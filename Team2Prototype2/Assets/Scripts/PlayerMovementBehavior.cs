@@ -14,6 +14,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementBehavior : MonoBehaviour
 {
+    private CharacterController cc;
     private PlayerInput _pControls;
     private InputAction _lrMovement;
     private InputAction _fbMovement;
@@ -23,25 +24,36 @@ public class PlayerMovementBehavior : MonoBehaviour
     private int fbValue;
     private Vector3 mPosValue;
 
-    private Camera pov;
+
+
+    [Header("Camera Controls")]
+    [SerializeField] private float _horizontalRotationSpeed;
+    [SerializeField] private float _verticalRotationSpeed;
+    [SerializeField] private float maxCamYAngle;
+    [SerializeField] private float minCamYAngle;
+    private Transform camTransform;
 
     [Header("Player Movement")]
-    [SerializeField] private float speed;
-    [SerializeField] private float speedCap;
-
-
-    [Header("Value Clamps")]
-    [SerializeField]private float maxCamYAngle;
-    [SerializeField] private float minCamYAngle;
-
+    [SerializeField] private float _speed;
+    [SerializeField] private float _speedCap;
     private bool moving;
 
-    // Start is called before the first frame update
+
+    public float HorizontalRotationSpeed { get => _horizontalRotationSpeed;}
+    public float VerticalRotationSpeed { get => _verticalRotationSpeed; }
+    public float MaxCamYAngle { get => maxCamYAngle;}
+    public float MinCamYAngle { get => minCamYAngle;}
+    public Vector3 MPosValue { get => mPosValue; set => mPosValue = value; }
+
+    /// <summary>
+    /// Called on the first frame update. Gets references to scripts and objects. Assigns input actions to functions.
+    /// </summary>
     void Start()
     {
+        cc = GetComponent<CharacterController>();
+        camTransform = Camera.main.transform;
         GetComponent<PlayerInput>().currentActionMap.Enable();
         _pControls = GetComponent<PlayerInput>();
-        pov = GetComponentInChildren<Camera>();
 
         _lrMovement = _pControls.currentActionMap.FindAction("SideMovement");
         _fbMovement = _pControls.currentActionMap.FindAction("ForwardBackMovement");
@@ -62,22 +74,24 @@ public class PlayerMovementBehavior : MonoBehaviour
 
 
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame. It handles movement and reads mouse position.
+    /// </summary>
     void Update()
     {
-        if(_mPos != null)
-        {
-            mPosValue = _mPos.ReadValue<Vector2>();
-            pov.transform.LookAt(mPosValue);
-        }
+        MPosValue = _mPos.ReadValue<Vector2>();
+        mPosValue.x -= Screen.width/2;
+        mPosValue.y -= Screen.height/2;
+        MPosValue = mPosValue;
 
+        //If the character should be moving
         if (lrValue != 0 || fbValue != 0)
         {
-            Vector3 moveDir = new Vector3(fbValue, 0, lrValue);
-            moveDir *= Time.deltaTime * speed;
+            Vector3 moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
+            moveDir *= Time.deltaTime * _speed;
             moveDir.y = 0;
-            Vector3.ClampMagnitude(moveDir, speedCap);
-            transform.Translate(moveDir);
+            cc.Move(moveDir);
+            transform.forward = moveDir;
         }
 
 
