@@ -19,11 +19,12 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _lrMovement;
     private InputAction _fbMovement;
     private InputAction _mPos;
+    private InputAction _saveState;
 
     private int lrValue;
     private int fbValue;
     private Vector3 mPosValue;
-
+    private SaveStateBehvaior ssBehav;
 
 
     [Header("Camera Controls")]
@@ -58,6 +59,7 @@ public class PlayerMovementBehavior : MonoBehaviour
         _lrMovement = _pControls.currentActionMap.FindAction("SideMovement");
         _fbMovement = _pControls.currentActionMap.FindAction("ForwardBackMovement");
         _mPos = _pControls.currentActionMap.FindAction("Mouse");
+        _saveState = _pControls.currentActionMap.FindAction("Save State");
 
         _lrMovement.performed += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.performed += contx => fbValue = (int)contx.ReadValue<float>();
@@ -66,8 +68,15 @@ public class PlayerMovementBehavior : MonoBehaviour
         _lrMovement.canceled += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.canceled += contx => fbValue = (int)contx.ReadValue<float>();
 
+        _saveState.started += _saveState_started;
+        ssBehav = GetComponent<SaveStateBehvaior>();
 
         Cursor.visible = false;
+    }
+
+    private void _saveState_started(InputAction.CallbackContext obj)
+    {
+        ssBehav.SaveButtonPressed();
     }
 
 

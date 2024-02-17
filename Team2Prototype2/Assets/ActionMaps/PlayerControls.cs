@@ -53,6 +53,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Save State"",
+                    ""type"": ""Button"",
+                    ""id"": ""718e3689-3285-45c2-98ec-b27adb11d0a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -198,6 +207,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28957ed7-9c63-4cb6-be8d-d704376947b6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Save State"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa085315-324d-45a3-a667-1c9b546f25cb"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Save State"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -209,6 +240,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Keyboard_SideMovement = m_Keyboard.FindAction("SideMovement", throwIfNotFound: true);
         m_Keyboard_ForwardBackMovement = m_Keyboard.FindAction("ForwardBackMovement", throwIfNotFound: true);
         m_Keyboard_Mouse = m_Keyboard.FindAction("Mouse", throwIfNotFound: true);
+        m_Keyboard_SaveState = m_Keyboard.FindAction("Save State", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +305,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_SideMovement;
     private readonly InputAction m_Keyboard_ForwardBackMovement;
     private readonly InputAction m_Keyboard_Mouse;
+    private readonly InputAction m_Keyboard_SaveState;
     public struct KeyboardActions
     {
         private @PlayerControls m_Wrapper;
@@ -280,6 +313,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SideMovement => m_Wrapper.m_Keyboard_SideMovement;
         public InputAction @ForwardBackMovement => m_Wrapper.m_Keyboard_ForwardBackMovement;
         public InputAction @Mouse => m_Wrapper.m_Keyboard_Mouse;
+        public InputAction @SaveState => m_Wrapper.m_Keyboard_SaveState;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -298,6 +332,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Mouse.started += instance.OnMouse;
             @Mouse.performed += instance.OnMouse;
             @Mouse.canceled += instance.OnMouse;
+            @SaveState.started += instance.OnSaveState;
+            @SaveState.performed += instance.OnSaveState;
+            @SaveState.canceled += instance.OnSaveState;
         }
 
         private void UnregisterCallbacks(IKeyboardActions instance)
@@ -311,6 +348,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Mouse.started -= instance.OnMouse;
             @Mouse.performed -= instance.OnMouse;
             @Mouse.canceled -= instance.OnMouse;
+            @SaveState.started -= instance.OnSaveState;
+            @SaveState.performed -= instance.OnSaveState;
+            @SaveState.canceled -= instance.OnSaveState;
         }
 
         public void RemoveCallbacks(IKeyboardActions instance)
@@ -333,5 +373,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSideMovement(InputAction.CallbackContext context);
         void OnForwardBackMovement(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
+        void OnSaveState(InputAction.CallbackContext context);
     }
 }
