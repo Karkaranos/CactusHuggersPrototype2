@@ -17,7 +17,7 @@ public class SaveStateBehvaior : MonoBehaviour
 
     [Header("Variables To Save: ")]
     [SerializeField] private Vector3 pPos;
-    [SerializeField] private Vector3 pRot;
+    [SerializeField] private Quaternion pRot;
     [SerializeField] private Vector3 pScale;
 
     [Header("Debug Variables: ")]
@@ -68,9 +68,8 @@ public class SaveStateBehvaior : MonoBehaviour
 
     public void SetSaveState()
     {
-        Quaternion temp = transform.rotation;
         pPos = transform.position;
-        pRot = temp.eulerAngles;
+        pRot = transform.rotation;
         pScale = transform.localScale;
         hasSaveState = true;
     }
@@ -78,7 +77,7 @@ public class SaveStateBehvaior : MonoBehaviour
     public void LoadSaveState()
     {
         transform.position = pPos;
-        transform.rotation = Quaternion.Euler(pRot);
+        transform.rotation = pRot;
         transform.localScale = pScale;
 
         hasSaveState = false;
