@@ -13,7 +13,6 @@ using UnityEngine;
 
 public class MovingPlatformBehavior : MonoBehaviour
 {
-
     [Header("Platform Waypoints"), Tooltip("Put the transforms you want the platform to go to here, in the order you want the platform to use")]
     //list of all the places the moving platform will go to
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
