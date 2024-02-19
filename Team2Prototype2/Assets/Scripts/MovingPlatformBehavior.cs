@@ -35,6 +35,8 @@ public class MovingPlatformBehavior : MonoBehaviour
     //next location for the moving platform to go to - formatted as waypoints[nextWaypoint]
     private int nextWaypoint;
 
+    public bool StopMoving { get => stopMoving; set => stopMoving = value; }
+
     /// <summary>
     /// set refrences
     /// </summary>
@@ -49,7 +51,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        if (!stopMoving)
+        if (!StopMoving)
         {
             Move();
         }

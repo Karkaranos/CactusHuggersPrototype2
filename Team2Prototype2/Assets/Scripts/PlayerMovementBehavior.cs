@@ -44,7 +44,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField] private float _speedCap;
     private bool moving;
 
-    private bool _isInteracting;
+    private bool _isInteracting = false;
 
     public float HorizontalRotationSpeed { get => _horizontalRotationSpeed;}
     public float VerticalRotationSpeed { get => _verticalRotationSpeed; }
@@ -123,9 +123,13 @@ public class PlayerMovementBehavior : MonoBehaviour
 
     IEnumerator Interact()
     {
-        Interacting = true;
-        yield return new WaitForSeconds(2f);
-        Interacting = false;
+        if(!Interacting)
+        {
+            Interacting = true;
+            yield return new WaitForSeconds(2f);
+            print("interacted");
+            Interacting = false;
+        }
     }
 
 
