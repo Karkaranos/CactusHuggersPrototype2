@@ -15,10 +15,9 @@ public class SaveStateBehvaior : MonoBehaviour
     [Header("Save State Cooldown: ")]
     [SerializeField] private float maxCooldownTime;
 
-    [Header("Variables To Save: ")]
-    [SerializeField] private Vector3 pPos;
-    [SerializeField] private Quaternion pRot;
-    [SerializeField] private Vector3 pScale;
+    [Header("Variables In Save States: "), Tooltip("DO NOT TOUCH THESE VARIABLES")]
+    [SerializeField] private SaveStateVariables[] saveStates = new SaveStateVariables[3];
+    [SerializeField] private int currentStateSelected;
 
     [Header("Debug Variables: ")]
     [SerializeField] private float currentCooldownTime;
@@ -69,7 +68,8 @@ public class SaveStateBehvaior : MonoBehaviour
 
     public void SwitchSelectedState(int switchTo)
     {
-
+        //-1 because selected save state is the index of the save state
+        selectedSaveState = switchTo - 1;
     }
 
     public void LoadState()
@@ -78,17 +78,17 @@ public class SaveStateBehvaior : MonoBehaviour
     }
     public void SetSaveState()
     {
-        pPos = transform.position;
-        pRot = transform.rotation;
-        pScale = transform.localScale;
+        saveStates[selectedSaveState].pPos = transform.position;
+        saveStates[selectedSaveState].pRot = transform.rotation;
+        saveStates[selectedSaveState].pScale = transform.localScale;
         hasSaveState = true;
     }
 
     public void LoadSaveState()
     {
-        transform.position = pPos;
-        transform.rotation = pRot;
-        transform.localScale = pScale;
+        transform.position = saveStates[selectedSaveState].pPos;
+        transform.rotation = saveStates[selectedSaveState].pRot;
+        transform.localScale = saveStates[selectedSaveState].pScale;
 
         hasSaveState = false;
     }
