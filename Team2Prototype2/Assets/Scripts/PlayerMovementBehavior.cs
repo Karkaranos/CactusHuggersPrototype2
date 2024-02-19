@@ -24,6 +24,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _switchState2;
     private InputAction _switchState3;
     private InputAction _loadState;
+    private InputAction _interact;
 
     private int lrValue;
     private int fbValue;
@@ -43,12 +44,14 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField] private float _speedCap;
     private bool moving;
 
+    private bool _isInteracting;
 
     public float HorizontalRotationSpeed { get => _horizontalRotationSpeed;}
     public float VerticalRotationSpeed { get => _verticalRotationSpeed; }
     public float MaxCamYAngle { get => maxCamYAngle;}
     public float MinCamYAngle { get => minCamYAngle;}
     public Vector3 MPosValue { get => mPosValue; set => mPosValue = value; }
+    public bool Interacting { get => _isInteracting; set => _isInteracting = value; }
 
     /// <summary>
     /// Called on the first frame update. Gets references to scripts and objects. Assigns input actions to functions.
@@ -68,6 +71,7 @@ public class PlayerMovementBehavior : MonoBehaviour
         _switchState2 = _pControls.currentActionMap.FindAction("SelectState2");
         _switchState3 = _pControls.currentActionMap.FindAction("SelectState3");
         _loadState = _pControls.currentActionMap.FindAction("LoadState");
+        _interact = _pControls.currentActionMap.FindAction("Interact");
 
         _lrMovement.performed += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.performed += contx => fbValue = (int)contx.ReadValue<float>();
@@ -75,6 +79,7 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         _lrMovement.canceled += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.canceled += contx => fbValue = (int)contx.ReadValue<float>();
+
 
         _saveState.started += _saveState_started;
         ssBehav = GetComponent<SaveStateBehvaior>();
@@ -84,6 +89,9 @@ public class PlayerMovementBehavior : MonoBehaviour
         _switchState3.started += _switchState3_started;
 
         _loadState.started += _loadState_started;
+
+        _interact.performed += contx => StartCoroutine(Interact());
+
 
         Cursor.visible = false;
     }
@@ -113,7 +121,12 @@ public class PlayerMovementBehavior : MonoBehaviour
         ssBehav.SaveButtonPressed();
     }
 
-
+    IEnumerator Interact()
+    {
+        Interacting = true;
+        yield return new WaitForSeconds(2f);
+        Interacting = false;
+    }
 
 
 
