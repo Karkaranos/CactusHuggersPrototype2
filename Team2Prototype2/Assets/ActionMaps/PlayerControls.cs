@@ -98,6 +98,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ed0dbd3-8a81-492f-8e17-a8886770041a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -320,6 +329,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""LoadState"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""afd7ab9c-206a-4ea5-aad7-298515d30f9e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -336,6 +356,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Keyboard_SelectState2 = m_Keyboard.FindAction("SelectState2", throwIfNotFound: true);
         m_Keyboard_SelectState3 = m_Keyboard.FindAction("SelectState3", throwIfNotFound: true);
         m_Keyboard_LoadState = m_Keyboard.FindAction("LoadState", throwIfNotFound: true);
+        m_Keyboard_Interact = m_Keyboard.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +426,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_SelectState2;
     private readonly InputAction m_Keyboard_SelectState3;
     private readonly InputAction m_Keyboard_LoadState;
+    private readonly InputAction m_Keyboard_Interact;
     public struct KeyboardActions
     {
         private @PlayerControls m_Wrapper;
@@ -417,6 +439,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SelectState2 => m_Wrapper.m_Keyboard_SelectState2;
         public InputAction @SelectState3 => m_Wrapper.m_Keyboard_SelectState3;
         public InputAction @LoadState => m_Wrapper.m_Keyboard_LoadState;
+        public InputAction @Interact => m_Wrapper.m_Keyboard_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -450,6 +473,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LoadState.started += instance.OnLoadState;
             @LoadState.performed += instance.OnLoadState;
             @LoadState.canceled += instance.OnLoadState;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IKeyboardActions instance)
@@ -478,6 +504,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LoadState.started -= instance.OnLoadState;
             @LoadState.performed -= instance.OnLoadState;
             @LoadState.canceled -= instance.OnLoadState;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IKeyboardActions instance)
@@ -505,5 +534,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSelectState2(InputAction.CallbackContext context);
         void OnSelectState3(InputAction.CallbackContext context);
         void OnLoadState(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }
