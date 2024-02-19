@@ -110,7 +110,7 @@ public class PlayerMovementBehavior : MonoBehaviour
 
     private void _saveState_started(InputAction.CallbackContext obj)
     {
-        ssBehav.SaveButtonPressed();
+        ssBehav.SetSaveState();
     }
 
 
