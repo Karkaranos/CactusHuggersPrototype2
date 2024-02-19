@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class ButtonBehavior : MonoBehaviour
 {
+    #region Variables
     private PlayerMovementBehavior pmb;
     private MovingPlatformBehavior mpb;
     private bool pressed;
@@ -49,6 +50,13 @@ public class ButtonBehavior : MonoBehaviour
 
     public int ButtonOrder { get => _order;}
 
+    #endregion
+
+    #region Functions
+
+    /// <summary>
+    /// Start is called on the first frame update. Initializes color and gets reference to player
+    /// </summary>
     private void Start()
     {
         pmb = FindObjectOfType<PlayerMovementBehavior>();
@@ -57,9 +65,13 @@ public class ButtonBehavior : MonoBehaviour
         InitializeLinkedState();
     }
 
+    /// <summary>
+    /// Occurs when a trigger stays in contact with this object. Checks if button was pressed
+    /// </summary>
+    /// <param name="other">The object collided with</param>
     private void OnTriggerStay(Collider other)
     {
-        print("box entered");
+        //If not pressed and the player is interacting
         if(!pressed && other.gameObject.GetComponent<PlayerMovementBehavior>()!=null && pmb.Interacting)
         {
             Interact();
@@ -67,6 +79,10 @@ public class ButtonBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when the button is pressed. Sets color and pressed bool, waits, then resets them
+    /// </summary>
+    /// <returns>The time before the button resets</returns>
     IEnumerator Pressed()
     {
         GetComponent<MeshRenderer>().material = _pressedColor;
@@ -76,8 +92,13 @@ public class ButtonBehavior : MonoBehaviour
         GetComponent<MeshRenderer>().material = _unpressedColor;
     }
 
+    /// <summary>
+    /// Handles button interactions. Takes the related type and the pressed action, then calls needed functions
+    /// Throws exceptions if related object does not have required behavior
+    /// </summary>
     private void Interact()
     {
+        //Handles button interactions for moving platforms
         if(_objectType == LinkedType.MOVING_PLATFORM)
         {
             MovingPlatformBehavior mpb = _linkObject.GetComponent<MovingPlatformBehavior>();
@@ -87,6 +108,7 @@ public class ButtonBehavior : MonoBehaviour
             }
             mpb.StopMoving = !mpb.StopMoving;
         }
+        //Handles button interactions for doors
         else if (_objectType == LinkedType.DOOR)
         {
             /*get door behavior reference
@@ -105,6 +127,7 @@ public class ButtonBehavior : MonoBehaviour
             print("Do door stuff");
 
         }
+        //Handles button interactions for buttons
         else if (_objectType == LinkedType.BUTTONS)
         {
             //do button stuff
@@ -114,6 +137,9 @@ public class ButtonBehavior : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Initializes the state of the linked object
+    /// </summary>
     private void InitializeLinkedState()
     {
         if (_objectType == LinkedType.MOVING_PLATFORM)
@@ -144,6 +170,9 @@ public class ButtonBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Draws a gizmo to visually link buttons with their associated object in scene view
+    /// </summary>
     private void OnDrawGizmos()
     {
         if(_objectType == LinkedType.MOVING_PLATFORM)
@@ -160,4 +189,5 @@ public class ButtonBehavior : MonoBehaviour
 
     }
 
+    #endregion
 }
