@@ -24,6 +24,7 @@ public class SaveStateBehvaior : MonoBehaviour
     [SerializeField] private float currentCooldownTime;
     private bool onCooldown;
     [SerializeField] private bool hasSaveState;
+    [SerializeField] private int selectedSaveState;
 
 
     // Start is called before the first frame update
@@ -66,6 +67,15 @@ public class SaveStateBehvaior : MonoBehaviour
         }
     }
 
+    public void SwitchSelectedState(int switchTo)
+    {
+
+    }
+
+    public void LoadState()
+    {
+
+    }
     public void SetSaveState()
     {
         pPos = transform.position;

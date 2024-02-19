@@ -62,6 +62,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectState1"",
+                    ""type"": ""Button"",
+                    ""id"": ""12f2e35d-4df6-4066-9ada-9ae4765477eb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectState2"",
+                    ""type"": ""Button"",
+                    ""id"": ""7148d5de-826e-451d-b15f-ad9409daa37a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectState3"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4ce3e12-24e7-4517-9ae9-f62208ce9064"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LoadState"",
+                    ""type"": ""Button"",
+                    ""id"": ""5922209f-bd26-4ae5-a30c-41117c437d59"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -211,7 +247,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""28957ed7-9c63-4cb6-be8d-d704376947b6"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -229,6 +265,61 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Save State"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c73647e9-0a84-4fa1-adde-1aa457789522"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectState1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36ecfa23-f830-41a7-bee4-85496087d299"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectState2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65b0ef2e-075f-4246-b6ef-b88ee65e55bc"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectState3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ec5894d-d2bb-4425-aafc-8003780063d6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LoadState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a713313-cceb-4c16-8b57-0b9ab04081e6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LoadState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -241,6 +332,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Keyboard_ForwardBackMovement = m_Keyboard.FindAction("ForwardBackMovement", throwIfNotFound: true);
         m_Keyboard_Mouse = m_Keyboard.FindAction("Mouse", throwIfNotFound: true);
         m_Keyboard_SaveState = m_Keyboard.FindAction("Save State", throwIfNotFound: true);
+        m_Keyboard_SelectState1 = m_Keyboard.FindAction("SelectState1", throwIfNotFound: true);
+        m_Keyboard_SelectState2 = m_Keyboard.FindAction("SelectState2", throwIfNotFound: true);
+        m_Keyboard_SelectState3 = m_Keyboard.FindAction("SelectState3", throwIfNotFound: true);
+        m_Keyboard_LoadState = m_Keyboard.FindAction("LoadState", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +401,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_ForwardBackMovement;
     private readonly InputAction m_Keyboard_Mouse;
     private readonly InputAction m_Keyboard_SaveState;
+    private readonly InputAction m_Keyboard_SelectState1;
+    private readonly InputAction m_Keyboard_SelectState2;
+    private readonly InputAction m_Keyboard_SelectState3;
+    private readonly InputAction m_Keyboard_LoadState;
     public struct KeyboardActions
     {
         private @PlayerControls m_Wrapper;
@@ -314,6 +413,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @ForwardBackMovement => m_Wrapper.m_Keyboard_ForwardBackMovement;
         public InputAction @Mouse => m_Wrapper.m_Keyboard_Mouse;
         public InputAction @SaveState => m_Wrapper.m_Keyboard_SaveState;
+        public InputAction @SelectState1 => m_Wrapper.m_Keyboard_SelectState1;
+        public InputAction @SelectState2 => m_Wrapper.m_Keyboard_SelectState2;
+        public InputAction @SelectState3 => m_Wrapper.m_Keyboard_SelectState3;
+        public InputAction @LoadState => m_Wrapper.m_Keyboard_LoadState;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -335,6 +438,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SaveState.started += instance.OnSaveState;
             @SaveState.performed += instance.OnSaveState;
             @SaveState.canceled += instance.OnSaveState;
+            @SelectState1.started += instance.OnSelectState1;
+            @SelectState1.performed += instance.OnSelectState1;
+            @SelectState1.canceled += instance.OnSelectState1;
+            @SelectState2.started += instance.OnSelectState2;
+            @SelectState2.performed += instance.OnSelectState2;
+            @SelectState2.canceled += instance.OnSelectState2;
+            @SelectState3.started += instance.OnSelectState3;
+            @SelectState3.performed += instance.OnSelectState3;
+            @SelectState3.canceled += instance.OnSelectState3;
+            @LoadState.started += instance.OnLoadState;
+            @LoadState.performed += instance.OnLoadState;
+            @LoadState.canceled += instance.OnLoadState;
         }
 
         private void UnregisterCallbacks(IKeyboardActions instance)
@@ -351,6 +466,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SaveState.started -= instance.OnSaveState;
             @SaveState.performed -= instance.OnSaveState;
             @SaveState.canceled -= instance.OnSaveState;
+            @SelectState1.started -= instance.OnSelectState1;
+            @SelectState1.performed -= instance.OnSelectState1;
+            @SelectState1.canceled -= instance.OnSelectState1;
+            @SelectState2.started -= instance.OnSelectState2;
+            @SelectState2.performed -= instance.OnSelectState2;
+            @SelectState2.canceled -= instance.OnSelectState2;
+            @SelectState3.started -= instance.OnSelectState3;
+            @SelectState3.performed -= instance.OnSelectState3;
+            @SelectState3.canceled -= instance.OnSelectState3;
+            @LoadState.started -= instance.OnLoadState;
+            @LoadState.performed -= instance.OnLoadState;
+            @LoadState.canceled -= instance.OnLoadState;
         }
 
         public void RemoveCallbacks(IKeyboardActions instance)
@@ -374,5 +501,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnForwardBackMovement(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
         void OnSaveState(InputAction.CallbackContext context);
+        void OnSelectState1(InputAction.CallbackContext context);
+        void OnSelectState2(InputAction.CallbackContext context);
+        void OnSelectState3(InputAction.CallbackContext context);
+        void OnLoadState(InputAction.CallbackContext context);
     }
 }

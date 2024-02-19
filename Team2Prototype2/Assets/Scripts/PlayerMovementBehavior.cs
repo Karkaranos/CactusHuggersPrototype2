@@ -20,6 +20,10 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _fbMovement;
     private InputAction _mPos;
     private InputAction _saveState;
+    private InputAction _switchState1;
+    private InputAction _switchState2;
+    private InputAction _switchState3;
+    private InputAction _loadState;
 
     private int lrValue;
     private int fbValue;
@@ -60,6 +64,10 @@ public class PlayerMovementBehavior : MonoBehaviour
         _fbMovement = _pControls.currentActionMap.FindAction("ForwardBackMovement");
         _mPos = _pControls.currentActionMap.FindAction("Mouse");
         _saveState = _pControls.currentActionMap.FindAction("Save State");
+        _switchState1 = _pControls.currentActionMap.FindAction("SelectState1");
+        _switchState2 = _pControls.currentActionMap.FindAction("SelectState2");
+        _switchState3 = _pControls.currentActionMap.FindAction("SelectState3");
+        _loadState = _pControls.currentActionMap.FindAction("LoadState");
 
         _lrMovement.performed += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.performed += contx => fbValue = (int)contx.ReadValue<float>();
@@ -71,7 +79,33 @@ public class PlayerMovementBehavior : MonoBehaviour
         _saveState.started += _saveState_started;
         ssBehav = GetComponent<SaveStateBehvaior>();
 
+        _switchState1.started += _switchState1_started;
+        _switchState2.started += _switchState2_started;
+        _switchState3.started += _switchState3_started;
+
+        _loadState.started += _loadState_started;
+
         Cursor.visible = false;
+    }
+
+    private void _loadState_started(InputAction.CallbackContext obj)
+    {
+        ssBehav.LoadState();
+    }
+
+    private void _switchState3_started(InputAction.CallbackContext obj)
+    {
+        ssBehav.SwitchSelectedState(3);
+    }
+
+    private void _switchState2_started(InputAction.CallbackContext obj)
+    {
+        ssBehav.SwitchSelectedState(2);
+    }
+
+    private void _switchState1_started(InputAction.CallbackContext obj)
+    {
+        ssBehav.SwitchSelectedState(1);
     }
 
     private void _saveState_started(InputAction.CallbackContext obj)
