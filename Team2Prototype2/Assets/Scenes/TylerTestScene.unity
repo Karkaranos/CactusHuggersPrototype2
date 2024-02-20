@@ -209,6 +209,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5107896328147371486, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5659917298951847876, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_Name
       value: MovingPlatform
@@ -582,11 +586,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxCooldownTime: 3
-  pPos: {x: 0, y: 0, z: 0}
-  pRot: {x: 0, y: 0, z: 0, w: 0}
-  pScale: {x: 0, y: 0, z: 0}
+  saveStates:
+  - hasBeenSaved: 0
+    pPos: {x: 0, y: 0, z: 0}
+    pRot: {x: 0, y: 0, z: 0, w: 0}
+    pScale: {x: 0, y: 0, z: 0}
+  - hasBeenSaved: 0
+    pPos: {x: 0, y: 0, z: 0}
+    pRot: {x: 0, y: 0, z: 0, w: 0}
+    pScale: {x: 0, y: 0, z: 0}
+  - hasBeenSaved: 0
+    pPos: {x: 0, y: 0, z: 0}
+    pRot: {x: 0, y: 0, z: 0, w: 0}
+    pScale: {x: 0, y: 0, z: 0}
+  currentStateSelected: 0
   currentCooldownTime: 0
-  hasSaveState: 0
+  selectedSaveState: 0
 --- !u!1 &451292874
 GameObject:
   m_ObjectHideFlags: 0
