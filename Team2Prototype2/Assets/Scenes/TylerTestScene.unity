@@ -520,7 +520,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915bce9ac226c134ba0b2bd28460d346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCooldownTime: 3
+  maxCooldownTime: 1
+  waypointColors:
+  - {r: 1, g: 0, b: 0, a: 0.5411765}
+  - {r: 0.4370397, g: 0.8301887, b: 0.40256318, a: 0.4745098}
+  - {r: 0.15202916, g: 0.26065698, b: 0.6886792, a: 0.5764706}
   saveStates:
   - hasBeenSaved: 0
     pPos: {x: 0, y: 0, z: 0}
@@ -537,6 +541,11 @@ MonoBehaviour:
   currentStateSelected: 0
   currentCooldownTime: 0
   selectedSaveState: 0
+  saveStateWaypoint: {fileID: 2657142245183595963, guid: 7007338f96fc18f42997ba8d7ccb3725, type: 3}
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &451292874
 GameObject:
   m_ObjectHideFlags: 0

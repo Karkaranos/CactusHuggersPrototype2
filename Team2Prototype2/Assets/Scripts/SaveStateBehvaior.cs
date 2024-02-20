@@ -17,6 +17,10 @@ public class SaveStateBehvaior : MonoBehaviour
     [Header("Save State Cooldown: "), Tooltip("Edit this to change the max cooldown time")]
     [SerializeField] private float maxCooldownTime;
 
+    [Header("Save State Waypoint Colors"), Tooltip("Change these to change the color of each"
+        + " save state's waypoint color")]
+    [SerializeField] private Color[] waypointColors = new Color[3];
+
     [Header("Variables In Save States: "), Tooltip("DO NOT TOUCH THESE VARIABLES")]
     [SerializeField] private SaveStateVariables[] saveStates = new SaveStateVariables[3];
     [SerializeField] private int currentStateSelected;
@@ -25,6 +29,8 @@ public class SaveStateBehvaior : MonoBehaviour
     [SerializeField] private float currentCooldownTime;
     private bool onCooldown;
     [SerializeField] private int selectedSaveState;
+    [SerializeField] private GameObject saveStateWaypoint;
+    [SerializeField] private GameObject[] waypoints = new GameObject[3];
 
     /// <summary>
     /// set refrences
@@ -89,6 +95,7 @@ public class SaveStateBehvaior : MonoBehaviour
 
                 //makes it so you have to save again to load the state
                 saveStates[selectedSaveState].hasBeenSaved = false;
+                Destroy(waypoints[selectedSaveState].gameObject);
             }
             else
             {
@@ -115,6 +122,10 @@ public class SaveStateBehvaior : MonoBehaviour
 
             //allows the player to load it now
             saveStates[selectedSaveState].hasBeenSaved = true;
+
+            GameObject go = Instantiate(saveStateWaypoint, transform.position, Quaternion.identity);
+            go.GetComponent<Renderer>().material.color = waypointColors[selectedSaveState];
+            waypoints[selectedSaveState] = go;
         }
     }
 }
