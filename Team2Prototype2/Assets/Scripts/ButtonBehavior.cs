@@ -14,6 +14,7 @@ public class ButtonBehavior : MonoBehaviour
     #region Variables
     private PlayerMovementBehavior pmb;
     private MovingPlatformBehavior mpb;
+    private DoorBehavior db;
     private bool pressed;
 
     private enum LinkedType
@@ -111,20 +112,19 @@ public class ButtonBehavior : MonoBehaviour
         //Handles button interactions for doors
         else if (_objectType == LinkedType.DOOR)
         {
-            /*get door behavior reference
-            if (doorNameReference == null)
+            DoorBehavior db = _linkObject.GetComponent<DoorBehavior>();
+            if (db == null)
             {
                 throw new System.Exception("Door Behavior could not be found on the linked object");
             }
             if(_pressedState == LinkedState.OPEN_DOOR)
             {
-                doorNameReference.OpenDoor();
+                db.OpenDoor();
             }
             else
             {
-                doorNameReference.CloseDoor();
-            }*/
-            print("Do door stuff");
+                db.CloseDoor();
+            }
 
         }
         //Handles button interactions for buttons
@@ -160,8 +160,15 @@ public class ButtonBehavior : MonoBehaviour
         }
         else if (_objectType == LinkedType.DOOR)
         {
-            //do something here once doors exist
-            print("initialize doors");
+            DoorBehavior db = _linkObject.GetComponent<DoorBehavior>();
+            if (db == null)
+            {
+                throw new System.Exception("Door Behavior could not be found on the linked object");
+            }
+            if (_defaultState == LinkedState.OPEN_DOOR)
+            {
+                db.OpenInitialDoor();
+            }
         }
         else if (_objectType == LinkedType.BUTTONS)
         {
@@ -177,14 +184,16 @@ public class ButtonBehavior : MonoBehaviour
     {
         if(_objectType == LinkedType.MOVING_PLATFORM)
         {
+
+            mpb = _linkObject.GetComponentInChildren<MovingPlatformBehavior>();
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, _linkObject.transform.position);
         }
         if (_objectType == LinkedType.DOOR)
         {
-            mpb = _linkObject.GetComponentInChildren<MovingPlatformBehavior>();
+            db = _linkObject.GetComponent<DoorBehavior>();
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, mpb.gameObject.transform.position);
+            Gizmos.DrawLine(transform.position, db.gameObject.transform.GetChild(0).position);
         }
 
     }
