@@ -201,67 +201,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
---- !u!1001 &342806636
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5659917298951847876, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_Name
-      value: MovingPlatform
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 22.026764
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.2429276
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
 --- !u!1 &390911745
 GameObject:
   m_ObjectHideFlags: 3
@@ -582,11 +521,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxCooldownTime: 3
-  pPos: {x: 0, y: 0, z: 0}
-  pRot: {x: 0, y: 0, z: 0, w: 0}
-  pScale: {x: 0, y: 0, z: 0}
+  saveStates:
+  - hasBeenSaved: 0
+    pPos: {x: 0, y: 0, z: 0}
+    pRot: {x: 0, y: 0, z: 0, w: 0}
+    pScale: {x: 0, y: 0, z: 0}
+  - hasBeenSaved: 0
+    pPos: {x: 0, y: 0, z: 0}
+    pRot: {x: 0, y: 0, z: 0, w: 0}
+    pScale: {x: 0, y: 0, z: 0}
+  - hasBeenSaved: 0
+    pPos: {x: 0, y: 0, z: 0}
+    pRot: {x: 0, y: 0, z: 0, w: 0}
+    pScale: {x: 0, y: 0, z: 0}
+  currentStateSelected: 0
   currentCooldownTime: 0
-  hasSaveState: 0
+  selectedSaveState: 0
 --- !u!1 &451292874
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +914,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ed9a2ae1c88f12647bdce6b540e7d6bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
