@@ -25,6 +25,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _switchState3;
     private InputAction _loadState;
     private InputAction _interact;
+    private InputAction _jump;
 
     private int lrValue;
     private int fbValue;
@@ -42,9 +43,14 @@ public class PlayerMovementBehavior : MonoBehaviour
     [Header("Player Movement")]
     [SerializeField] private float _speed;
     [SerializeField] private float _speedCap;
+    [SerializeField] private float _jumpHeight;
     private bool moving;
+    [SerializeField]private bool jumping;
 
     private bool _isInteracting = false;
+    private Vector3 moveDir;
+
+    RigidbodyConstraints defConstraints;
 
     public float HorizontalRotationSpeed { get => _horizontalRotationSpeed;}
     public float VerticalRotationSpeed { get => _verticalRotationSpeed; }
@@ -58,6 +64,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// </summary>
     void Start()
     {
+        defConstraints = GetComponent<Rigidbody>().constraints;
         cc = GetComponent<CharacterController>();
         camTransform = Camera.main.transform;
         GetComponent<PlayerInput>().currentActionMap.Enable();
@@ -72,6 +79,7 @@ public class PlayerMovementBehavior : MonoBehaviour
         _switchState3 = _pControls.currentActionMap.FindAction("SelectState3");
         _loadState = _pControls.currentActionMap.FindAction("LoadState");
         _interact = _pControls.currentActionMap.FindAction("Interact");
+        _jump = _pControls.currentActionMap.FindAction("Jump");
 
         _lrMovement.performed += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.performed += contx => fbValue = (int)contx.ReadValue<float>();
@@ -91,6 +99,8 @@ public class PlayerMovementBehavior : MonoBehaviour
         _loadState.started += _loadState_started;
 
         _interact.performed += contx => StartCoroutine(Interact());
+
+        _jump.performed += contx => Jump();
 
 
         Cursor.visible = false;
@@ -121,6 +131,33 @@ public class PlayerMovementBehavior : MonoBehaviour
         ssBehav.SetSaveState();
     }
 
+    /// <summary>
+    /// Handles player jumping
+    /// </summary>
+    private void Jump()
+    {
+        if(!jumping)
+        {
+            jumping = true;
+            StartCoroutine(JumpDecay());
+        }
+    }
+
+    /// <summary>
+    /// Stops the jump after a set amount of time
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator JumpDecay()
+    {
+        print("should jump");
+        yield return new WaitForSeconds(.5f);
+        jumping = false;
+    }
+
+    /// <summary>
+    /// Called if the player interacts with something
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Interact()
     {
         if(!Interacting)
@@ -144,16 +181,20 @@ public class PlayerMovementBehavior : MonoBehaviour
         mPosValue.y -= Screen.height/2;
         MPosValue = mPosValue;
 
-        //If the character should be moving
-        if (lrValue != 0 || fbValue != 0)
+        moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
+        if(jumping)
         {
-            Vector3 moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
-            moveDir *= Time.deltaTime * _speed;
-            moveDir.y = 0;
-            cc.Move(moveDir);
-            transform.forward = moveDir;
+            moveDir.y = _jumpHeight;
         }
+        moveDir.y -= 15f * Time.deltaTime;
+        moveDir *= Time.deltaTime * _speed;
+        cc.Move(moveDir);
+        transform.forward = moveDir;
 
+        Vector3 eulerRot = transform.rotation.eulerAngles;
+        eulerRot.x = 0;
+        eulerRot.z = 0;
+        transform.rotation = Quaternion.Euler(0, eulerRot.y, 0);
 
     }
 }

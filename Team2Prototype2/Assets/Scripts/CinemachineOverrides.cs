@@ -17,6 +17,7 @@ public class CinemachineOverrides : CinemachineExtension
 {
     private PlayerMovementBehavior pmb;
     private Vector3 camRotate;
+    private static float SENSITIVITY_ADJUSTMENT = .2f;
 
     /// <summary>
     /// Overrides the awake function to initialize angles and get references to other scripts
@@ -51,7 +52,7 @@ public class CinemachineOverrides : CinemachineExtension
                 }
 
                 Vector2 mousePos = pmb.MPosValue;
-                camRotate.x += mousePos.x * Time.deltaTime * pmb.HorizontalRotationSpeed;
+                camRotate.x += mousePos.x * Time.deltaTime * pmb.HorizontalRotationSpeed * SENSITIVITY_ADJUSTMENT;
                 camRotate.y += mousePos.y * Time.deltaTime * pmb.VerticalRotationSpeed;
 
                 camRotate.y = Mathf.Clamp(camRotate.y, pmb.MinCamYAngle, pmb.MaxCamYAngle);
