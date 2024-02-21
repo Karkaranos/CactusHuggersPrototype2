@@ -42,6 +42,8 @@ public class DoorBehavior : MonoBehaviour
     /// </summary>
     public void OpenInitialDoor()
     {
+
+        doorObj = transform.GetChild(0).gameObject;
         Vector3 doorPos = doorObj.transform.position;
         doorPos.y += doorOpenHeight;
         doorObj.transform.position = doorPos;
