@@ -10,27 +10,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
 
 public class SaveStateBehvaior : MonoBehaviour
 {
+    public const int NumberOfSaveStates = 3;
+
     [Header("Save State Cooldown: "), Tooltip("Edit this to change the max cooldown time")]
     [SerializeField] private float maxCooldownTime;
+    
 
     [Header("Save State Waypoint Colors"), Tooltip("Change these to change the color of each"
         + " save state's waypoint color")]
-    [SerializeField] private Color[] waypointColors = new Color[3];
+    [SerializeField] private Color[] waypointColors = new Color[NumberOfSaveStates];
 
     [Header("Variables In Save States: "), Tooltip("DO NOT TOUCH THESE VARIABLES")]
-    [SerializeField] private SaveStateVariables[] saveStates = new SaveStateVariables[3];
+    [SerializeField] private SaveStateVariables[] saveStates = new SaveStateVariables[NumberOfSaveStates];
     [SerializeField] private int currentStateSelected;
 
     [Header("Debug Variables: "), Tooltip("dont touch these pls")]
     [SerializeField] private float currentCooldownTime;
     private bool onCooldown;
-    [SerializeField] private int selectedSaveState;
+    [SerializeField] public static int selectedSaveState;
     [SerializeField] private GameObject saveStateWaypoint;
-    [SerializeField] private GameObject[] waypoints = new GameObject[3];
+    [SerializeField] private GameObject[] waypoints = new GameObject[NumberOfSaveStates];
+    [SerializeField] private TMP_Text stateText;
+    private bool noText;
+    
 
     /// <summary>
     /// set refrences
@@ -39,6 +46,12 @@ public class SaveStateBehvaior : MonoBehaviour
     {
         currentCooldownTime = maxCooldownTime;
         onCooldown = false;
+        if (stateText == null)
+        {
+            noText = true;
+            Debug.Log("No Save State Text Refrenced");
+        }
+        SwitchSelectedState(1);
     }
 
     /// <summary>
@@ -72,6 +85,11 @@ public class SaveStateBehvaior : MonoBehaviour
     {
         //-1 because selected save state is the index of the save state
         selectedSaveState = switchTo - 1;
+        if (!noText)
+        {
+            stateText.text = "Selected State: " + switchTo;
+        }
+        
     }
 
     /// <summary>
@@ -125,6 +143,11 @@ public class SaveStateBehvaior : MonoBehaviour
 
             GameObject go = Instantiate(saveStateWaypoint, transform.position, Quaternion.identity);
             go.GetComponent<Renderer>().material.color = waypointColors[selectedSaveState];
+
+            if (waypoints[selectedSaveState] != null)
+            {
+                Destroy(waypoints[selectedSaveState].gameObject);
+            }
             waypoints[selectedSaveState] = go;
         }
     }

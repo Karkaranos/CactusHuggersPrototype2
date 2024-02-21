@@ -26,12 +26,18 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _loadState;
     private InputAction _interact;
     private InputAction _jump;
+    private InputAction _scrollWheel;
 
     private int lrValue;
     private int fbValue;
     private Vector3 mPosValue;
     private SaveStateBehvaior ssBehav;
+    private bool scrolling;
+    private float scrollAxis;
+    private float timer;
 
+    [Header("Scroll Wheel Sensitivity"), Tooltip("The lower the number, the more sensitive")]
+    [SerializeField] private float scrollSensitivity = 0.1f;
 
     [Header("Camera Controls")]
     [SerializeField] private float _horizontalRotationSpeed;
@@ -80,6 +86,8 @@ public class PlayerMovementBehavior : MonoBehaviour
         _loadState = _pControls.currentActionMap.FindAction("LoadState");
         _interact = _pControls.currentActionMap.FindAction("Interact");
         _jump = _pControls.currentActionMap.FindAction("Jump");
+        _scrollWheel = _pControls.currentActionMap.FindAction("SwitchStatesWheel");
+
 
         _lrMovement.performed += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.performed += contx => fbValue = (int)contx.ReadValue<float>();
@@ -88,6 +96,8 @@ public class PlayerMovementBehavior : MonoBehaviour
         _lrMovement.canceled += contx => lrValue = (int)contx.ReadValue<float>();
         _fbMovement.canceled += contx => fbValue = (int)contx.ReadValue<float>();
 
+        _scrollWheel.performed += _scrollWheel_performed;
+        _scrollWheel.canceled += _scrollWheel_canceled;
 
         _saveState.started += _saveState_started;
         ssBehav = GetComponent<SaveStateBehvaior>();
@@ -104,6 +114,17 @@ public class PlayerMovementBehavior : MonoBehaviour
 
 
         Cursor.visible = false;
+    }
+
+    private void _scrollWheel_canceled(InputAction.CallbackContext obj)
+    {
+        scrolling = false;
+    }
+
+    private void _scrollWheel_performed(InputAction.CallbackContext obj)
+    {
+        scrolling = true;
+        scrollAxis = obj.ReadValue<float>();
     }
 
     private void _loadState_started(InputAction.CallbackContext obj)
@@ -176,6 +197,50 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// </summary>
     void Update()
     {
+        //this handles changing the selected state with the scroll wheel
+        if (timer == scrollSensitivity)
+        {
+            if (scrolling)
+            {
+                timer = 0;
+                if (scrollAxis > 0)
+                {
+                    if (SaveStateBehvaior.selectedSaveState + 1 >= SaveStateBehvaior.NumberOfSaveStates)
+                    {
+                        ssBehav.SwitchSelectedState(1);
+                    }
+                    else
+                    {
+                        ssBehav.SwitchSelectedState(SaveStateBehvaior.selectedSaveState + 2);
+                    }
+                }
+                if (scrollAxis < 0)
+                {
+                    if (SaveStateBehvaior.selectedSaveState <= 0)
+                    {
+                        ssBehav.SwitchSelectedState(SaveStateBehvaior.NumberOfSaveStates);
+                    }
+                    else
+                    {
+                        ssBehav.SwitchSelectedState(SaveStateBehvaior.selectedSaveState);
+                    }
+                }
+                
+            }
+            
+            
+        }
+        else
+        {
+            timer += Time.deltaTime;
+            if (timer >= scrollSensitivity)
+            {
+                timer = scrollSensitivity;
+            }
+        }
+
+
+
         MPosValue = _mPos.ReadValue<Vector2>();
         mPosValue.x -= Screen.width/2;
         mPosValue.y -= Screen.height/2;
