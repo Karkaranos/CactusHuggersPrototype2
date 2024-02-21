@@ -44,7 +44,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _speedCap;
     [SerializeField] private float _jumpHeight;
-    private bool moving;
+    [SerializeField] private float _gravity = 14;
     [SerializeField]private bool jumping;
 
     private bool _isInteracting = false;
@@ -186,7 +186,7 @@ public class PlayerMovementBehavior : MonoBehaviour
         {
             moveDir.y = _jumpHeight;
         }
-        moveDir.y -= 15f * Time.deltaTime;
+        moveDir.y -= _gravity * Time.deltaTime;
         moveDir *= Time.deltaTime * _speed;
         cc.Move(moveDir);
         transform.forward = moveDir;
