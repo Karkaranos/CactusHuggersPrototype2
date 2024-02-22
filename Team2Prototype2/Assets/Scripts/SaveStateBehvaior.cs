@@ -37,6 +37,7 @@ public class SaveStateBehvaior : MonoBehaviour
     [SerializeField] private GameObject[] waypoints = new GameObject[NumberOfSaveStates];
     [SerializeField] private TMP_Text stateText;
     private bool noText;
+    private bool fuckCharacterController = false;
     
 
     /// <summary>
@@ -99,7 +100,6 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void LoadState()
     {
-        print("Load triggered");
         //only works if its not on cooldown
         if (!onCooldown)
         {
@@ -109,15 +109,8 @@ public class SaveStateBehvaior : MonoBehaviour
             //checks to see if the save state has anything in it
             if (saveStates[selectedSaveState].hasBeenSaved)
             {
-                //sets all the variables in the saveStateVariables attached to it
-                transform.position = saveStates[selectedSaveState].pPos;
-                print("should have set player position");
-                transform.rotation = saveStates[selectedSaveState].pRot;
-                transform.localScale = saveStates[selectedSaveState].pScale;
 
-                //makes it so you have to save again to load the state
-                saveStates[selectedSaveState].hasBeenSaved = false;
-                Destroy(waypoints[selectedSaveState].gameObject);
+                fuckCharacterController = true;
             }
             else
             {
@@ -131,7 +124,6 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void SetSaveState()
     {
-        print("save triggered");
         //checks to see if its on cooldown already
         if (!onCooldown)
         {
@@ -154,6 +146,25 @@ public class SaveStateBehvaior : MonoBehaviour
                 Destroy(waypoints[selectedSaveState].gameObject);
             }
             waypoints[selectedSaveState] = go;
+        }
+    }
+
+    public void LateUpdate()
+    {
+        if(fuckCharacterController)
+        {
+            fuckCharacterController = false;
+            GetComponent<CharacterController>().enabled = false;
+            //sets all the variables in the saveStateVariables attached to it
+            transform.position = saveStates[selectedSaveState].pPos;
+            transform.rotation = saveStates[selectedSaveState].pRot;
+            transform.localScale = saveStates[selectedSaveState].pScale;
+
+            //makes it so you have to save again to load the state
+            saveStates[selectedSaveState].hasBeenSaved = false;
+            Destroy(waypoints[selectedSaveState].gameObject);
+
+            GetComponent<CharacterController>().enabled = true;
         }
     }
 }
