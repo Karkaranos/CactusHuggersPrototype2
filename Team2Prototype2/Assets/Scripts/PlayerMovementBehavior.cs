@@ -40,6 +40,11 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField] private float scrollSensitivity = 0.1f;
 
     [Header("Camera Controls")]
+    [SerializeField] private float mouseSensX;
+    [SerializeField] private float mouseSensY;
+    [SerializeField] private CameraRotationBehavior cameraBehav;
+    [SerializeField] private Transform orientation;
+
     [SerializeField] private float _horizontalRotationSpeed;
     [SerializeField] private float _verticalRotationSpeed;
     [SerializeField] private float maxCamYAngle;
@@ -55,8 +60,8 @@ public class PlayerMovementBehavior : MonoBehaviour
 
     private bool _isInteracting = false;
     private Vector3 moveDir;
-    float xRot = 0f;
-    float yRot = 0f;
+    float xRot;
+    float yRot;
 
     RigidbodyConstraints defConstraints;
 
@@ -114,7 +119,7 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         _jump.performed += contx => Jump();
 
-
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
@@ -241,18 +246,9 @@ public class PlayerMovementBehavior : MonoBehaviour
             }
         }
 
-
-
-        MPosValue = _mPos.ReadValue<Vector2>();
-
-        mPosValue.x -= Screen.width/2;
-        mPosValue.y -= Screen.height/2;
-        float temp = mPosValue.x;
-        mPosValue.x = mPosValue.y;
-        mPosValue.y = temp;
         
-        MPosValue = mPosValue;
-        Camera.main.transform.LookAt(MPosValue);
+
+        
 
         moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
         if(jumping)
@@ -271,4 +267,10 @@ public class PlayerMovementBehavior : MonoBehaviour
         transform.forward = moveDir;
 
     }
+
+    private void FixedUpdate()
+    {
+        cameraBehav.Look(_mPos.ReadValue<Vector2>());
+    }
+
 }
