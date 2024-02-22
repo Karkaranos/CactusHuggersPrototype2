@@ -87,6 +87,8 @@ public class SaveStateBehvaior : MonoBehaviour
         selectedSaveState = switchTo - 1;
         if (!noText)
         {
+
+            print("Ran switch state");
             stateText.text = "Selected State: " + switchTo;
         }
         
@@ -97,6 +99,7 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void LoadState()
     {
+        print("Load triggered");
         //only works if its not on cooldown
         if (!onCooldown)
         {
@@ -108,6 +111,7 @@ public class SaveStateBehvaior : MonoBehaviour
             {
                 //sets all the variables in the saveStateVariables attached to it
                 transform.position = saveStates[selectedSaveState].pPos;
+                print("should have set player position");
                 transform.rotation = saveStates[selectedSaveState].pRot;
                 transform.localScale = saveStates[selectedSaveState].pScale;
 
@@ -127,6 +131,7 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void SetSaveState()
     {
+        print("save triggered");
         //checks to see if its on cooldown already
         if (!onCooldown)
         {

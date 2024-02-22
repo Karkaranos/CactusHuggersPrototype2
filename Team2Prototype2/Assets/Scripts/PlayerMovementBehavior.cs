@@ -251,15 +251,16 @@ public class PlayerMovementBehavior : MonoBehaviour
         {
             moveDir.y = _jumpHeight;
         }
-        moveDir.y -= _gravity * Time.deltaTime;
         moveDir *= Time.deltaTime * _speed;
-        cc.Move(moveDir);
-        transform.forward = moveDir;
+        if(!jumping)
+        {
+            moveDir.y = 0;
+        }
 
-        Vector3 eulerRot = transform.rotation.eulerAngles;
-        eulerRot.x = 0;
-        eulerRot.z = 0;
-        transform.rotation = Quaternion.Euler(0, eulerRot.y, 0);
+        moveDir.y -= _gravity * Time.deltaTime;
+        cc.Move(moveDir);
+        moveDir.y = 0;
+        transform.forward = moveDir;
 
     }
 }
