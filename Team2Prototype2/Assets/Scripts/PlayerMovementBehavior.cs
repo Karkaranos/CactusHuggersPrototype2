@@ -28,8 +28,9 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _jump;
     private InputAction _scrollWheel;
 
-    private int lrValue;
-    private int fbValue;
+    private Rigidbody rb;
+    [SerializeField] private float lrValue;
+    [SerializeField] private float fbValue;
     private Vector3 mPosValue;
     private SaveStateBehvaior ssBehav;
     private bool scrolling;
@@ -40,8 +41,6 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField] private float scrollSensitivity = 0.1f;
 
     [Header("Camera Controls")]
-    [SerializeField] private float mouseSensX;
-    [SerializeField] private float mouseSensY;
     [SerializeField] private CameraRotationBehavior cameraBehav;
     [SerializeField] private Transform orientation;
 
@@ -52,6 +51,13 @@ public class PlayerMovementBehavior : MonoBehaviour
     private Transform camTransform;
 
     [Header("Player Movement")]
+    [SerializeField] private float moveSpeed;
+
+    [SerializeField] private float playerHeight;
+    [SerializeField] private LayerMask groundLayers;
+    private bool grounded;
+    [SerializeField] private float groundDrag;
+
     [SerializeField] private float _speed;
     [SerializeField] private float _speedCap;
     [SerializeField] private float _jumpHeight;
@@ -59,9 +65,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField]private bool jumping;
 
     private bool _isInteracting = false;
-    private Vector3 moveDir;
-    float xRot;
-    float yRot;
+    [SerializeField] private Vector3 moveDir;
 
     RigidbodyConstraints defConstraints;
 
@@ -77,7 +81,8 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// </summary>
     void Start()
     {
-        defConstraints = GetComponent<Rigidbody>().constraints;
+        rb = GetComponent<Rigidbody>();
+        //defConstraints = GetComponent<Rigidbody>().constraints;
         cc = GetComponent<CharacterController>();
         camTransform = Camera.main.transform;
         GetComponent<PlayerInput>().currentActionMap.Enable();
@@ -96,12 +101,12 @@ public class PlayerMovementBehavior : MonoBehaviour
         _scrollWheel = _pControls.currentActionMap.FindAction("SwitchStatesWheel");
 
 
-        _lrMovement.performed += contx => lrValue = (int)contx.ReadValue<float>();
-        _fbMovement.performed += contx => fbValue = (int)contx.ReadValue<float>();
+        _lrMovement.performed += contx => lrValue = contx.ReadValue<float>();
+        _fbMovement.performed += contx => fbValue = contx.ReadValue<float>();
 
 
-        _lrMovement.canceled += contx => lrValue = (int)contx.ReadValue<float>();
-        _fbMovement.canceled += contx => fbValue = (int)contx.ReadValue<float>();
+        _lrMovement.canceled += contx => lrValue = contx.ReadValue<float>();
+        _fbMovement.canceled += contx => fbValue = contx.ReadValue<float>();
 
         _scrollWheel.performed += _scrollWheel_performed;
         _scrollWheel.canceled += _scrollWheel_canceled;
@@ -246,11 +251,22 @@ public class PlayerMovementBehavior : MonoBehaviour
             }
         }
 
-        
 
-        
+        cameraBehav.Look(_mPos.ReadValue<Vector2>());
 
-        moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayers);
+
+        if (grounded)
+        {
+            rb.drag = groundDrag;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
+
+
+       /* moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
         if(jumping)
         {
             moveDir.y = _jumpHeight;
@@ -264,13 +280,29 @@ public class PlayerMovementBehavior : MonoBehaviour
         moveDir.y -= _gravity * Time.deltaTime;
         cc.Move(moveDir);
         moveDir.y = 0;
-        transform.forward = moveDir;
+        transform.forward = moveDir;*/
 
     }
-
     private void FixedUpdate()
     {
-        cameraBehav.Look(_mPos.ReadValue<Vector2>());
+        MovePlayer();
+        ControlSpeed();
+    }
+    private void MovePlayer()
+    {
+        moveDir = orientation.forward * fbValue + orientation.right * lrValue;
+
+        rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
+    private void ControlSpeed()
+    {
+        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        if (flatVelocity.magnitude > moveSpeed)
+        {
+            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
+        }
+    }
 }
