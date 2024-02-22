@@ -38,6 +38,11 @@ public class SaveStateBehvaior : MonoBehaviour
     [SerializeField] private TMP_Text stateText;
     private bool noText;
     private bool fuckCharacterController = false;
+
+    [Header("Canvas References")]
+    [SerializeField] private GameObject _saveStateTextFeedback;
+    [SerializeField] private float _textFadeOutTime;
+    private Coroutine stopMe;
     
 
     /// <summary>
@@ -45,6 +50,7 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     void Start()
     {
+        _saveStateTextFeedback.SetActive(false);
         currentCooldownTime = maxCooldownTime;
         onCooldown = false;
         if (stateText == null)
@@ -143,7 +149,20 @@ public class SaveStateBehvaior : MonoBehaviour
 
             if (waypoints[selectedSaveState] != null)
             {
+                if (stopMe != null)
+                {
+                    StopCoroutine(stopMe);
+                }
+                stopMe = StartCoroutine(TextFade("Overwrote Save " + (selectedSaveState + 1)));
                 Destroy(waypoints[selectedSaveState].gameObject);
+            }
+            else
+            {
+                if(stopMe!=null)
+                {
+                    StopCoroutine(stopMe);
+                }
+                stopMe = StartCoroutine(TextFade("Added Save " + (selectedSaveState + 1)));
             }
             waypoints[selectedSaveState] = go;
         }
@@ -155,6 +174,12 @@ public class SaveStateBehvaior : MonoBehaviour
         {
             fuckCharacterController = false;
             GetComponent<CharacterController>().enabled = false;
+
+            if (stopMe != null)
+            {
+                StopCoroutine(stopMe);
+            }
+            stopMe = StartCoroutine(TextFade("Loaded Save " + (selectedSaveState + 1)));
             //sets all the variables in the saveStateVariables attached to it
             transform.position = saveStates[selectedSaveState].pPos;
             transform.rotation = saveStates[selectedSaveState].pRot;
@@ -166,5 +191,26 @@ public class SaveStateBehvaior : MonoBehaviour
 
             GetComponent<CharacterController>().enabled = true;
         }
+    }
+
+    /// <summary>
+    /// Sets the current text message, then fades it out over a set period of time
+    /// </summary>
+    /// <param name="message">The message the text should say</param>
+    private IEnumerator TextFade(String message)
+    {
+        print("ran text thing");
+        _saveStateTextFeedback.GetComponent<TMP_Text>().text = message;
+        _saveStateTextFeedback.SetActive(true);
+        float timer = _textFadeOutTime;
+        Color currColor = _saveStateTextFeedback.GetComponent<TextMeshProUGUI>().faceColor;
+        while (timer > 0)
+        {
+            _saveStateTextFeedback.GetComponent<TextMeshProUGUI>().faceColor = new Color(currColor.r, currColor.g, currColor.b,  (timer / _textFadeOutTime));
+            timer -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        _saveStateTextFeedback.GetComponent<TextMeshProUGUI>().faceColor = new Color(currColor.r, currColor.g, currColor.b, 1);
+        _saveStateTextFeedback.SetActive(false);
     }
 }
