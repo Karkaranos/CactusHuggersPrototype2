@@ -55,6 +55,8 @@ public class PlayerMovementBehavior : MonoBehaviour
 
     private bool _isInteracting = false;
     private Vector3 moveDir;
+    float xRot = 0f;
+    float yRot = 0f;
 
     RigidbodyConstraints defConstraints;
 
@@ -242,9 +244,15 @@ public class PlayerMovementBehavior : MonoBehaviour
 
 
         MPosValue = _mPos.ReadValue<Vector2>();
+
         mPosValue.x -= Screen.width/2;
         mPosValue.y -= Screen.height/2;
+        float temp = mPosValue.x;
+        mPosValue.x = mPosValue.y;
+        mPosValue.y = temp;
+        
         MPosValue = mPosValue;
+        Camera.main.transform.LookAt(MPosValue);
 
         moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
         if(jumping)
