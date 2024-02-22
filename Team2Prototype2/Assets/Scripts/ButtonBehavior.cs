@@ -17,15 +17,6 @@ public class ButtonBehavior : MonoBehaviour
     private DoorBehavior db;
     private bool pressed;
 
-    private enum LinkedType
-    {
-        NONE, MOVING_PLATFORM, DOOR, BUTTONS
-    }
-
-    private enum LinkedState
-    {
-        NONE, CLOSED_DOOR, OPEN_DOOR, STOPPED_PLATFORM, MOVING_PLATFORM
-    }
 
     [Header("Button Information")]
     [Tooltip("How long the button's effect lasts for")]
@@ -35,21 +26,10 @@ public class ButtonBehavior : MonoBehaviour
     [Tooltip("The pressed color of this button")]
     [SerializeField] private Material _pressedColor;
 
+    [Header("Linked Objects")]
+    [SerializeField] private Interactables[] allInteractables;
 
-    [Header("Linked Objects"), Tooltip("The type of object this button is linked to")]
-    [SerializeField] private LinkedType _objectType; 
-    [Tooltip("The related object. Leave blank if related to buttons")]
-    [SerializeField] private GameObject _linkObject;
-    [Tooltip("Leave blank if related to buttons.")]
-    [SerializeField] private LinkedState _defaultState;
-    [Tooltip("Leave blank if related to buttons.")]
-    [SerializeField] private LinkedState _pressedState;
-    [Tooltip("All other related buttons. Leave blank if related to platforms or doors")]
-    [SerializeField] private GameObject[] _buttons;
-    [Tooltip("The order this button should be pressed in. Leave blank if related to platforms or doors")]
-    [SerializeField] private int _order;
 
-    public int ButtonOrder { get => _order;}
 
     #endregion
 
@@ -99,40 +79,38 @@ public class ButtonBehavior : MonoBehaviour
     /// </summary>
     private void Interact()
     {
-        //Handles button interactions for moving platforms
-        if(_objectType == LinkedType.MOVING_PLATFORM)
+        foreach(Interactables i in allInteractables)
         {
-            MovingPlatformBehavior mpb = _linkObject.GetComponent<MovingPlatformBehavior>();
-            if(mpb == null)
+            //Handles button interactions for moving platforms
+            if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
             {
-                throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
+                MovingPlatformBehavior mpb = i.LinkObject.GetComponent<MovingPlatformBehavior>();
+                if (mpb == null)
+                {
+                    throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
+                }
+                mpb.StopMoving = !mpb.StopMoving;
             }
-            mpb.StopMoving = !mpb.StopMoving;
-        }
-        //Handles button interactions for doors
-        else if (_objectType == LinkedType.DOOR)
-        {
-            DoorBehavior db = _linkObject.GetComponent<DoorBehavior>();
-            if (db == null)
+            //Handles button interactions for doors
+            else if (i.ObjectType == Interactables.LinkedType.DOOR)
             {
-                throw new System.Exception("Door Behavior could not be found on the linked object");
-            }
-            if(_pressedState == LinkedState.OPEN_DOOR)
-            {
-                db.OpenDoor();
-            }
-            else
-            {
-                db.CloseDoor();
-            }
+                DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
+                if (db == null)
+                {
+                    throw new System.Exception("Door Behavior could not be found on the linked object");
+                }
+                if (i.PressedState == Interactables.LinkedState.OPEN_DOOR)
+                {
+                    db.OpenDoor();
+                }
+                else
+                {
+                    db.CloseDoor();
+                }
 
+            }
         }
-        //Handles button interactions for buttons
-        else if (_objectType == LinkedType.BUTTONS)
-        {
-            //do button stuff
-            print("Do button stuff");
-        }
+        
 
 
     }
@@ -142,38 +120,36 @@ public class ButtonBehavior : MonoBehaviour
     /// </summary>
     private void InitializeLinkedState()
     {
-        if (_objectType == LinkedType.MOVING_PLATFORM)
+        foreach(Interactables i in allInteractables)
         {
-            mpb = _linkObject.GetComponentInChildren<MovingPlatformBehavior>();
-            if (mpb == null)
+            if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
             {
-                throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
+                mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
+                if (mpb == null)
+                {
+                    throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
+                }
+                if (i.DefaultState == Interactables.LinkedState.STOPPED_PLATFORM)
+                {
+                    mpb.StopMoving = true;
+                }
+                else
+                {
+                    mpb.StopMoving = false;
+                }
             }
-            if(_defaultState == LinkedState.STOPPED_PLATFORM)
+            else if (i.ObjectType == Interactables.LinkedType.DOOR)
             {
-                mpb.StopMoving = true;
+                DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
+                if (db == null)
+                {
+                    throw new System.Exception("Door Behavior could not be found on the linked object");
+                }
+                if (i.DefaultState == Interactables.LinkedState.OPEN_DOOR)
+                {
+                    db.OpenInitialDoor();
+                }
             }
-            else
-            {
-                mpb.StopMoving = false;
-            }
-        }
-        else if (_objectType == LinkedType.DOOR)
-        {
-            DoorBehavior db = _linkObject.GetComponent<DoorBehavior>();
-            if (db == null)
-            {
-                throw new System.Exception("Door Behavior could not be found on the linked object");
-            }
-            if (_defaultState == LinkedState.OPEN_DOOR)
-            {
-                db.OpenInitialDoor();
-            }
-        }
-        else if (_objectType == LinkedType.BUTTONS)
-        {
-            print("initialize buttons");
-            //do something here once button puzzles exist
         }
     }
 
@@ -182,18 +158,21 @@ public class ButtonBehavior : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        if(_objectType == LinkedType.MOVING_PLATFORM)
+        foreach(Interactables i in allInteractables)
         {
+            if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
+            {
 
-            mpb = _linkObject.GetComponentInChildren<MovingPlatformBehavior>();
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, _linkObject.transform.position);
-        }
-        if (_objectType == LinkedType.DOOR)
-        {
-            db = _linkObject.GetComponent<DoorBehavior>();
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, db.gameObject.transform.GetChild(0).position);
+                mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, i.LinkObject.transform.position);
+            }
+            if (i.ObjectType == Interactables.LinkedType.DOOR)
+            {
+                db = i.LinkObject.GetComponent<DoorBehavior>();
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, db.gameObject.transform.GetChild(0).position);
+            }
         }
 
     }

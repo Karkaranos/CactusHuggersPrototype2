@@ -517,6 +517,10 @@ PrefabInstance:
       propertyPath: stateText
       value: 
       objectReference: {fileID: 1857072827}
+    - target: {fileID: 8659676225703197916, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
