@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerMovementBehavior : MonoBehaviour
@@ -63,6 +64,9 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField] private float _jumpHeight;
     [SerializeField] private float _gravity = 14;
     [SerializeField]private bool jumping;
+
+    [Header("Scene Management")]
+    [SerializeField] private int _sceneToGoTo;
 
     private bool _isInteracting = false;
     [SerializeField] private Vector3 moveDir;
@@ -294,6 +298,17 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Equals("LevelEnd"))
+        {
+            print("Load next scene");
+            SceneManager.LoadScene(_sceneToGoTo);
+        }
+    }
+
 
     private void ControlSpeed()
     {

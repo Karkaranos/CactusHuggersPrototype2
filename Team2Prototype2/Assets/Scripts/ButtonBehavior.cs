@@ -71,6 +71,46 @@ public class ButtonBehavior : MonoBehaviour
         yield return new WaitForSeconds(_activeTime);
         pressed = false;
         GetComponent<MeshRenderer>().material = _unpressedColor;
+        foreach (Interactables i in allInteractables)
+        {
+            if(i.ResetsWhenNotPressed)
+            {
+                if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
+                {
+                    mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
+                    if (mpb == null)
+                    {
+                        throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
+                    }
+                    if (i.DefaultState == Interactables.LinkedState.STOPPED_PLATFORM)
+                    {
+                        mpb.StopMoving = true;
+                    }
+                    else
+                    {
+                        mpb.StopMoving = false;
+                    }
+                }
+                else if (i.ObjectType == Interactables.LinkedType.DOOR)
+                {
+                    DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
+                    if (db == null)
+                    {
+                        throw new System.Exception("Door Behavior could not be found on the linked object");
+                    }
+                    if (i.DefaultState == Interactables.LinkedState.OPEN_DOOR)
+                    {
+                        db.OpenDoor();
+                    }
+                    else
+                    {
+                        db.CloseDoor();
+                    }
+                }
+            }
+            
+        }
+
     }
 
     /// <summary>
