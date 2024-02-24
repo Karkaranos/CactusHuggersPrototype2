@@ -1415,6 +1415,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4542099285505526605, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6.1439104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4542099285505526605, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.7327
+      objectReference: {fileID: 0}
     - target: {fileID: 4563705263018632389, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
       propertyPath: m_Name
       value: Door (1)
@@ -1429,7 +1437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5658627045264603366, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3047001
+      value: 2.15
       objectReference: {fileID: 0}
     - target: {fileID: 5658627045264603366, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1463,6 +1471,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8591413550612545602, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a455c553bdee95c418619706e6570aa4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
