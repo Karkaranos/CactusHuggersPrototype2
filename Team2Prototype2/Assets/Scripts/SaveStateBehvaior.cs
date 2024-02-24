@@ -199,7 +199,6 @@ public class SaveStateBehvaior : MonoBehaviour
     /// <param name="message">The message the text should say</param>
     private IEnumerator TextFade(String message)
     {
-        print("ran text thing");
         _saveStateTextFeedback.GetComponent<TMP_Text>().text = message;
         _saveStateTextFeedback.SetActive(true);
         float timer = _textFadeOutTime;
