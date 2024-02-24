@@ -107,6 +107,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""60a44ddb-e9fa-4ba8-b1cb-9d5fba518412"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchStatesWheel"",
+                    ""type"": ""Value"",
+                    ""id"": ""893bcf7c-d2eb-406e-b9ab-bac1bbad1a2f"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -245,7 +263,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""220452cb-a29a-430d-8b2d-eba81539291e"",
-                    ""path"": ""<Mouse>/position"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -329,6 +347,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dcbd4ec5-e54a-4e5d-b50e-8b3af90ad46d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""842936dd-0e36-4839-9454-418a78bab4ff"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchStatesWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -346,6 +386,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Keyboard_SelectState3 = m_Keyboard.FindAction("SelectState3", throwIfNotFound: true);
         m_Keyboard_LoadState = m_Keyboard.FindAction("LoadState", throwIfNotFound: true);
         m_Keyboard_Interact = m_Keyboard.FindAction("Interact", throwIfNotFound: true);
+        m_Keyboard_Jump = m_Keyboard.FindAction("Jump", throwIfNotFound: true);
+        m_Keyboard_SwitchStatesWheel = m_Keyboard.FindAction("SwitchStatesWheel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -416,6 +458,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_SelectState3;
     private readonly InputAction m_Keyboard_LoadState;
     private readonly InputAction m_Keyboard_Interact;
+    private readonly InputAction m_Keyboard_Jump;
+    private readonly InputAction m_Keyboard_SwitchStatesWheel;
     public struct KeyboardActions
     {
         private @PlayerControls m_Wrapper;
@@ -429,6 +473,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SelectState3 => m_Wrapper.m_Keyboard_SelectState3;
         public InputAction @LoadState => m_Wrapper.m_Keyboard_LoadState;
         public InputAction @Interact => m_Wrapper.m_Keyboard_Interact;
+        public InputAction @Jump => m_Wrapper.m_Keyboard_Jump;
+        public InputAction @SwitchStatesWheel => m_Wrapper.m_Keyboard_SwitchStatesWheel;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -465,6 +511,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @SwitchStatesWheel.started += instance.OnSwitchStatesWheel;
+            @SwitchStatesWheel.performed += instance.OnSwitchStatesWheel;
+            @SwitchStatesWheel.canceled += instance.OnSwitchStatesWheel;
         }
 
         private void UnregisterCallbacks(IKeyboardActions instance)
@@ -496,6 +548,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @SwitchStatesWheel.started -= instance.OnSwitchStatesWheel;
+            @SwitchStatesWheel.performed -= instance.OnSwitchStatesWheel;
+            @SwitchStatesWheel.canceled -= instance.OnSwitchStatesWheel;
         }
 
         public void RemoveCallbacks(IKeyboardActions instance)
@@ -524,5 +582,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSelectState3(InputAction.CallbackContext context);
         void OnLoadState(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnSwitchStatesWheel(InputAction.CallbackContext context);
     }
 }

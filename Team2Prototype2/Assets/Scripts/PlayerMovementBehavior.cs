@@ -25,14 +25,25 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _switchState3;
     private InputAction _loadState;
     private InputAction _interact;
+    private InputAction _jump;
+    private InputAction _scrollWheel;
 
-    private int lrValue;
-    private int fbValue;
+    private Rigidbody rb;
+    [SerializeField] private float lrValue;
+    [SerializeField] private float fbValue;
     private Vector3 mPosValue;
     private SaveStateBehvaior ssBehav;
+    private bool scrolling;
+    private float scrollAxis;
+    private float timer;
 
+    [Header("Scroll Wheel Sensitivity"), Tooltip("The lower the number, the more sensitive")]
+    [SerializeField] private float scrollSensitivity = 0.1f;
 
     [Header("Camera Controls")]
+    [SerializeField] private CameraRotationBehavior cameraBehav;
+    [SerializeField] private Transform orientation;
+
     [SerializeField] private float _horizontalRotationSpeed;
     [SerializeField] private float _verticalRotationSpeed;
     [SerializeField] private float maxCamYAngle;
@@ -40,11 +51,23 @@ public class PlayerMovementBehavior : MonoBehaviour
     private Transform camTransform;
 
     [Header("Player Movement")]
+    [SerializeField] private float moveSpeed;
+
+    [SerializeField] private float playerHeight;
+    [SerializeField] private LayerMask groundLayers;
+    private bool grounded;
+    [SerializeField] private float groundDrag;
+
     [SerializeField] private float _speed;
     [SerializeField] private float _speedCap;
-    private bool moving;
+    [SerializeField] private float _jumpHeight;
+    [SerializeField] private float _gravity = 14;
+    [SerializeField]private bool jumping;
 
     private bool _isInteracting = false;
+    [SerializeField] private Vector3 moveDir;
+
+    RigidbodyConstraints defConstraints;
 
     public float HorizontalRotationSpeed { get => _horizontalRotationSpeed;}
     public float VerticalRotationSpeed { get => _verticalRotationSpeed; }
@@ -58,6 +81,8 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// </summary>
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        //defConstraints = GetComponent<Rigidbody>().constraints;
         cc = GetComponent<CharacterController>();
         camTransform = Camera.main.transform;
         GetComponent<PlayerInput>().currentActionMap.Enable();
@@ -72,14 +97,19 @@ public class PlayerMovementBehavior : MonoBehaviour
         _switchState3 = _pControls.currentActionMap.FindAction("SelectState3");
         _loadState = _pControls.currentActionMap.FindAction("LoadState");
         _interact = _pControls.currentActionMap.FindAction("Interact");
+        _jump = _pControls.currentActionMap.FindAction("Jump");
+        _scrollWheel = _pControls.currentActionMap.FindAction("SwitchStatesWheel");
 
-        _lrMovement.performed += contx => lrValue = (int)contx.ReadValue<float>();
-        _fbMovement.performed += contx => fbValue = (int)contx.ReadValue<float>();
+
+        _lrMovement.performed += contx => lrValue = contx.ReadValue<float>();
+        _fbMovement.performed += contx => fbValue = contx.ReadValue<float>();
 
 
-        _lrMovement.canceled += contx => lrValue = (int)contx.ReadValue<float>();
-        _fbMovement.canceled += contx => fbValue = (int)contx.ReadValue<float>();
+        _lrMovement.canceled += contx => lrValue = contx.ReadValue<float>();
+        _fbMovement.canceled += contx => fbValue = contx.ReadValue<float>();
 
+        _scrollWheel.performed += _scrollWheel_performed;
+        _scrollWheel.canceled += _scrollWheel_canceled;
 
         _saveState.started += _saveState_started;
         ssBehav = GetComponent<SaveStateBehvaior>();
@@ -92,8 +122,21 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         _interact.performed += contx => StartCoroutine(Interact());
 
+        _jump.performed += contx => Jump();
 
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void _scrollWheel_canceled(InputAction.CallbackContext obj)
+    {
+        scrolling = false;
+    }
+
+    private void _scrollWheel_performed(InputAction.CallbackContext obj)
+    {
+        scrolling = true;
+        scrollAxis = obj.ReadValue<float>();
     }
 
     private void _loadState_started(InputAction.CallbackContext obj)
@@ -121,6 +164,33 @@ public class PlayerMovementBehavior : MonoBehaviour
         ssBehav.SetSaveState();
     }
 
+    /// <summary>
+    /// Handles player jumping
+    /// </summary>
+    private void Jump()
+    {
+        if(!jumping)
+        {
+            jumping = true;
+            StartCoroutine(JumpDecay());
+        }
+    }
+
+    /// <summary>
+    /// Stops the jump after a set amount of time
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator JumpDecay()
+    {
+        print("should jump");
+        yield return new WaitForSeconds(.5f);
+        jumping = false;
+    }
+
+    /// <summary>
+    /// Called if the player interacts with something
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Interact()
     {
         if(!Interacting)
@@ -139,21 +209,100 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// </summary>
     void Update()
     {
-        MPosValue = _mPos.ReadValue<Vector2>();
-        mPosValue.x -= Screen.width/2;
-        mPosValue.y -= Screen.height/2;
-        MPosValue = mPosValue;
-
-        //If the character should be moving
-        if (lrValue != 0 || fbValue != 0)
+        //this handles changing the selected state with the scroll wheel
+        if (timer == scrollSensitivity)
         {
-            Vector3 moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
-            moveDir *= Time.deltaTime * _speed;
-            moveDir.y = 0;
-            cc.Move(moveDir);
-            transform.forward = moveDir;
+            if (scrolling)
+            {
+                timer = 0;
+                if (scrollAxis > 0)
+                {
+                    if (SaveStateBehvaior.selectedSaveState + 1 >= SaveStateBehvaior.NumberOfSaveStates)
+                    {
+                        ssBehav.SwitchSelectedState(1);
+                    }
+                    else
+                    {
+                        ssBehav.SwitchSelectedState(SaveStateBehvaior.selectedSaveState + 2);
+                    }
+                }
+                if (scrollAxis < 0)
+                {
+                    if (SaveStateBehvaior.selectedSaveState <= 0)
+                    {
+                        ssBehav.SwitchSelectedState(SaveStateBehvaior.NumberOfSaveStates);
+                    }
+                    else
+                    {
+                        ssBehav.SwitchSelectedState(SaveStateBehvaior.selectedSaveState);
+                    }
+                }
+                
+            }
+            
+            
+        }
+        else
+        {
+            timer += Time.deltaTime;
+            if (timer >= scrollSensitivity)
+            {
+                timer = scrollSensitivity;
+            }
         }
 
 
+        cameraBehav.Look(_mPos.ReadValue<Vector2>());
+
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayers);
+
+        if (grounded)
+        {
+            rb.drag = groundDrag;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
+
+
+       /* moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
+        if(jumping)
+        {
+            moveDir.y = _jumpHeight;
+        }
+        moveDir *= Time.deltaTime * _speed;
+        if(!jumping)
+        {
+            moveDir.y = 0;
+        }
+
+        moveDir.y -= _gravity * Time.deltaTime;
+        cc.Move(moveDir);
+        moveDir.y = 0;
+        transform.forward = moveDir;*/
+
+    }
+    private void FixedUpdate()
+    {
+        MovePlayer();
+        ControlSpeed();
+    }
+    private void MovePlayer()
+    {
+        moveDir = orientation.forward * fbValue + orientation.right * lrValue;
+
+        rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
+    }
+
+    private void ControlSpeed()
+    {
+        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        if (flatVelocity.magnitude > moveSpeed)
+        {
+            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
+        }
     }
 }
