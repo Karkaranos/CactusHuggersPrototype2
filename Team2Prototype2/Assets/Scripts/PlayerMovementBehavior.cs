@@ -66,7 +66,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField]private bool jumping;
 
     [Header("Scene Management")]
-    [SerializeField] private int _sceneToGoTo;
+    [SerializeField] private string _sceneToGoTo;
 
     private bool _isInteracting = false;
     [SerializeField] private Vector3 moveDir;

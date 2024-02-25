@@ -17,6 +17,8 @@ public class DoorBehavior : MonoBehaviour
     [SerializeField] private float doorOpenHeight;
     private bool isOpen;
 
+    public bool IsOpen { get => isOpen; set => isOpen = value; }
+
     /// <summary>
     /// Gets a reference to the door's object
     /// </summary>
@@ -30,10 +32,10 @@ public class DoorBehavior : MonoBehaviour
     /// </summary>
     public void OpenDoor()
     {
-        if(!isOpen)
+        if(!IsOpen)
         {
             StartCoroutine(DoorSlideOpen());
-            isOpen = true;
+            IsOpen = true;
         }
     }
 
@@ -47,7 +49,7 @@ public class DoorBehavior : MonoBehaviour
         Vector3 doorPos = doorObj.transform.position;
         doorPos.y += doorOpenHeight;
         doorObj.transform.position = doorPos;
-        isOpen = true;
+        IsOpen = true;
     }
 
     /// <summary>
@@ -74,10 +76,10 @@ public class DoorBehavior : MonoBehaviour
     /// </summary>
     public void CloseDoor()
     {
-        if(isOpen)
+        if(IsOpen)
         {
             StartCoroutine(DoorShut());
-            isOpen = false;
+            IsOpen = false;
         }
     }
 
