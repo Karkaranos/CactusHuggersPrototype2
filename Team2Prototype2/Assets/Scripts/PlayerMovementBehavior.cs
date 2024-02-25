@@ -66,6 +66,8 @@ public class PlayerMovementBehavior : MonoBehaviour
     [SerializeField] private float _jumpHeight;
     [SerializeField] private float _gravity = 14;
     [SerializeField]private bool jumping;
+    [SerializeField] private float _jumpTime;
+    [SerializeField] private float _airMultiplier;
 
     [Header("Scene Management")]
     [SerializeField] private string _sceneToGoTo;
@@ -192,8 +194,11 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if(!jumping)
+        if(!jumping && grounded)
         {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.AddForce(transform.up * _jumpHeight, ForceMode.Impulse);
+            print("should jump");
             jumping = true;
             StartCoroutine(JumpDecay());
         }
@@ -205,8 +210,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// <returns></returns>
     IEnumerator JumpDecay()
     {
-        print("should jump");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(_jumpTime);
         jumping = false;
     }
 
@@ -281,6 +285,7 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         if (grounded)
         {
+            print("grounded");
             rb.drag = groundDrag;
         }
         else
@@ -314,6 +319,15 @@ public class PlayerMovementBehavior : MonoBehaviour
     private void MovePlayer()
     {
         moveDir = orientation.forward * fbValue + orientation.right * lrValue;
+
+        if(grounded)
+        {
+            rb.AddForce(moveDir.normalized * moveSpeed * 10, ForceMode.Force);
+        }
+        else
+        {
+            rb.AddForce(moveDir.normalized * moveSpeed * 10 * _airMultiplier, ForceMode.Force);
+        }
 
         rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
     }
