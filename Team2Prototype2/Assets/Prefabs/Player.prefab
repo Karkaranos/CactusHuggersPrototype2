@@ -71,7 +71,7 @@ Transform:
   - {fileID: 4038205345497140749}
   - {fileID: 633572930706008441}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -4.41, z: 0}
 --- !u!33 &3855017730795328204
 MeshFilter:
@@ -152,9 +152,11 @@ MonoBehaviour:
   groundDrag: 5
   _speed: 8
   _speedCap: 5
-  _jumpHeight: 1
+  _jumpHeight: 5
   _gravity: 13
   jumping: 0
+  _jumpTime: 0.5
+  _airMultiplier: 0.4
   _sceneToGoTo: 0
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!114 &7018769107813650103
