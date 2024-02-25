@@ -125,6 +125,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8853065-156a-40d8-89a4-5fca099ecd2f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e244451-8225-4ae8-b15c-b8b72fb82d80"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -369,6 +387,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchStatesWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""929369a6-ee36-4e0b-8d8e-9bd21ad9d05b"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c2357d4-8b27-495e-b513-83177ae678af"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -388,6 +428,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Keyboard_Interact = m_Keyboard.FindAction("Interact", throwIfNotFound: true);
         m_Keyboard_Jump = m_Keyboard.FindAction("Jump", throwIfNotFound: true);
         m_Keyboard_SwitchStatesWheel = m_Keyboard.FindAction("SwitchStatesWheel", throwIfNotFound: true);
+        m_Keyboard_Restart = m_Keyboard.FindAction("Restart", throwIfNotFound: true);
+        m_Keyboard_Exit = m_Keyboard.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -460,6 +502,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_Interact;
     private readonly InputAction m_Keyboard_Jump;
     private readonly InputAction m_Keyboard_SwitchStatesWheel;
+    private readonly InputAction m_Keyboard_Restart;
+    private readonly InputAction m_Keyboard_Exit;
     public struct KeyboardActions
     {
         private @PlayerControls m_Wrapper;
@@ -475,6 +519,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Keyboard_Interact;
         public InputAction @Jump => m_Wrapper.m_Keyboard_Jump;
         public InputAction @SwitchStatesWheel => m_Wrapper.m_Keyboard_SwitchStatesWheel;
+        public InputAction @Restart => m_Wrapper.m_Keyboard_Restart;
+        public InputAction @Exit => m_Wrapper.m_Keyboard_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -517,6 +563,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchStatesWheel.started += instance.OnSwitchStatesWheel;
             @SwitchStatesWheel.performed += instance.OnSwitchStatesWheel;
             @SwitchStatesWheel.canceled += instance.OnSwitchStatesWheel;
+            @Restart.started += instance.OnRestart;
+            @Restart.performed += instance.OnRestart;
+            @Restart.canceled += instance.OnRestart;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(IKeyboardActions instance)
@@ -554,6 +606,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchStatesWheel.started -= instance.OnSwitchStatesWheel;
             @SwitchStatesWheel.performed -= instance.OnSwitchStatesWheel;
             @SwitchStatesWheel.canceled -= instance.OnSwitchStatesWheel;
+            @Restart.started -= instance.OnRestart;
+            @Restart.performed -= instance.OnRestart;
+            @Restart.canceled -= instance.OnRestart;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(IKeyboardActions instance)
@@ -584,5 +642,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchStatesWheel(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }

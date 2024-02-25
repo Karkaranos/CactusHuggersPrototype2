@@ -28,6 +28,8 @@ public class PlayerMovementBehavior : MonoBehaviour
     private InputAction _interact;
     private InputAction _jump;
     private InputAction _scrollWheel;
+    private InputAction _restartLevel;
+    private InputAction _quit;
 
     private Rigidbody rb;
     [SerializeField] private float lrValue;
@@ -103,6 +105,8 @@ public class PlayerMovementBehavior : MonoBehaviour
         _interact = _pControls.currentActionMap.FindAction("Interact");
         _jump = _pControls.currentActionMap.FindAction("Jump");
         _scrollWheel = _pControls.currentActionMap.FindAction("SwitchStatesWheel");
+        _restartLevel = _pControls.currentActionMap.FindAction("Restart");
+        _quit = _pControls.currentActionMap.FindAction("Exit");
 
 
         _lrMovement.performed += contx => lrValue = contx.ReadValue<float>();
@@ -127,6 +131,11 @@ public class PlayerMovementBehavior : MonoBehaviour
         _interact.performed += contx => StartCoroutine(Interact());
 
         _jump.performed += contx => Jump();
+
+        _restartLevel.performed += contx => RestartLevel();
+
+        _quit.performed += contx => Quit();
+
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -166,6 +175,16 @@ public class PlayerMovementBehavior : MonoBehaviour
     private void _saveState_started(InputAction.CallbackContext obj)
     {
         ssBehav.SetSaveState();
+    }
+
+    private void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void Quit()
+    {
+        Application.Quit();
     }
 
     /// <summary>
