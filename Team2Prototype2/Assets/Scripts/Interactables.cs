@@ -27,10 +27,14 @@ public class Interactables
     [SerializeField] private LinkedState _pressedState;
     [Tooltip("True if it resets to its default state when the button stops being pressed.")]
     [SerializeField] private bool _resetsWhenNotPressed;
+    [Tooltip("True if object goes between two states when pressed")]
+    [SerializeField] private bool _togglesWhenPressed;
+
 
     public LinkedType ObjectType { get => _objectType; set => _objectType = value; }
     public GameObject LinkObject { get => _linkObject; set => _linkObject = value; }
     public LinkedState DefaultState { get => _defaultState; set => _defaultState = value; }
     public LinkedState PressedState { get => _pressedState; set => _pressedState = value; }
     public bool ResetsWhenNotPressed { get => _resetsWhenNotPressed; set => _resetsWhenNotPressed = value; }
+    public bool TogglesWhenPressed { get => _togglesWhenPressed; set => _togglesWhenPressed = value; }
 }
