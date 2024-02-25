@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 1688859110782702637}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3972175118786339828
 MonoBehaviour:
@@ -49,14 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeTime: 2
-  _unpressedColor: {fileID: 2100000, guid: 152b4733bbdadb641a8e52e5af73699a, type: 2}
+  _unpressedColor: {fileID: 2100000, guid: 65149efd9514417419a1bfec74172f5f, type: 2}
   _pressedColor: {fileID: 2100000, guid: ed9a2ae1c88f12647bdce6b540e7d6bf, type: 2}
-  _objectType: 1
-  _linkObject: {fileID: 0}
-  _defaultState: 0
-  _pressedState: 0
-  _buttons: []
-  _order: 0
+  allInteractables: []
 --- !u!33 &7122315366291986724
 MeshFilter:
   m_ObjectHideFlags: 0
