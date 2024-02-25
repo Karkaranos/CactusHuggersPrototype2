@@ -8,7 +8,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ButtonShiftBehavior : MonoBehaviour
 {
     [SerializeField] private GameObject _firstButton;
@@ -18,5 +18,10 @@ public class ButtonShiftBehavior : MonoBehaviour
     {
         _firstButton.SetActive(false);
         _secondButton.SetActive(true);
+
+        if(SceneManager.GetActiveScene().name == "PuzzleRoom1")
+        {
+
+        }
     }
 }

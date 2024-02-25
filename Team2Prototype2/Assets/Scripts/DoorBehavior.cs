@@ -44,12 +44,14 @@ public class DoorBehavior : MonoBehaviour
     /// </summary>
     public void OpenInitialDoor()
     {
-
-        doorObj = transform.GetChild(0).gameObject;
-        Vector3 doorPos = doorObj.transform.position;
-        doorPos.y += doorOpenHeight;
-        doorObj.transform.position = doorPos;
-        IsOpen = true;
+        if(!isOpen)
+        {
+            doorObj = transform.GetChild(0).gameObject;
+            Vector3 doorPos = doorObj.transform.position;
+            doorPos.y += doorOpenHeight;
+            doorObj.transform.position = doorPos;
+            IsOpen = true;
+        }
     }
 
     /// <summary>
@@ -58,7 +60,6 @@ public class DoorBehavior : MonoBehaviour
     /// <returns>The time the door opens in</returns>
     private IEnumerator DoorSlideOpen()
     {
-        print("sdhkjgdsjl");
         float timer = doorOpenTime;
         Vector3 doorPos = doorObj.transform.position;
         while(timer > 0)

@@ -139,7 +139,7 @@ public class ButtonBehavior : MonoBehaviour
                 {
                     throw new System.Exception("Door Behavior could not be found on the linked object");
                 }
-                if (i.PressedState == Interactables.LinkedState.OPEN_DOOR || (i.TogglesWhenPressed && !db.IsOpen))
+                if ((i.PressedState == Interactables.LinkedState.OPEN_DOOR && !i.TogglesWhenPressed)|| (i.TogglesWhenPressed && !db.IsOpen))
                 {
                     db.OpenDoor();
                 }
