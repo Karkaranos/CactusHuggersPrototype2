@@ -43,7 +43,9 @@ public class SaveStateBehvaior : MonoBehaviour
     [SerializeField] private GameObject _saveStateTextFeedback;
     [SerializeField] private float _textFadeOutTime;
     private Coroutine stopMe;
-    
+
+    public int CurrentStateSelected { get => currentStateSelected;}
+
 
     /// <summary>
     /// set refrences
@@ -90,8 +92,17 @@ public class SaveStateBehvaior : MonoBehaviour
     /// <param name="switchTo"> number of the state to switch to </param>
     public void SwitchSelectedState(int switchTo)
     {
+        UIManager uim = FindObjectOfType<UIManager>();
+        if (uim != null)
+        {
+            uim.DeselectSaveState(selectedSaveState);
+        }
         //-1 because selected save state is the index of the save state
         selectedSaveState = switchTo - 1;
+        if(uim!=null)
+        {
+            uim.SelectSaveState(selectedSaveState);
+        }
         if (!noText)
         {
 
@@ -115,7 +126,11 @@ public class SaveStateBehvaior : MonoBehaviour
             //checks to see if the save state has anything in it
             if (saveStates[selectedSaveState].hasBeenSaved)
             {
-
+                UIManager uim = FindObjectOfType<UIManager>();
+                if (uim != null)
+                {
+                    uim.EmptySaveState(selectedSaveState);
+                }
                 fuckCharacterController = true;
             }
             else
@@ -143,6 +158,8 @@ public class SaveStateBehvaior : MonoBehaviour
 
             //allows the player to load it now
             saveStates[selectedSaveState].hasBeenSaved = true;
+            UIManager uim = FindObjectOfType<UIManager>();
+
 
             GameObject go = Instantiate(saveStateWaypoint, transform.position, Quaternion.identity);
             go.GetComponent<Renderer>().material.color = waypointColors[selectedSaveState];
@@ -155,6 +172,10 @@ public class SaveStateBehvaior : MonoBehaviour
                 }
                 stopMe = StartCoroutine(TextFade("Overwrote Save " + (selectedSaveState + 1)));
                 Destroy(waypoints[selectedSaveState].gameObject);
+                if (uim != null)
+                {
+                    uim.OverwriteSaveState(selectedSaveState);
+                }
             }
             else
             {
@@ -163,6 +184,10 @@ public class SaveStateBehvaior : MonoBehaviour
                     StopCoroutine(stopMe);
                 }
                 stopMe = StartCoroutine(TextFade("Added Save " + (selectedSaveState + 1)));
+                if (uim != null)
+                {
+                    uim.FillSaveState(selectedSaveState);
+                }
             }
             waypoints[selectedSaveState] = go;
         }
