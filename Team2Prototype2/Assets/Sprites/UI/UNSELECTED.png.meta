@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 71f9865a004728f41a543d2864ed5803
+guid: e4eb07c4dda2a554eb08a11891d050bd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Exit_Menu-removebg-preview_0
+      name: Save_States-removebg-preview_2_0
       rect:
         serializedVersion: 2
-        x: 67
-        y: 50
-        width: 367
-        height: 356
+        x: 50
+        y: 390
+        width: 240
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,8 +150,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08ca3a4272cf13b41876319e3e3ba108
-      internalID: 1846195153
+      spriteID: 3249c6ca372a7b640ad7eec85e2a49c4
+      internalID: 1066423761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Save_States-removebg-preview_2_1
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 327
+        width: 247
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc80f821e0100954dbb285c2d7854005
+      internalID: 402039117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Save_States-removebg-preview_2_2
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 227
+        width: 240
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4227aa5dcda1be4f837d73b37022291
+      internalID: -577869854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Save_States-removebg-preview_2_3
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 170
+        width: 238
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d26052592a535847b33c5a682e0b4ae
+      internalID: -1364886526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Save_States-removebg-preview_2_4
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 95
+        width: 240
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 469e15f0ee3b8e04c8a13fd25a74baaa
+      internalID: 1835095939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Save_States-removebg-preview_2_5
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 34
+        width: 243
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e312c668be88644aa040dbe77cd6e35
+      internalID: 1750823507
       vertices: []
       indices: 
       edges: []
@@ -159,7 +264,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 4646e42c842c88f4a880b98ea8de9182
     internalID: 0
     vertices: []
     indices: 
@@ -167,7 +272,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Exit_Menu-removebg-preview_0: 1846195153
+      Save_States-removebg-preview_2_0: 1066423761
+      Save_States-removebg-preview_2_1: 402039117
+      Save_States-removebg-preview_2_2: -577869854
+      Save_States-removebg-preview_2_3: -1364886526
+      Save_States-removebg-preview_2_4: 1835095939
+      Save_States-removebg-preview_2_5: 1750823507
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
