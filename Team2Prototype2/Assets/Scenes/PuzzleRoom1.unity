@@ -8674,8 +8674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18332b97434571c46b5480dcb87cdeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensX: 75
-  mouseSensY: 75
+  mouseSensX: 25
+  mouseSensY: 50
   orientation: {fileID: 992226841}
 --- !u!81 &2056652160
 AudioListener:
