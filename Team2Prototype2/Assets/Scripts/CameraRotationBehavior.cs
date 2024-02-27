@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraRotationBehavior : MonoBehaviour
 {
     private Vector2 mPosValue;
-    [SerializeField] private float mouseSensX;
-    [SerializeField] private float mouseSensY;
+    [SerializeField, Range(1, 100)] private float mouseSensX;
+    [SerializeField, Range(1, 100)] private float mouseSensY;
     private float yRot;
     private float xRot;
     [SerializeField] private Transform orientation;
