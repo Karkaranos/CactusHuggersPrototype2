@@ -29,6 +29,18 @@ public class UIManager : MonoBehaviour
     private string lastCanvas;
 
 
+    private void Start()
+    {
+        if(SceneManager.GetActiveScene().name.Contains("Puzzle"))
+        {
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.visible = true;
+        }
+    }
+
     /// <summary>
     /// Sets the active canvas based on a provided name
     /// </summary>

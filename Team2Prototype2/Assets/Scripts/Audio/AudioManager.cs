@@ -62,7 +62,6 @@ public class AudioManager : MonoBehaviour
             sound.source.playOnAwake = false;
         }
 
-        Cursor.visible = false;
 
     }
 
