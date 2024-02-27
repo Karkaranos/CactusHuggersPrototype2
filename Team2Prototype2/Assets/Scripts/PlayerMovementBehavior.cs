@@ -198,7 +198,6 @@ public class PlayerMovementBehavior : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(transform.up * _jumpHeight, ForceMode.Impulse);
-            print("should jump");
             jumping = true;
             StartCoroutine(JumpDecay());
         }
@@ -285,7 +284,6 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         if (grounded)
         {
-            print("grounded");
             rb.drag = groundDrag;
         }
         else
@@ -352,5 +350,12 @@ public class PlayerMovementBehavior : MonoBehaviour
             Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
         }
+    }
+
+
+    public void PlayerIsLaunched(float launchHeight)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(transform.up * launchHeight, ForceMode.Impulse);
     }
 }
