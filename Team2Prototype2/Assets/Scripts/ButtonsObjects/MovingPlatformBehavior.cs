@@ -24,6 +24,13 @@ public class MovingPlatformBehavior : MonoBehaviour
     //changes if the next waypoint targeting loops or snakes
     [SerializeField] private bool loops;
 
+    [Header("Check this bool if you want the platform to launch")]
+    [SerializeField] private bool launches;
+    [SerializeField] private bool launchStraightUp;
+    [SerializeField, Range(10, 50)] private float launchHeight;
+    [SerializeField, Tooltip("Put every transform you want" +
+        "the launch to happen at in this array")] private Transform[] launchPoints;
+
     //refrences
     private Rigidbody rb;
 
@@ -80,6 +87,17 @@ public class MovingPlatformBehavior : MonoBehaviour
     /// </summary>
     private void GetNextWaypoint()
     {
+        if (launches)
+        {
+            foreach (Transform t in launchPoints)
+            {
+                if (t == waypoints[nextWaypoint].transform)
+                {
+                    LaunchPlayer();
+                }
+            }
+        }
+        
         //checks to see if its reached the end of the list
         if (nextWaypoint + 1 >= waypoints.Count)
         {
@@ -109,6 +127,8 @@ public class MovingPlatformBehavior : MonoBehaviour
             //just goes up the list if you havent reached the end
             nextWaypoint++;
         }
+
+        
     }
 
     /// <summary>
@@ -124,6 +144,15 @@ public class MovingPlatformBehavior : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        //check to see if the object landed on top of the platform vs landing on the bottom or side
+        if (collision.transform.position.y > transform.position.y)
+        {
+            collision.transform.SetParent(transform);
+        }
+    }
+
     /// <summary>
     /// when the object jumps/falls off the platform, resets the parent to null
     /// </summary>
@@ -131,5 +160,14 @@ public class MovingPlatformBehavior : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         collision.transform.SetParent(null);
+    }
+
+    private void LaunchPlayer()
+    {
+        if (gameObject.transform.GetComponentInChildren<PlayerMovementBehavior>() != null)
+        {
+            PlayerMovementBehavior pbehav = GetComponentInChildren<PlayerMovementBehavior>();
+            pbehav.PlayerIsLaunched(launchHeight);
+        }
     }
 }
