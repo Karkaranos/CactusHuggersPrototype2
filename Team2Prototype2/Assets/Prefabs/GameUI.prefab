@@ -282,8 +282,9 @@ RectTransform:
   m_Children:
   - {fileID: 2544309070665434411}
   - {fileID: 4721269104165094555}
+  - {fileID: 1450094283885453303}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -716,6 +717,70 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7973448270317515100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450094283885453303}
+  - component: {fileID: 3180791451926418608}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1450094283885453303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973448270317515100}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 567.4082, y: 43.173862, z: 9.965709}
+  m_LocalScale: {x: 2.379182, y: 2.379182, z: 2.379182}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1440811186619933206}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3180791451926418608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973448270317515100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0cc9e3524729848921277cabf48e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overwriteFlashTime: 0.5
+  canvases:
+  - canvasName: SaveStateUI
+    Canvas: {fileID: 2170988075733667561}
+    firstSelected: {fileID: 0}
+  - canvasName: Quit
+    Canvas: {fileID: 6479427101382826510}
+    firstSelected: {fileID: 5517551012390711926}
+  select: {fileID: 6810306845438178819}
+  states:
+  - {fileID: 5898400568842864349}
+  - {fileID: 7613314282407969248}
+  - {fileID: 8732020276738213852}
+  stateSprites:
+  - {fileID: 1859736199, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: -1167723047, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: 1584567195, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: 77309437, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: -1560281317, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: -1693406074, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
 --- !u!1 &8864360044545369898
 GameObject:
   m_ObjectHideFlags: 0
