@@ -16,20 +16,22 @@ public class ButtonBehavior : MonoBehaviour
     private MovingPlatformBehavior mpb;
     private DoorBehavior db;
     private bool pressed;
+    private bool interactedYet;
 
 
     [Header("Button Information")]
     [Tooltip("How long the button's effect lasts for")]
     [SerializeField] private float _activeTime;
-    [Tooltip("The default color of this button")]
-    [SerializeField] private Material _unpressedColor;
-    [Tooltip("The pressed color of this button")]
-    [SerializeField] private Material _pressedColor;
 
     [Header("Linked Objects")]
     [SerializeField] private Interactables[] allInteractables;
 
-
+    [Header("Button Press Animation")]
+    private float _initialButtonXPos;
+    [Tooltip("How far the button moves in when pressed"), Range(0, 4)]
+    [SerializeField] private float _buttonPressDistance;
+    [Tooltip("The amount of time the total animation takes")]
+    [SerializeField] private float _buttonAnimationTime;
 
     #endregion
 
@@ -41,7 +43,6 @@ public class ButtonBehavior : MonoBehaviour
     private void Start()
     {
         pmb = FindObjectOfType<PlayerMovementBehavior>();
-        GetComponent<MeshRenderer>().material = _unpressedColor;
 
         InitializeLinkedState();
     }
@@ -52,11 +53,17 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="other">The object collided with</param>
     private void OnTriggerStay(Collider other)
     {
-        //If not pressed and the player is interacting
-        if(!pressed && other.gameObject.GetComponent<PlayerMovementBehavior>()!=null && pmb.Interacting)
+        //If the player isn't interacting, allow this button to be interacted with
+        if(!pmb.Interacting)
+        {
+            interactedYet = false;
+        }
+        //If not pressed and the player is interacting and has not interacted with the button this time
+        if(!pressed && other.gameObject.GetComponent<PlayerMovementBehavior>()!=null && pmb.Interacting && !interactedYet)
         {
             Interact();
             StartCoroutine(Pressed());
+            interactedYet = true;
         }
     }
 
@@ -66,14 +73,47 @@ public class ButtonBehavior : MonoBehaviour
     /// <returns>The time before the button resets</returns>
     IEnumerator Pressed()
     {
-        GetComponent<MeshRenderer>().material = _pressedColor;
+        print("started pressed");
+        Vector3 pos = transform.localPosition;
         pressed = true;
-        yield return new WaitForSeconds(_activeTime);
+
+        float buttonAnimCounter = _buttonAnimationTime / 2;
+
+        while(buttonAnimCounter > 0)
+        {
+            buttonAnimCounter -= Time.deltaTime;
+            pos.x -= _buttonPressDistance /(Screen.width/_buttonPressDistance);
+            transform.localPosition = pos;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        print("Switched button direction");
+        buttonAnimCounter = _buttonAnimationTime / 2;
+
+        while(buttonAnimCounter > 0)
+        {
+            buttonAnimCounter -= Time.deltaTime;
+            pos.x += _buttonPressDistance / (Screen.width / _buttonPressDistance);
+            transform.localPosition = pos;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+
+
         pressed = false;
-        GetComponent<MeshRenderer>().material = _unpressedColor;
+
+        StopInteraction();
+
+    }
+
+    /// <summary>
+    /// Handles stopping interactions on buttons
+    /// </summary>
+    private void StopInteraction()
+    {
         foreach (Interactables i in allInteractables)
         {
-            if(i.ResetsWhenNotPressed)
+            if (i.ResetsWhenNotPressed)
             {
                 if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
                 {
@@ -108,9 +148,8 @@ public class ButtonBehavior : MonoBehaviour
                     }
                 }
             }
-            
-        }
 
+        }
     }
 
     /// <summary>
