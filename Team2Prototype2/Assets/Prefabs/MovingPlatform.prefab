@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 518088661078054875}
   - component: {fileID: 389136284834307997}
   - component: {fileID: 6652261615575382523}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -282,6 +282,10 @@ MonoBehaviour:
   - {fileID: 3822731954929545869}
   speed: 11.9
   loops: 1
+  launches: 0
+  launchStraightUp: 0
+  launchHeight: 0
+  launchPoints: []
   stopMoving: 0
 --- !u!1 &6995469516718227784
 GameObject:
