@@ -138,6 +138,8 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         _quit.performed += contx => Quit();
 
+        moveSpeed *= rb.mass;
+        _jumpHeight *= rb.mass;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -196,7 +198,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     {
         if(!jumping && grounded)
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            //rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(transform.up * _jumpHeight, ForceMode.Impulse);
             jumping = true;
             StartCoroutine(JumpDecay());
@@ -318,7 +320,9 @@ public class PlayerMovementBehavior : MonoBehaviour
     {
         moveDir = orientation.forward * fbValue + orientation.right * lrValue;
 
-        if(grounded)
+        
+
+        if (grounded)
         {
             rb.AddForce(moveDir.normalized * moveSpeed * 10, ForceMode.Force);
         }
@@ -327,7 +331,7 @@ public class PlayerMovementBehavior : MonoBehaviour
             rb.AddForce(moveDir.normalized * moveSpeed * 10 * _airMultiplier, ForceMode.Force);
         }
 
-        rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
+        //rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
 
@@ -356,6 +360,9 @@ public class PlayerMovementBehavior : MonoBehaviour
     public void PlayerIsLaunched(float launchHeight)
     {
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        launchHeight *= rb.mass;
+
         rb.AddForce(transform.up * launchHeight, ForceMode.Impulse);
     }
 }
