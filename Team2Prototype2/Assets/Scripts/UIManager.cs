@@ -21,8 +21,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Canvases[] canvases;
 
+
+    [SerializeField] private Image select;
     [SerializeField]private Image[] states;
-    [Tooltip("Unselected Empty, Unselected Full, Selected Empty, Selected Full")]
+    [Tooltip("Empty, Full")]
     [SerializeField]
     private Sprite[] stateSprites;
 
@@ -124,11 +126,6 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("PuzzleRoom1");
     }
 
-    public void SwitchHighlightButton(int saveState)
-    {
-
-    }
-
     /// <summary>
     /// Changes the sprite of a save state to indicate it has been saved to
     /// </summary>
@@ -138,7 +135,7 @@ public class UIManager : MonoBehaviour
         Canvases canvas = Array.Find(canvases, CanvasInfo => CanvasInfo.canvasName == "SaveStateUI");
         if (canvas.Canvas.activeInHierarchy)
         {
-            states[saveState].sprite = stateSprites[((saveState + 1) * 4) - 1];
+            states[saveState].sprite = stateSprites[saveState * 2 +1];
         }
     }
 
@@ -151,7 +148,7 @@ public class UIManager : MonoBehaviour
         Canvases canvas = Array.Find(canvases, CanvasInfo => CanvasInfo.canvasName == "SaveStateUI");
         if (canvas.Canvas.activeInHierarchy)
         {
-            states[saveState].sprite = stateSprites[((saveState + 1) * 4) - 2];
+            states[saveState].sprite = stateSprites[saveState * 2];
         }
     }
 
@@ -167,7 +164,7 @@ public class UIManager : MonoBehaviour
         Canvases canvas = Array.Find(canvases, CanvasInfo => CanvasInfo.canvasName == "SaveStateUI");
         if (canvas.Canvas.activeInHierarchy)
         {
-            states[saveState].sprite = stateSprites[(saveState + 1) * 4 - 2];
+            states[saveState].sprite = stateSprites[saveState * 2];
         }
         yield return new WaitForSeconds(overwriteFlashTime);
         if (canvas.Canvas.activeInHierarchy)
@@ -175,11 +172,7 @@ public class UIManager : MonoBehaviour
             SaveStateBehvaior ssb = FindObjectOfType<SaveStateBehvaior>();
             if(ssb.CurrentStateSelected == saveState)
             {
-                states[saveState].sprite = stateSprites[((saveState + 1) * 4 - 1)];
-            }
-            else
-            {
-                states[saveState].sprite = stateSprites[(saveState + 1) * 4 - 3];
+                states[saveState].sprite = stateSprites[saveState * 2 + 1];
             }
         }
     }
@@ -189,34 +182,7 @@ public class UIManager : MonoBehaviour
         Canvases canvas = Array.Find(canvases, CanvasInfo => CanvasInfo.canvasName == "SaveStateUI");
         if (canvas.Canvas.activeInHierarchy)
         {
-            //If the current save state is full, change it to the full selected state
-            if (states[saveState].sprite == stateSprites[(saveState + 1) * 4 - 3])
-            {
-                states[saveState].sprite = stateSprites[(saveState + 1) * 4 - 1];
-            }
-            //if the current save state is empty, change it to the empty selected state
-            else
-            {
-                states[saveState].sprite = stateSprites[(saveState + 1) * 4 -2];
-            }
-        }
-    }
-
-    public void DeselectSaveState(int saveState)
-    {
-        Canvases canvas = Array.Find(canvases, CanvasInfo => CanvasInfo.canvasName == "SaveStateUI");
-        if (canvas.Canvas.activeInHierarchy)
-        {
-            //If the previously selected save state was full, change it to the full deselected state
-            if (states[saveState].sprite == stateSprites[((saveState+1) * 4 - 1)])
-            {
-                states[saveState].sprite = stateSprites[((saveState + 1) * 4 -3)];
-            }
-            //if the previously selected save state was empty, change it to the empty deselected state
-            else
-            {
-                states[saveState].sprite = stateSprites[((saveState) * 4)];
-            }
+            select.transform.position = new Vector3(states[saveState].transform.position.x, select.transform.position.y, select.transform.position.z);
         }
     }
 }

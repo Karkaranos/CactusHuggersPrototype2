@@ -93,10 +93,6 @@ public class SaveStateBehvaior : MonoBehaviour
     public void SwitchSelectedState(int switchTo)
     {
         UIManager uim = FindObjectOfType<UIManager>();
-        if (uim != null)
-        {
-            uim.DeselectSaveState(selectedSaveState);
-        }
         //-1 because selected save state is the index of the save state
         selectedSaveState = switchTo - 1;
         if(uim!=null)
@@ -163,6 +159,7 @@ public class SaveStateBehvaior : MonoBehaviour
 
             GameObject go = Instantiate(saveStateWaypoint, transform.position, Quaternion.identity);
             go.GetComponent<Renderer>().material.color = waypointColors[selectedSaveState];
+            go.GetComponentInChildren<SpriteRenderer>().material.color = waypointColors[selectedSaveState];
 
             if (waypoints[selectedSaveState] != null)
             {

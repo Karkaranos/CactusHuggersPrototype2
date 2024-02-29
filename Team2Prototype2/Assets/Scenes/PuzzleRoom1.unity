@@ -3663,6 +3663,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 633572930706008441, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
   m_PrefabInstance: {fileID: 992226839}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1044797339 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6810306845438178819, guid: 5818bc2cb45ac4148b6e5630eae6c567, type: 3}
+  m_PrefabInstance: {fileID: 362121517}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1061953865
 GameObject:
   m_ObjectHideFlags: 0
@@ -5968,23 +5979,18 @@ MonoBehaviour:
   - canvasName: Quit
     Canvas: {fileID: 362121519}
     firstSelected: {fileID: 362121518}
+  select: {fileID: 1044797339}
   states:
   - {fileID: 5486257}
   - {fileID: 434644078}
   - {fileID: 137911178}
   stateSprites:
-  - {fileID: 402039117, guid: e4eb07c4dda2a554eb08a11891d050bd, type: 3}
-  - {fileID: 1066423761, guid: e4eb07c4dda2a554eb08a11891d050bd, type: 3}
-  - {fileID: -93708335, guid: 566f686f92b9fec44a57640607f8edb8, type: 3}
-  - {fileID: -382993882, guid: 566f686f92b9fec44a57640607f8edb8, type: 3}
-  - {fileID: -1364886526, guid: e4eb07c4dda2a554eb08a11891d050bd, type: 3}
-  - {fileID: -577869854, guid: e4eb07c4dda2a554eb08a11891d050bd, type: 3}
-  - {fileID: 1735843391, guid: 566f686f92b9fec44a57640607f8edb8, type: 3}
-  - {fileID: -333602970, guid: 566f686f92b9fec44a57640607f8edb8, type: 3}
-  - {fileID: 1750823507, guid: e4eb07c4dda2a554eb08a11891d050bd, type: 3}
-  - {fileID: 1835095939, guid: e4eb07c4dda2a554eb08a11891d050bd, type: 3}
-  - {fileID: 76051500, guid: 566f686f92b9fec44a57640607f8edb8, type: 3}
-  - {fileID: -2135912302, guid: 566f686f92b9fec44a57640607f8edb8, type: 3}
+  - {fileID: 1859736199, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: -1167723047, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: 1584567195, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: 77309437, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: -1560281317, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
+  - {fileID: -1693406074, guid: c2ec648ad52b49648b6cb69f2733d687, type: 3}
 --- !u!4 &1446909272
 Transform:
   m_ObjectHideFlags: 0
