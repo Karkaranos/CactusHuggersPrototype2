@@ -17,6 +17,7 @@ public class ButtonBehavior : MonoBehaviour
     private DoorBehavior db;
     private bool pressed;
     private bool interactedYet;
+    LineRenderer l = null;
 
 
     [Header("Button Information")]
@@ -28,8 +29,8 @@ public class ButtonBehavior : MonoBehaviour
 
     [Header("Button Press Animation")]
     private float _initialButtonXPos;
-    [Tooltip("How far the button moves in when pressed"), Range(0, 4)]
-    [SerializeField] private float _buttonPressDistance;
+    [Tooltip("How far the button moves in when pressed"), Range(0, 3.8f)]
+    [SerializeField] private float _buttonPressDistance = 3.8f;
     [Tooltip("The amount of time the total animation takes")]
     [SerializeField] private float _buttonAnimationTime;
 
@@ -45,6 +46,8 @@ public class ButtonBehavior : MonoBehaviour
         pmb = FindObjectOfType<PlayerMovementBehavior>();
 
         InitializeLinkedState();
+
+        GenerateWirePositions();
     }
 
     /// <summary>
@@ -253,6 +256,60 @@ public class ButtonBehavior : MonoBehaviour
                 Gizmos.DrawLine(transform.position, db.gameObject.transform.GetChild(0).position);
             }
         }
+
+    }
+
+
+    private void GenerateWirePositions()
+    {
+        Vector3[] wirePositions = new Vector3[10];
+
+        foreach(Interactables i in allInteractables)
+        {
+            Vector3 objPos = i.LinkObject.transform.position;
+            wirePositions[0] = transform.position;
+            wirePositions[1] = new Vector3(wirePositions[0].x, .005f, wirePositions[0].z);
+
+            if(Mathf.Abs(objPos.x - transform.parent.transform.position.x) > .1f)
+            {
+                wirePositions[2] = new Vector3(wirePositions[1].x + (objPos.x - transform.parent.transform.position.x), wirePositions[1].y, wirePositions[1].z);
+                wirePositions[3] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
+                wirePositions[4] = objPos;
+
+                //DrawWires(wirePositions, 5);
+            }
+            else if (Mathf.Abs(objPos.z - transform.parent.transform.position.z) > .1f)
+            {
+                wirePositions[2] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z + (objPos.z - transform.parent.transform.position.z));
+                wirePositions[3] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
+                wirePositions[4] = objPos;
+
+                //DrawWires(wirePositions, 5);
+            }
+            else
+            {
+                wirePositions[2] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
+                wirePositions[3] = objPos;
+                DrawWires(wirePositions, 4);
+            }
+
+
+        }
+    }
+
+    private void DrawWires(Vector3[] points, int size)
+    {
+        if (l == null)
+        {
+            l = transform.GetChild(0).gameObject.AddComponent<LineRenderer>();
+        }
+
+        l.startWidth = .2f;
+        l.endWidth = .2f;
+        l.alignment = LineAlignment.TransformZ;
+        l.positionCount = size;
+        l.SetPositions(points);
+        l.useWorldSpace = true;
 
     }
 

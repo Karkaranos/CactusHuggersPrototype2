@@ -21,7 +21,9 @@ public class Interactables
     [SerializeField] private LinkedType _objectType;
     [Tooltip("The related object. Leave blank if related to buttons")]
     [SerializeField] private GameObject _linkObject;
-    [Tooltip("Leave blank if related to buttons.")]
+    [Tooltip("The object wires should run to")]
+    [SerializeField] private GameObject wireBox;
+    [Tooltip("Leave blank if related to buttons")]
     [SerializeField] private LinkedState _defaultState;
     [Tooltip("Leave blank if related to buttons.")]
     [SerializeField] private LinkedState _pressedState;
