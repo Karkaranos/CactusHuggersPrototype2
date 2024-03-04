@@ -2894,7 +2894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2998729786619205751, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2998729786619205751, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2939,7 +2939,7 @@ PrefabInstance:
     - target: {fileID: 6631452765804977548, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: allInteractables.Array.data[0]._linkObject
       value: 
-      objectReference: {fileID: 1110803238}
+      objectReference: {fileID: 702323567}
     - target: {fileID: 6631452765804977548, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: allInteractables.Array.data[0]._objectType
       value: 1
@@ -3159,7 +3159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2998729786619205751, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.863
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2998729786619205751, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3196,6 +3196,14 @@ PrefabInstance:
     - target: {fileID: 4612672901092020910, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_Name
       value: Button (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795596699197272558, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795596699197272558, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
+      propertyPath: m_Size.z
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6793,7 +6801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2998729786619205751, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.162932
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2998729786619205751, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10340,6 +10348,18 @@ PrefabInstance:
     - target: {fileID: 4612672901092020910, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: m_Name
       value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795596699197272558, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
+      propertyPath: m_Size.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795596699197272558, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795596699197272558, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
+      propertyPath: m_Size.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6631452765804977548, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: allInteractables.Array.size
@@ -14766,6 +14786,11 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &702323567 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6686182998377696287, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+  m_PrefabInstance: {fileID: 1110803237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &722464797
 GameObject:
   m_ObjectHideFlags: 0
@@ -30673,6 +30698,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingPlatform Maze3
       objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9121640560460905898, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -33707,11 +33736,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
---- !u!1 &1110803238 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5659917298951847876, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-  m_PrefabInstance: {fileID: 1110803237}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1112477400
 GameObject:
   m_ObjectHideFlags: 0
@@ -42107,6 +42131,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1342820987917093291, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
   m_PrefabInstance: {fileID: 1427015692}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1436937318 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 633572930706008441, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
+  m_PrefabInstance: {fileID: 1770122415}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1450150219
 GameObject:
@@ -51593,7 +51622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensX: 75
   mouseSensY: 75
-  orientation: {fileID: 0}
+  orientation: {fileID: 1436937318}
 --- !u!81 &1797395010
 AudioListener:
   m_ObjectHideFlags: 0
@@ -52383,6 +52412,10 @@ PrefabInstance:
     - target: {fileID: 5659917298951847876, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_Name
       value: MovingPlatform Maze3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: waypoints.Array.data[3]
@@ -53362,6 +53395,10 @@ PrefabInstance:
     - target: {fileID: 5659917298951847876, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_Name
       value: MovingPlatform Maze3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: waypoints.Array.data[3]
