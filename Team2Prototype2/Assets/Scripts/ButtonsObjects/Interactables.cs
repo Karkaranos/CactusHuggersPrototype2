@@ -21,7 +21,7 @@ public class Interactables
     [SerializeField] private LinkedType _objectType;
     [Tooltip("The related object. Leave blank if related to buttons")]
     [SerializeField] private GameObject _linkObject;
-    [Tooltip("The object wires should run to")]
+    [Tooltip("The wirebox a wire finishes at")]
     [SerializeField] private GameObject wireBox;
     [Tooltip("Leave blank if related to buttons")]
     [SerializeField] private LinkedState _defaultState;
@@ -39,4 +39,5 @@ public class Interactables
     public LinkedState PressedState { get => _pressedState; set => _pressedState = value; }
     public bool ResetsWhenNotPressed { get => _resetsWhenNotPressed; set => _resetsWhenNotPressed = value; }
     public bool TogglesWhenPressed { get => _togglesWhenPressed; set => _togglesWhenPressed = value; }
+    public GameObject WireBox { get => wireBox; set => wireBox = value; }
 }

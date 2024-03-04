@@ -18,11 +18,14 @@ public class ButtonBehavior : MonoBehaviour
     private bool pressed;
     private bool interactedYet;
     LineRenderer l = null;
+    GameObject[] walls;
 
 
     [Header("Button Information")]
     [Tooltip("How long the button's effect lasts for")]
     [SerializeField] private float _activeTime;
+    [Tooltip("The wall this button is on")]
+    [SerializeField] private GameObject _wallReference;
 
     [Header("Linked Objects")]
     [SerializeField] private Interactables[] allInteractables;
@@ -44,6 +47,9 @@ public class ButtonBehavior : MonoBehaviour
     private void Start()
     {
         pmb = FindObjectOfType<PlayerMovementBehavior>();
+
+
+        walls = GameObject.FindGameObjectsWithTag("Wall");
 
         InitializeLinkedState();
 
@@ -263,50 +269,177 @@ public class ButtonBehavior : MonoBehaviour
     private void GenerateWirePositions()
     {
         Vector3[] wirePositions = new Vector3[10];
-
-        foreach(Interactables i in allInteractables)
+        foreach (Interactables i in allInteractables)
         {
-            Vector3 objPos = i.LinkObject.transform.position;
+            Transform parent = transform.parent;
+            Vector3 objPos = i.WireBox.transform.position;
             wirePositions[0] = transform.position;
             wirePositions[1] = new Vector3(wirePositions[0].x, .005f, wirePositions[0].z);
+            int valueCount = 2;
+            Vector3 buildMe = wirePositions[1];
 
-            if(Mathf.Abs(objPos.x - transform.parent.transform.position.x) > .1f)
+            if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
+            {
+                if (parent.position.x - objPos.x < 0)
+                {
+                    print("needs to move right");
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], -1, 'z');
+                    valueCount++;
+                    print(wirePositions[valueCount - 1]);
+                }
+                else
+                {
+                    print("Needs to move left");
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], 1, 'z');
+                    valueCount++;
+
+                    print(wirePositions[valueCount - 1]);
+                }
+            }
+            else if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
+            {
+                if (parent.position.x - objPos.x < 0)
+                {
+                    print("needs to move forward");
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'x');
+                    valueCount++;
+                    print(wirePositions[valueCount - 1]);
+                }
+                else
+                {
+                    print("Needs to move back");
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'x');
+                    valueCount++;
+
+                    print(wirePositions[valueCount - 1]);
+                }
+            }
+
+            /*
+            while ((Mathf.Abs(buildMe.x - objPos.x) > .3f && (Mathf.Abs(buildMe.z - objPos.z) > .3f)))
+            {
+
+            }*/
+
+
+            
+
+
+            //foreach () ;
+
+            wirePositions[valueCount] = new Vector3(objPos.x, .005f, objPos.z);
+            valueCount++;
+            wirePositions[valueCount] = objPos;
+            valueCount++;
+
+            DrawWires(wirePositions, valueCount);
+
+            /*
+            if(transform.parent.transform.rotation.y != 0)
             {
                 wirePositions[2] = new Vector3(wirePositions[1].x + (objPos.x - transform.parent.transform.position.x), wirePositions[1].y, wirePositions[1].z);
                 wirePositions[3] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
                 wirePositions[4] = objPos;
+                print("changed x");
 
-                //DrawWires(wirePositions, 5);
+                DrawWires(wirePositions, 5);
             }
-            else if (Mathf.Abs(objPos.z - transform.parent.transform.position.z) > .1f)
+            else if (transform.parent.transform.rotation.y == 0)
             {
                 wirePositions[2] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z + (objPos.z - transform.parent.transform.position.z));
                 wirePositions[3] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
                 wirePositions[4] = objPos;
 
-                //DrawWires(wirePositions, 5);
+                print("changed z");
+                DrawWires(wirePositions, 5);
             }
             else
             {
+                print("no change in x or z");
                 wirePositions[2] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
                 wirePositions[3] = objPos;
                 DrawWires(wirePositions, 4);
-            }
+            }*/
 
-
+            
         }
     }
 
+
+    private Vector3 GeneratePoint(Vector3 lastPoint, int direction, char axis)
+    {
+        GameObject g = null;
+        float difference;
+
+        if (direction == 1)
+        {
+            difference = float.MaxValue;
+        }
+        else
+        {
+            difference = float.MinValue;
+        }
+        
+        foreach(GameObject w in walls)
+        {
+            if(axis == 'x' && direction == 1)
+            {
+                if((w.transform.position.x > lastPoint.x) && difference > (w.transform.position.x - lastPoint.x))
+                {
+                    difference = w.transform.position.x - lastPoint.x;
+                    g = w;
+                }
+            }
+            else if (axis == 'x' && direction == -1)
+            {
+                if ((w.transform.position.x < lastPoint.x) && difference < (w.transform.position.x - lastPoint.x))
+                {
+                    difference = w.transform.position.x - lastPoint.x;
+                    g = w;
+                }
+            }
+            else if (axis == 'z' && direction == 1)
+            {
+                if ((w.transform.position.z > lastPoint.z) && difference > (w.transform.position.z - lastPoint.z))
+                {
+                    difference = w.transform.position.z - lastPoint.z;
+                    g = w;
+                }
+            }
+            else if (axis == 'z' && direction == -1)
+            {
+                if ((w.transform.position.z < lastPoint.z) && difference < (w.transform.position.z - lastPoint.z))
+                {
+                    difference = w.transform.position.z - lastPoint.z;
+                    g = w;
+                }
+            }
+        }
+
+        print(g.name);
+
+        if(axis == 'z')
+        {
+            return new Vector3(g.transform.position.x + (.6f * -direction) -.25f, .005f, lastPoint.z);
+        }
+        else
+        {
+            return new Vector3(lastPoint.x, .005f, g.transform.position.z + (.6f * -direction));
+        }
+
+        /*(lastPoint.x + difference) + (3 * -direction)*/
+    }
     private void DrawWires(Vector3[] points, int size)
     {
+        print("length of points: " + size);
         if (l == null)
         {
             l = transform.GetChild(0).gameObject.AddComponent<LineRenderer>();
         }
 
-        l.startWidth = .2f;
-        l.endWidth = .2f;
-        l.alignment = LineAlignment.TransformZ;
+        l.startWidth = .5f;
+        l.endWidth = .5f;
+        l.alignment = LineAlignment.View;
         l.positionCount = size;
         l.SetPositions(points);
         l.useWorldSpace = true;
