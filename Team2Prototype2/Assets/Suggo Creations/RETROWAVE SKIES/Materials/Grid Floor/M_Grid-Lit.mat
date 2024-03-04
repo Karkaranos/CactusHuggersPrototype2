@@ -63,7 +63,7 @@ Material:
     - _QueueOffset: 0
     - _Smoothness: 1
     m_Colors:
-    - _GridColor: {r: 4.2370934, g: 0, b: 4.2370934, a: 1}
+    - _GridColor: {r: 5.6568522, g: 5.6568522, b: 5.6568522, a: 1}
     - _GridSpeed: {r: 0, g: -0.3, b: 0, a: 0}
     - _GroundColor: {r: 0.13725486, g: 0, b: 0.24705875, a: 1}
     - _Tiling: {r: 0.025, g: 0.025, b: 0, a: 0}
