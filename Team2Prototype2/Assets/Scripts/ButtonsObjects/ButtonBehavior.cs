@@ -277,55 +277,90 @@ public class ButtonBehavior : MonoBehaviour
             wirePositions[1] = new Vector3(wirePositions[0].x, .005f, wirePositions[0].z);
             int valueCount = 2;
             Vector3 buildMe = wirePositions[1];
+            int lastDir = 0;
 
             if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
             {
                 if (parent.position.x - objPos.x < 0)
                 {
-                    print("needs to move right");
-                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], -1, 'z');
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], -1, 'x');
                     valueCount++;
-                    print(wirePositions[valueCount - 1]);
+                    lastDir = 1;
                 }
                 else
                 {
-                    print("Needs to move left");
-                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], 1, 'z');
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], 1, 'x');
                     valueCount++;
-
-                    print(wirePositions[valueCount - 1]);
+                    lastDir = 1;
                 }
             }
             else if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
             {
-                if (parent.position.x - objPos.x < 0)
+                if (parent.position.z - objPos.z < 0)
                 {
-                    print("needs to move forward");
-                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'x');
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'z');
                     valueCount++;
-                    print(wirePositions[valueCount - 1]);
+                    lastDir = 2;
                 }
                 else
                 {
-                    print("Needs to move back");
-                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'x');
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
                     valueCount++;
-
-                    print(wirePositions[valueCount - 1]);
+                    lastDir = 2;
                 }
             }
 
-            /*
-            while ((Mathf.Abs(buildMe.x - objPos.x) > .3f && (Mathf.Abs(buildMe.z - objPos.z) > .3f)))
-            {
-
-            }*/
-
-
             
+            while (valueCount < wirePositions.Length -2 && (Mathf.Abs(wirePositions[valueCount-1].x - objPos.x) > 1 && (Mathf.Abs(wirePositions[valueCount-1].z - objPos.z) > 1)))
+            {
+                print(valueCount);
+                if(lastDir == 1)
+                {
+                    if (wirePositions[valueCount-1].z - objPos.z < 0)
+                    {
+                        print("needs to move forward");
+                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
+                        valueCount++;
+                        lastDir = 2;
+                    }
+                    else
+                    {
+                        print("Needs to move back");
+                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'z');
+                        valueCount++;
+                        lastDir = 2;
+                    }
+                }
+                else if (lastDir == 2)
+                {
+                    if (wirePositions[valueCount-1].x - objPos.x < 0)
+                    {
+                        print("needs to move right");
+                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'x');
+                        valueCount++;
+                        print(wirePositions[valueCount - 1]);
+                        lastDir = 1;
+                    }
+                    else
+                    {
+                        print("Needs to move left");
+                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'x');
+                        valueCount++;
+
+                        print(wirePositions[valueCount - 1]);
+                        lastDir = 1;
+                    }
+                }
+
+            }
+            
+            if(valueCount >= wirePositions.Length)
+            {
+                valueCount = wirePositions.Length - 3;
+            }
 
 
-            //foreach () ;
+                //foreach () ;
 
             wirePositions[valueCount] = new Vector3(objPos.x, .005f, objPos.z);
             valueCount++;
@@ -333,33 +368,6 @@ public class ButtonBehavior : MonoBehaviour
             valueCount++;
 
             DrawWires(wirePositions, valueCount);
-
-            /*
-            if(transform.parent.transform.rotation.y != 0)
-            {
-                wirePositions[2] = new Vector3(wirePositions[1].x + (objPos.x - transform.parent.transform.position.x), wirePositions[1].y, wirePositions[1].z);
-                wirePositions[3] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
-                wirePositions[4] = objPos;
-                print("changed x");
-
-                DrawWires(wirePositions, 5);
-            }
-            else if (transform.parent.transform.rotation.y == 0)
-            {
-                wirePositions[2] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z + (objPos.z - transform.parent.transform.position.z));
-                wirePositions[3] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
-                wirePositions[4] = objPos;
-
-                print("changed z");
-                DrawWires(wirePositions, 5);
-            }
-            else
-            {
-                print("no change in x or z");
-                wirePositions[2] = new Vector3(objPos.x, wirePositions[1].y, objPos.z);
-                wirePositions[3] = objPos;
-                DrawWires(wirePositions, 4);
-            }*/
 
             
         }
@@ -384,7 +392,7 @@ public class ButtonBehavior : MonoBehaviour
         {
             if(axis == 'x' && direction == 1)
             {
-                if((w.transform.position.x > lastPoint.x) && difference > (w.transform.position.x - lastPoint.x))
+                if((w.transform.position.x > lastPoint.x) && difference > (w.transform.position.x - lastPoint.x) && Mathf.Abs(w.transform.position.z - lastPoint.z) < 5f)
                 {
                     difference = w.transform.position.x - lastPoint.x;
                     g = w;
@@ -392,7 +400,7 @@ public class ButtonBehavior : MonoBehaviour
             }
             else if (axis == 'x' && direction == -1)
             {
-                if ((w.transform.position.x < lastPoint.x) && difference < (w.transform.position.x - lastPoint.x))
+                if ((w.transform.position.x < lastPoint.x) && difference < (w.transform.position.x - lastPoint.x) && Mathf.Abs(w.transform.position.z - lastPoint.z) < 5f)
                 {
                     difference = w.transform.position.x - lastPoint.x;
                     g = w;
@@ -400,7 +408,7 @@ public class ButtonBehavior : MonoBehaviour
             }
             else if (axis == 'z' && direction == 1)
             {
-                if ((w.transform.position.z > lastPoint.z) && difference > (w.transform.position.z - lastPoint.z))
+                if ((w.transform.position.z > lastPoint.z) && difference > (w.transform.position.z - lastPoint.z) && Mathf.Abs(w.transform.position.x - lastPoint.x) < 5f)
                 {
                     difference = w.transform.position.z - lastPoint.z;
                     g = w;
@@ -408,37 +416,55 @@ public class ButtonBehavior : MonoBehaviour
             }
             else if (axis == 'z' && direction == -1)
             {
-                if ((w.transform.position.z < lastPoint.z) && difference < (w.transform.position.z - lastPoint.z))
+                if ((w.transform.position.z < lastPoint.z) && difference < (w.transform.position.z - lastPoint.z) && Mathf.Abs(w.transform.position.x - lastPoint.x) < 5f)
                 {
                     difference = w.transform.position.z - lastPoint.z;
                     g = w;
                 }
             }
+            if(g!=null)
+                print(g.name);
         }
 
         print(g.name);
 
-        if(axis == 'z')
+
+        if(axis == 'x')
         {
-            return new Vector3(g.transform.position.x + (.6f * -direction) -.25f, .005f, lastPoint.z);
+            if (transform.position.x < g.transform.position.x)
+            {
+                direction = -1;
+            }
+            else
+            {
+                direction = 1;
+            }
+            return new Vector3(g.transform.position.x + (.6f * direction), .005f, lastPoint.z);
         }
         else
         {
-            return new Vector3(lastPoint.x, .005f, g.transform.position.z + (.6f * -direction));
+            if (transform.position.z < g.transform.position.z)
+            {
+                direction = -1;
+            }
+            else
+            {
+                direction = 1;
+            }
+            return new Vector3(lastPoint.x, .005f, g.transform.position.z + (.6f * direction));
         }
 
-        /*(lastPoint.x + difference) + (3 * -direction)*/
     }
     private void DrawWires(Vector3[] points, int size)
     {
         print("length of points: " + size);
         if (l == null)
         {
-            l = transform.GetChild(0).gameObject.AddComponent<LineRenderer>();
+            l = transform.GetChild(0).gameObject.GetComponent<LineRenderer>();
         }
 
-        l.startWidth = .5f;
-        l.endWidth = .5f;
+        l.startWidth = .3f;
+        l.endWidth = .3f;
         l.alignment = LineAlignment.View;
         l.positionCount = size;
         l.SetPositions(points);
