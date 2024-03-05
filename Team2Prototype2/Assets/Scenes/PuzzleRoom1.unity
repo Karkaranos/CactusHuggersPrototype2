@@ -7271,6 +7271,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1112918179}
+    - target: {fileID: 2425952771248594250, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.717
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425952771248594250, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.869
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425952771248594250, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.641
+      objectReference: {fileID: 0}
     - target: {fileID: 4563705263018632389, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
       propertyPath: m_Name
       value: ThirdDoor

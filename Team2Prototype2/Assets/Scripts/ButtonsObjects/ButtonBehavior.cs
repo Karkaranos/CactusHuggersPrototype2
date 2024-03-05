@@ -283,7 +283,7 @@ public class ButtonBehavior : MonoBehaviour
             Vector3 objPos = i.WireBox.transform.position;
             wirePositions[0] = transform.position;
             wirePositions[1] = new Vector3(wirePositions[0].x, .005f, wirePositions[0].z);
-            wirePositions[9] = objPos;
+            wirePositions[9] = i.WireBox.transform.position;
             wirePositions[8] = new Vector3(wirePositions[9].x, .005f, wirePositions[9].z);
             wirePositions[7] = Vector3.zero;
             int valueCount = 2;
@@ -300,7 +300,7 @@ public class ButtonBehavior : MonoBehaviour
                 
                 if (parent.position.x - objPos.x < 0)
                 {
-                    wirePositions[valueCount] = new Vector3(wirePositions[1].x + .1f, wirePositions[1].y, wirePositions[1].z);
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z - .2f);
                     valueCount++;
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], 1, 'x');
                     valueCount++;
@@ -308,7 +308,7 @@ public class ButtonBehavior : MonoBehaviour
                 }
                 else
                 {
-                    wirePositions[valueCount] = new Vector3(wirePositions[1].x - .1f, wirePositions[1].y, wirePositions[1].z);
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z + .2f);
                     valueCount++;
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], -1, 'x');
                     valueCount++;
@@ -319,7 +319,7 @@ public class ButtonBehavior : MonoBehaviour
             {
                 if (parent.position.z - objPos.z < 0)
                 {
-                    wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z - .1f);
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x + .2f, wirePositions[1].y, wirePositions[1].z);
                     valueCount++;
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'z');
                     valueCount++;
@@ -327,7 +327,7 @@ public class ButtonBehavior : MonoBehaviour
                 }
                 else
                 {
-                    wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z + .1f);
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x - .2f, wirePositions[1].y, wirePositions[1].z);
                     valueCount++;
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
                     valueCount++;
@@ -356,13 +356,13 @@ public class ButtonBehavior : MonoBehaviour
                 {
                     if (parent.position.z - objPos.z < 0)
                     {
-                        wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x +.6f, .005f, objPos.z);
+                        wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x, .005f, objPos.z);
                         valueCount++;
                         lastDir = 2;
                     }
                     else
                     {
-                        wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x -.6f, .005f, objPos.z);
+                        wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x , .005f, objPos.z);
                         valueCount++;
                         lastDir = 2;
                     }
@@ -433,11 +433,11 @@ public class ButtonBehavior : MonoBehaviour
 
                 if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
                 {
-                    wirePositions[7] = new Vector3(wirePositions[8].x, wirePositions[8].y, wirePositions[2].z + (wirePositions[2].z - wirePositions[1].z));
+                    wirePositions[7] = new Vector3(wirePositions[8].x + (wirePositions[2].x - wirePositions[1].x), wirePositions[8].y, wirePositions[8].z);
                 }
                 else
                 {
-                    wirePositions[7] = new Vector3(wirePositions[8].x + (wirePositions[2].x - wirePositions[1].x), wirePositions[8].y, wirePositions[8].z);
+                    wirePositions[7] = new Vector3(wirePositions[8].x, wirePositions[8].y, wirePositions[8].z + (wirePositions[2].z - wirePositions[1].z));
                 }
             }
 
@@ -449,12 +449,11 @@ public class ButtonBehavior : MonoBehaviour
             }
 
 
-            valueCount--;
             for (int j = 0; j < valueCount; j++)
                 print( j + " stores " + wirePositions[j].ToString());
 
 
-            DrawWires(wirePositions, valueCount);
+            DrawWires(wirePositions, valueCount, i);
 
             
         }
@@ -539,13 +538,12 @@ public class ButtonBehavior : MonoBehaviour
         }
 
     }
-    private void DrawWires(Vector3[] points, int size)
+    private void DrawWires(Vector3[] points, int size, Interactables i)
     {
         print("length of points: " + size);
-        if (l == null)
-        {
-            l = transform.GetChild(0).gameObject.GetComponent<LineRenderer>();
-        }
+        GameObject newChild = new GameObject();
+        i.LineRendererObject = newChild;
+        l = newChild.AddComponent<LineRenderer>();
 
         l.startWidth = .3f;
         l.endWidth = .3f;
