@@ -16,8 +16,10 @@ public class DoorBehavior : MonoBehaviour
     [SerializeField] private float doorCloseTime = .2f;
     [SerializeField] private float doorOpenHeight;
     private bool isOpen;
+    private Interactables relatedInteractable;
 
     public bool IsOpen { get => isOpen; set => isOpen = value; }
+    public Interactables RelatedInteractable { get => relatedInteractable; set => relatedInteractable = value; }
 
     /// <summary>
     /// Gets a reference to the door's object
@@ -80,6 +82,7 @@ public class DoorBehavior : MonoBehaviour
         if(IsOpen)
         {
             StartCoroutine(DoorShut());
+            FindObjectOfType<ButtonBehavior>().DeactivateWires(relatedInteractable);
             IsOpen = false;
         }
     }

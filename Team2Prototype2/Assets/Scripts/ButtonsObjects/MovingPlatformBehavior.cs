@@ -40,6 +40,7 @@ public class MovingPlatformBehavior : MonoBehaviour
 
     //refrences
     private Rigidbody rb;
+    private Interactables relatedInteractable;
     private GameObject player;
 
     [Header("Debug Yay!!!!")]
@@ -50,6 +51,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     private int nextWaypoint;
 
     public bool StopMoving { get => stopMoving; set => stopMoving = value; }
+    public Interactables RelatedInteractable { get => relatedInteractable; set => relatedInteractable = value; }
 
     /// <summary>
     /// set refrences
