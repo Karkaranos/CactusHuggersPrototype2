@@ -152,11 +152,11 @@ MonoBehaviour:
   groundDrag: 5
   _speed: 8
   _speedCap: 5
-  _jumpHeight: 5
+  _jumpHeight: 7
   _gravity: 13
   jumping: 0
   _jumpTime: 0.5
-  _airMultiplier: 1
+  _airMultiplier: 0.09
   _sceneToGoTo: 0
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!114 &7018769107813650103
