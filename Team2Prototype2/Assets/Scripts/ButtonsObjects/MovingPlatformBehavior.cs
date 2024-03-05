@@ -30,10 +30,18 @@ public class MovingPlatformBehavior : MonoBehaviour
     [SerializeField, Range(10, 50)] private float launchHeight;
     [SerializeField, Tooltip("Put every transform you want" +
         "the launch to happen at in this array")] private Transform[] launchPoints;
+    [SerializeField] private Vector2 XZLaunch;
+
+    [Header("Debug")]
+    [SerializeField] private bool DebugLaunching;
+    [HideInInspector] public Vector3 playerPos;
+
+
 
     //refrences
     private Rigidbody rb;
     private Interactables relatedInteractable;
+    private GameObject player;
 
     [Header("Debug Yay!!!!")]
     //can stop the platform in the inspector to check if something is working/not
@@ -52,6 +60,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         nextWaypoint = 0;
+        player = GameObject.FindAnyObjectByType<PlayerMovementBehavior>().gameObject;
     }
 
     /// <summary>
@@ -70,6 +79,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        
         //calcs how far to move
         float temp = speed * Time.deltaTime;
 
@@ -164,12 +174,20 @@ public class MovingPlatformBehavior : MonoBehaviour
         collision.transform.SetParent(null);
     }
 
-    private void LaunchPlayer()
+    
+    public void LaunchPlayer()
     {
+        if (DebugLaunching)
+        {
+            stopMoving = true;
+            
+        }
         if (gameObject.transform.GetComponentInChildren<PlayerMovementBehavior>() != null)
         {
-            PlayerMovementBehavior pbehav = GetComponentInChildren<PlayerMovementBehavior>();
-            pbehav.PlayerIsLaunched(launchHeight);
+            PlayerMovementBehavior pbehav = player.GetComponent<PlayerMovementBehavior>();
+            playerPos = pbehav.gameObject.transform.position;
+
+            pbehav.PlayerIsLaunched(launchHeight, launchStraightUp, XZLaunch);
         }
     }
 }

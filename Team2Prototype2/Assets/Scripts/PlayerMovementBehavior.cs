@@ -357,12 +357,24 @@ public class PlayerMovementBehavior : MonoBehaviour
     }
 
 
-    public void PlayerIsLaunched(float launchHeight)
+    public void PlayerIsLaunched(float launchHeight, bool straightUp, Vector2 launchDirecton)
     {
+        
+
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         launchHeight *= rb.mass;
 
-        rb.AddForce(transform.up * launchHeight, ForceMode.Impulse);
+        
+        if (straightUp)
+        {
+            rb.AddForce(new Vector3 (launchDirecton.x, 1, launchDirecton.y) * launchHeight, ForceMode.Impulse);
+        }
+        else
+        {
+            rb.AddForce(transform.up * launchHeight, ForceMode.Impulse);
+        }
+
+        Debug.Log(launchHeight + " " + straightUp + " " + launchDirecton);
     }
 }
