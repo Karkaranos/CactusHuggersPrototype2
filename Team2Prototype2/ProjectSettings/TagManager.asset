@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - LevelEnd
+  - WallX
+  - WallZ
+  - Wall
   layers:
   - Default
   - TransparentFX
