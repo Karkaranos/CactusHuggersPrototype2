@@ -53,7 +53,14 @@ public class ButtonBehavior : MonoBehaviour
 
         InitializeLinkedState();
 
-        GenerateWirePositions();
+        if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("2"))
+        {
+            GenerateWirePositions();
+        }
+        else
+        {
+            Destroy(transform.GetChild(0).gameObject.GetComponent<LineRenderer>());
+        }
     }
 
     /// <summary>
@@ -271,25 +278,39 @@ public class ButtonBehavior : MonoBehaviour
         Vector3[] wirePositions = new Vector3[10];
         foreach (Interactables i in allInteractables)
         {
+            
             Transform parent = transform.parent;
             Vector3 objPos = i.WireBox.transform.position;
             wirePositions[0] = transform.position;
             wirePositions[1] = new Vector3(wirePositions[0].x, .005f, wirePositions[0].z);
+            wirePositions[9] = objPos;
+            wirePositions[8] = new Vector3(wirePositions[9].x, .005f, wirePositions[9].z);
+            wirePositions[7] = Vector3.zero;
             int valueCount = 2;
             Vector3 buildMe = wirePositions[1];
+
+
+
             int lastDir = 0;
 
+
+            
             if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
             {
+                
                 if (parent.position.x - objPos.x < 0)
                 {
-                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], -1, 'x');
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x + .1f, wirePositions[1].y, wirePositions[1].z);
+                    valueCount++;
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], 1, 'x');
                     valueCount++;
                     lastDir = 1;
                 }
                 else
                 {
-                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], 1, 'x');
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x - .1f, wirePositions[1].y, wirePositions[1].z);
+                    valueCount++;
+                    wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], -1, 'x');
                     valueCount++;
                     lastDir = 1;
                 }
@@ -298,74 +319,140 @@ public class ButtonBehavior : MonoBehaviour
             {
                 if (parent.position.z - objPos.z < 0)
                 {
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z - .1f);
+                    valueCount++;
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'z');
                     valueCount++;
                     lastDir = 2;
                 }
                 else
                 {
+                    wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z + .1f);
+                    valueCount++;
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
                     valueCount++;
                     lastDir = 2;
                 }
             }
 
-            
-            while (valueCount < wirePositions.Length -2 && (Mathf.Abs(wirePositions[valueCount-1].x - objPos.x) > 1 && (Mathf.Abs(wirePositions[valueCount-1].z - objPos.z) > 1)))
+            if(Mathf.Abs(wirePositions[valueCount-1].x - wirePositions[8].x) > .2f || Mathf.Abs(wirePositions[valueCount - 1].z - wirePositions[8].z) > .2f)
             {
-                print(valueCount);
-                if(lastDir == 1)
+                if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
                 {
-                    if (wirePositions[valueCount-1].z - objPos.z < 0)
+                    if (parent.position.x - objPos.x < 0)
                     {
-                        print("needs to move forward");
-                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
+                        wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount-1].z - .6f);
+                        valueCount++;
+                        lastDir = 1;
+                    }
+                    else
+                    {
+                        wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount - 1].z +.6f);
+                        valueCount++;
+                        lastDir = 1;
+                    }
+                }
+                else if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
+                {
+                    if (parent.position.z - objPos.z < 0)
+                    {
+                        wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x +.6f, .005f, objPos.z);
                         valueCount++;
                         lastDir = 2;
                     }
                     else
                     {
-                        print("Needs to move back");
+                        wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x -.6f, .005f, objPos.z);
+                        valueCount++;
+                        lastDir = 2;
+                    }
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
+                {
+                    wirePositions[7] = new Vector3(wirePositions[2].x, wirePositions[8].y, wirePositions[8].z);
+                }
+                else
+                {
+                    wirePositions[7] = new Vector3(wirePositions[8].x, wirePositions[8].y, wirePositions[2].z);
+                }
+            }
+
+            if (Mathf.Abs(wirePositions[valueCount - 1].x - wirePositions[8].x) > .2f || Mathf.Abs(wirePositions[valueCount - 1].z - wirePositions[8].z) > .2f)
+            {
+                wirePositions[valueCount + 1] = new Vector3(objPos.x, .005f, objPos.z);
+                if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
+                {
+                    if (parent.position.x - objPos.x < 0)
+                    {
+                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'x');
+                        valueCount++;
+                        lastDir = 1;
+                    }
+                    else
+                    {
+                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'x');
+                        valueCount++;
+                        lastDir = 1;
+                    }
+                }
+                else if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
+                {
+                    if (parent.position.z - objPos.z < 0)
+                    {
                         wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'z');
                         valueCount++;
                         lastDir = 2;
                     }
-                }
-                else if (lastDir == 2)
-                {
-                    if (wirePositions[valueCount-1].x - objPos.x < 0)
-                    {
-                        print("needs to move right");
-                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'x');
-                        valueCount++;
-                        print(wirePositions[valueCount - 1]);
-                        lastDir = 1;
-                    }
                     else
                     {
-                        print("Needs to move left");
-                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'x');
+                        wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
                         valueCount++;
-
-                        print(wirePositions[valueCount - 1]);
-                        lastDir = 1;
+                        lastDir = 2;
                     }
                 }
-
             }
-            
-            if(valueCount >= wirePositions.Length)
+
+            else
             {
-                valueCount = wirePositions.Length - 3;
+                if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
+                {
+                    wirePositions[7] = new Vector3(wirePositions[2].x, wirePositions[8].y, wirePositions[8].z);
+                }
+                else
+                {
+                    wirePositions[7] = new Vector3(wirePositions[8].x, wirePositions[8].y, wirePositions[2].z);
+                }
+            }
+
+            if(wirePositions[7] == Vector3.zero)
+            {
+                print("funky case");
+
+                if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
+                {
+                    wirePositions[7] = new Vector3(wirePositions[8].x, wirePositions[8].y, wirePositions[2].z + (wirePositions[2].z - wirePositions[1].z));
+                }
+                else
+                {
+                    wirePositions[7] = new Vector3(wirePositions[8].x + (wirePositions[2].x - wirePositions[1].x), wirePositions[8].y, wirePositions[8].z);
+                }
+            }
+
+            for(int j=7; j < wirePositions.Length; j++)
+            {
+                wirePositions[valueCount] = wirePositions[j];
+                valueCount++;
+                print("moved position " + j + " to position " + (valueCount - 1));
             }
 
 
-                //foreach () ;
+            valueCount--;
+            for (int j = 0; j < valueCount; j++)
+                print( j + " stores " + wirePositions[j].ToString());
 
-            wirePositions[valueCount] = new Vector3(objPos.x, .005f, objPos.z);
-            valueCount++;
-            wirePositions[valueCount] = objPos;
-            valueCount++;
 
             DrawWires(wirePositions, valueCount);
 
@@ -422,11 +509,8 @@ public class ButtonBehavior : MonoBehaviour
                     g = w;
                 }
             }
-            if(g!=null)
-                print(g.name);
         }
 
-        print(g.name);
 
 
         if(axis == 'x')
@@ -439,7 +523,7 @@ public class ButtonBehavior : MonoBehaviour
             {
                 direction = 1;
             }
-            return new Vector3(g.transform.position.x + (.6f * direction), .005f, lastPoint.z);
+            return new Vector3(g.transform.position.x + (1f * direction), .005f, lastPoint.z);
         }
         else
         {
@@ -451,7 +535,7 @@ public class ButtonBehavior : MonoBehaviour
             {
                 direction = 1;
             }
-            return new Vector3(lastPoint.x, .005f, g.transform.position.z + (.6f * direction));
+            return new Vector3(lastPoint.x, .005f, g.transform.position.z + (1f * direction));
         }
 
     }
