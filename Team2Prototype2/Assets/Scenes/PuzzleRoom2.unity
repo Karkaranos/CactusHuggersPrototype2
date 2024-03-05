@@ -2538,7 +2538,7 @@ GameObject:
   - component: {fileID: 105638510}
   - component: {fileID: 105638509}
   - component: {fileID: 105638508}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10368,7 +10368,7 @@ PrefabInstance:
     - target: {fileID: 6631452765804977548, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: allInteractables.Array.data[0]._linkObject
       value: 
-      objectReference: {fileID: 1966300943}
+      objectReference: {fileID: 1295054368}
     - target: {fileID: 6631452765804977548, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: allInteractables.Array.data[0]._objectType
       value: 1
@@ -29321,7 +29321,7 @@ GameObject:
   - component: {fileID: 851705956}
   - component: {fileID: 851705955}
   - component: {fileID: 851705954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36661,7 +36661,7 @@ GameObject:
   - component: {fileID: 1241740528}
   - component: {fileID: 1241740527}
   - component: {fileID: 1241740526}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38136,6 +38136,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1342820987917093291, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
   m_PrefabInstance: {fileID: 1291626766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1295054368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6686182998377696287, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+  m_PrefabInstance: {fileID: 492574000}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1301316333
 GameObject:
@@ -45718,7 +45723,7 @@ GameObject:
   - component: {fileID: 1625693061}
   - component: {fileID: 1625693060}
   - component: {fileID: 1625693059}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51168,7 +51173,7 @@ GameObject:
   - component: {fileID: 1794726096}
   - component: {fileID: 1794726095}
   - component: {fileID: 1794726094}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54874,11 +54879,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1966300943 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5659917298951847876, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-  m_PrefabInstance: {fileID: 492574000}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1967802843
 PrefabInstance:
   m_ObjectHideFlags: 0
