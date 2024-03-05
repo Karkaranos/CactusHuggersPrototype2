@@ -306,6 +306,8 @@ public class ButtonBehavior : MonoBehaviour
     private void GenerateWirePositions()
     {
         Vector3[] wirePositions = new Vector3[10];
+
+        //Iterate over each interactables saved to this button
         foreach (Interactables i in allInteractables)
         {
             
@@ -368,22 +370,26 @@ public class ButtonBehavior : MonoBehaviour
                 }
             }
 
+            //Here's where the code gets messy. This could probably be done with a for loop thst runs twice and a direction variable
 
+            //Checks if the previous point was close to the second-to-last point
             if(Mathf.Abs(wirePositions[valueCount-1].x - wirePositions[8].x) > .5f || Mathf.Abs(wirePositions[valueCount - 1].z - wirePositions[8].z) > .5f)
             {
+                //If the button is on the z axis, change the next point's X
                 if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
                 {
                     if (parent.position.x - objPos.x < 0)
                     {
-                        wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount-1].z - .6f);
+                        wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount-1].z);
                         valueCount++;
                     }
                     else
                     {
-                        wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount - 1].z +.6f);
+                        wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount - 1].z);
                         valueCount++;
                     }
                 }
+                //Otherwise if the button is on the x axis, change the next point's Z
                 else if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
                 {
                     if (parent.position.z - objPos.z < 0)
@@ -400,7 +406,6 @@ public class ButtonBehavior : MonoBehaviour
             }
             else
             {
-                print("Statement ran 1");
                 if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
                 {
                     wirePositions[7] = new Vector3(wirePositions[2].x, wirePositions[8].y, wirePositions[8].z);
@@ -411,9 +416,10 @@ public class ButtonBehavior : MonoBehaviour
                 }
             }
 
-            if (Mathf.Abs(wirePositions[valueCount - 1].x - wirePositions[8].x) > .2f || Mathf.Abs(wirePositions[valueCount - 1].z - wirePositions[8].z) > .2f)
+            //Checks if the previous point was close to the second-to-last point
+            if (Mathf.Abs(wirePositions[valueCount - 1].x - wirePositions[8].x) > .5f || Mathf.Abs(wirePositions[valueCount - 1].z - wirePositions[8].z) > .5f)
             {
-                wirePositions[valueCount + 1] = new Vector3(objPos.x, .005f, objPos.z);
+                //If the button is on the X axis, change the X value
                 if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
                 {
                     if (parent.position.x - objPos.x < 0)
@@ -427,6 +433,7 @@ public class ButtonBehavior : MonoBehaviour
                         valueCount++;
                     }
                 }
+                //If the button is on the Z axis, change the Z value
                 else if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
                 {
                     if (parent.position.z - objPos.z < 0)
@@ -441,10 +448,8 @@ public class ButtonBehavior : MonoBehaviour
                     }
                 }
             }
-
             else
             {
-                print("Statement ran 2");
                 if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
                 {
                     wirePositions[7] = new Vector3(wirePositions[2].x, wirePositions[8].y, wirePositions[8].z);
@@ -455,20 +460,22 @@ public class ButtonBehavior : MonoBehaviour
                 }
             }
 
+            //If the third-to-last position is empty, set it to am adjusted version of the second-to-last position
             if(wirePositions[7] == Vector3.zero)
             {
-                print("funky case");
-
+                //Adjusts the x-coordinate
                 if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
                 {
                     wirePositions[7] = new Vector3(wirePositions[8].x + (wirePositions[2].x - wirePositions[1].x), wirePositions[8].y, wirePositions[8].z);
                 }
+                //Adjusts the z-coordinate 
                 else
                 {
                     wirePositions[7] = new Vector3(wirePositions[8].x, wirePositions[8].y, wirePositions[8].z + (wirePositions[2].z - wirePositions[1].z));
                 }
             }
 
+            //shift the array so no positions point to 0,0
             for(int j=7; j < wirePositions.Length; j++)
             {
                 wirePositions[valueCount] = wirePositions[j];
@@ -568,12 +575,13 @@ public class ButtonBehavior : MonoBehaviour
     }
     private void DrawWires(Vector3[] points, int size, Interactables i)
     {
-        print("length of points: " + size);
+        //Create a new game object and give it a line renderer
         GameObject newChild = new GameObject(i.LinkObject.name + " Line Renderer");
         newChild.transform.parent = transform;
         i.LineRendererObject = newChild;
         l = newChild.AddComponent<LineRenderer>();
 
+        //update the line renderer's values
         l.startWidth = .3f;
         l.endWidth = .3f;
         l.material = _inactiveWire;
