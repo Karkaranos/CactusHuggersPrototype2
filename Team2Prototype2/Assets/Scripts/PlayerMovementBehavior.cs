@@ -74,7 +74,7 @@ public class PlayerMovementBehavior : MonoBehaviour
 
     private bool _isInteracting = false;
     [SerializeField] private Vector3 moveDir;
-
+    private Transform lastCheckpoint;
     RigidbodyConstraints defConstraints;
 
     public float HorizontalRotationSpeed { get => _horizontalRotationSpeed;}
@@ -341,6 +341,20 @@ public class PlayerMovementBehavior : MonoBehaviour
         {
             print("Load next scene");
             SceneManager.LoadScene(_sceneToGoTo);
+        }
+
+        if (other.gameObject.tag.Equals("Checkpoint"))
+        {
+            print("Checkpoint Reached");
+            lastCheckpoint = other.transform;
+        }
+
+        if (other.gameObject.tag.Equals("Deathbox"))
+        {
+            CharacterController c = GetComponent<CharacterController>();
+            c.enabled = false;
+            transform.position = lastCheckpoint.position;
+            c.enabled = true;
         }
     }
 
