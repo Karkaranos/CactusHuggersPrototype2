@@ -37,6 +37,10 @@ public class ButtonBehavior : MonoBehaviour
     [Tooltip("The amount of time the total animation takes")]
     [SerializeField] private float _buttonAnimationTime;
 
+    [Header("Wire Controls")]
+    [SerializeField] private Material _inactiveWire;
+    [SerializeField] private Material _activeWire;
+
     #endregion
 
     #region Functions
@@ -51,16 +55,13 @@ public class ButtonBehavior : MonoBehaviour
 
         walls = GameObject.FindGameObjectsWithTag("Wall");
 
-        InitializeLinkedState();
 
         if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("2"))
         {
             GenerateWirePositions();
         }
-        else
-        {
-            Destroy(transform.GetChild(0).gameObject.GetComponent<LineRenderer>());
-        }
+
+        InitializeLinkedState();
     }
 
     /// <summary>
@@ -184,7 +185,27 @@ public class ButtonBehavior : MonoBehaviour
                 {
                     throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
                 }
-                mpb.StopMoving = !mpb.StopMoving;
+                if(i.PressedState == Interactables.LinkedState.MOVING_PLATFORM && !i.TogglesWhenPressed)
+                {
+                    mpb.StopMoving = false;
+                }
+                else if (i.PressedState == Interactables.LinkedState.STOPPED_PLATFORM && !i.TogglesWhenPressed)
+                {
+                    mpb.StopMoving = true;
+                }
+                else
+                {
+                    mpb.StopMoving = !mpb.StopMoving;
+                }
+
+                if(mpb.StopMoving)
+                {
+                    DeactivateWires(i);
+                }
+                else
+                {
+                    ActivateWires(i);
+                }
             }
             //Handles button interactions for doors
             else if (i.ObjectType == Interactables.LinkedType.DOOR)
@@ -197,10 +218,12 @@ public class ButtonBehavior : MonoBehaviour
                 if ((i.PressedState == Interactables.LinkedState.OPEN_DOOR && !i.TogglesWhenPressed)|| (i.TogglesWhenPressed && !db.IsOpen))
                 {
                     db.OpenDoor();
+                    ActivateWires(i);
                 }
                 else 
                 {
                     db.CloseDoor();
+                    DeactivateWires(i);
                 }
 
             }
@@ -220,6 +243,7 @@ public class ButtonBehavior : MonoBehaviour
             if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
             {
                 mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
+                mpb.RelatedInteractable = i;
                 if (mpb == null)
                 {
                     throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
@@ -231,11 +255,13 @@ public class ButtonBehavior : MonoBehaviour
                 else
                 {
                     mpb.StopMoving = false;
+                    ActivateWires(i);
                 }
             }
             else if (i.ObjectType == Interactables.LinkedType.DOOR)
             {
                 DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
+                db.RelatedInteractable = i;
                 if (db == null)
                 {
                     throw new System.Exception("Door Behavior could not be found on the linked object");
@@ -243,6 +269,7 @@ public class ButtonBehavior : MonoBehaviour
                 if (i.DefaultState == Interactables.LinkedState.OPEN_DOOR)
                 {
                     db.OpenInitialDoor();
+                    ActivateWires(i);
                 }
             }
         }
@@ -272,7 +299,10 @@ public class ButtonBehavior : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Generates the wires for this button
+    /// Hella inefficient code, but it works
+    /// </summary>
     private void GenerateWirePositions()
     {
         Vector3[] wirePositions = new Vector3[10];
@@ -287,55 +317,59 @@ public class ButtonBehavior : MonoBehaviour
             wirePositions[8] = new Vector3(wirePositions[9].x, .005f, wirePositions[9].z);
             wirePositions[7] = Vector3.zero;
             int valueCount = 2;
-            Vector3 buildMe = wirePositions[1];
-
-
-
-            int lastDir = 0;
-
-
             
+            //Any time you see something comparing the angles, it is checking what axis the button is on
+            //In this case, the button is on the x axis
             if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
             {
-                
+                //Gets the direction the button is facing. Sets a point a distance away on the ground
+                //Then calls generation of the next point
                 if (parent.position.x - objPos.x < 0)
                 {
+                    //Generates a point on the ground a set distance away from the wall
                     wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z - .2f);
                     valueCount++;
+                    //Generates the next point
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], 1, 'x');
                     valueCount++;
-                    lastDir = 1;
                 }
                 else
                 {
+                    //Generates a point on the ground a set distance away from the wall
                     wirePositions[valueCount] = new Vector3(wirePositions[1].x, wirePositions[1].y, wirePositions[1].z + .2f);
                     valueCount++;
+                    //Generates the next point
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount-1], -1, 'x');
                     valueCount++;
-                    lastDir = 1;
                 }
             }
+            //If the button is on the z axis
             else if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
             {
+                //Gets the direction the button is facing. Sets a point a distance away on the ground
+                //Then calls generation of the next point
                 if (parent.position.z - objPos.z < 0)
                 {
+                    //Generates a point on the ground a set distance away from the wall
                     wirePositions[valueCount] = new Vector3(wirePositions[1].x + .2f, wirePositions[1].y, wirePositions[1].z);
                     valueCount++;
+                    //Generates the next point
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'z');
                     valueCount++;
-                    lastDir = 2;
                 }
                 else
                 {
+                    //Generates a point on the ground a set distance away from the wall
                     wirePositions[valueCount] = new Vector3(wirePositions[1].x - .2f, wirePositions[1].y, wirePositions[1].z);
                     valueCount++;
+                    //Generates the next point
                     wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
                     valueCount++;
-                    lastDir = 2;
                 }
             }
 
-            if(Mathf.Abs(wirePositions[valueCount-1].x - wirePositions[8].x) > .2f || Mathf.Abs(wirePositions[valueCount - 1].z - wirePositions[8].z) > .2f)
+
+            if(Mathf.Abs(wirePositions[valueCount-1].x - wirePositions[8].x) > .5f || Mathf.Abs(wirePositions[valueCount - 1].z - wirePositions[8].z) > .5f)
             {
                 if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
                 {
@@ -343,13 +377,11 @@ public class ButtonBehavior : MonoBehaviour
                     {
                         wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount-1].z - .6f);
                         valueCount++;
-                        lastDir = 1;
                     }
                     else
                     {
                         wirePositions[valueCount] = new Vector3(objPos.x, .005f, wirePositions[valueCount - 1].z +.6f);
                         valueCount++;
-                        lastDir = 1;
                     }
                 }
                 else if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
@@ -358,18 +390,17 @@ public class ButtonBehavior : MonoBehaviour
                     {
                         wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x, .005f, objPos.z);
                         valueCount++;
-                        lastDir = 2;
                     }
                     else
                     {
                         wirePositions[valueCount] = new Vector3(wirePositions[valueCount - 1].x , .005f, objPos.z);
                         valueCount++;
-                        lastDir = 2;
                     }
                 }
             }
             else
             {
+                print("Statement ran 1");
                 if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
                 {
                     wirePositions[7] = new Vector3(wirePositions[2].x, wirePositions[8].y, wirePositions[8].z);
@@ -389,13 +420,11 @@ public class ButtonBehavior : MonoBehaviour
                     {
                         wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'x');
                         valueCount++;
-                        lastDir = 1;
                     }
                     else
                     {
                         wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'x');
                         valueCount++;
-                        lastDir = 1;
                     }
                 }
                 else if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
@@ -404,19 +433,18 @@ public class ButtonBehavior : MonoBehaviour
                     {
                         wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], 1, 'z');
                         valueCount++;
-                        lastDir = 2;
                     }
                     else
                     {
                         wirePositions[valueCount] = GeneratePoint(wirePositions[valueCount - 1], -1, 'z');
                         valueCount++;
-                        lastDir = 2;
                     }
                 }
             }
 
             else
             {
+                print("Statement ran 2");
                 if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
                 {
                     wirePositions[7] = new Vector3(wirePositions[2].x, wirePositions[8].y, wirePositions[8].z);
@@ -445,13 +473,7 @@ public class ButtonBehavior : MonoBehaviour
             {
                 wirePositions[valueCount] = wirePositions[j];
                 valueCount++;
-                print("moved position " + j + " to position " + (valueCount - 1));
             }
-
-
-            for (int j = 0; j < valueCount; j++)
-                print( j + " stores " + wirePositions[j].ToString());
-
 
             DrawWires(wirePositions, valueCount, i);
 
@@ -459,7 +481,13 @@ public class ButtonBehavior : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Generates wire points following a set algorithim
+    /// </summary>
+    /// <param name="lastPoint">The last point the wire went to</param>
+    /// <param name="direction">The positive/negative direction the wire should go</param>
+    /// <param name="axis">The axis the wire should generate a new point on</param>
+    /// <returns>The new point as a Vector3</returns>
     private Vector3 GeneratePoint(Vector3 lastPoint, int direction, char axis)
     {
         GameObject g = null;
@@ -541,17 +569,38 @@ public class ButtonBehavior : MonoBehaviour
     private void DrawWires(Vector3[] points, int size, Interactables i)
     {
         print("length of points: " + size);
-        GameObject newChild = new GameObject();
+        GameObject newChild = new GameObject(i.LinkObject.name + " Line Renderer");
+        newChild.transform.parent = transform;
         i.LineRendererObject = newChild;
         l = newChild.AddComponent<LineRenderer>();
 
         l.startWidth = .3f;
         l.endWidth = .3f;
+        l.material = _inactiveWire;
         l.alignment = LineAlignment.View;
         l.positionCount = size;
         l.SetPositions(points);
         l.useWorldSpace = true;
 
+    }
+    /// <summary>
+    /// Activates the wire for the given interactable
+    /// </summary>
+    /// <param name="i">The interactable to activate wire states on</param>
+    public void ActivateWires(Interactables i)
+    {
+        LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
+        l.material = _activeWire;
+    }
+
+    /// <summary>
+    /// Deactivates wthe wire for the given interactable
+    /// </summary>
+    /// <param name="i">The interactable to deactivate wire states on</param>
+    public void DeactivateWires(Interactables i)
+    {
+        LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
+        l.material = _inactiveWire;
     }
 
     #endregion

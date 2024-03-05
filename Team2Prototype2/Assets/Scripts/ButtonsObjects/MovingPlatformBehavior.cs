@@ -33,6 +33,7 @@ public class MovingPlatformBehavior : MonoBehaviour
 
     //refrences
     private Rigidbody rb;
+    private Interactables relatedInteractable;
 
     [Header("Debug Yay!!!!")]
     //can stop the platform in the inspector to check if something is working/not
@@ -42,6 +43,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     private int nextWaypoint;
 
     public bool StopMoving { get => stopMoving; set => stopMoving = value; }
+    public Interactables RelatedInteractable { get => relatedInteractable; set => relatedInteractable = value; }
 
     /// <summary>
     /// set refrences
