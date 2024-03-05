@@ -5267,6 +5267,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -4.338
       objectReference: {fileID: 0}
+    - target: {fileID: 2574313603338259045, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: aea1db318c904074e81389d05bc80c10, type: 2}
     - target: {fileID: 4563705263018632389, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
       propertyPath: m_Name
       value: SecondDoor

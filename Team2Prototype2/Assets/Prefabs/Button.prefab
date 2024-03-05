@@ -373,6 +373,8 @@ MonoBehaviour:
   _buttonAnimationTime: 0.4
   _inactiveWire: {fileID: 2100000, guid: cd3c856da5d2d8a4c878a6e29dc96148, type: 2}
   _activeWire: {fileID: 2100000, guid: 829a623e86e325b47829fe07aa0ff46d, type: 2}
+  _inactiveWireBox: {fileID: 2100000, guid: aea1db318c904074e81389d05bc80c10, type: 2}
+  _activeWireBox: {fileID: 2100000, guid: a19d2e0b4c63e3640a7aec7b40f7090b, type: 2}
 --- !u!33 &5193728321476886118
 MeshFilter:
   m_ObjectHideFlags: 0

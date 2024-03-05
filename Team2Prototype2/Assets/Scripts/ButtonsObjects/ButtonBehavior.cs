@@ -40,6 +40,8 @@ public class ButtonBehavior : MonoBehaviour
     [Header("Wire Controls")]
     [SerializeField] private Material _inactiveWire;
     [SerializeField] private Material _activeWire;
+    [SerializeField] private Material _inactiveWireBox;
+    [SerializeField] private Material _activeWireBox;
 
     #endregion
 
@@ -599,6 +601,7 @@ public class ButtonBehavior : MonoBehaviour
     {
         LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
         l.material = _activeWire;
+        i.WireBox.GetComponent<Renderer>().material = _activeWireBox;
     }
 
     /// <summary>
@@ -609,6 +612,7 @@ public class ButtonBehavior : MonoBehaviour
     {
         LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
         l.material = _inactiveWire;
+        i.WireBox.GetComponent<Renderer>().material = _inactiveWireBox;
     }
 
     #endregion
