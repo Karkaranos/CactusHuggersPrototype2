@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - LevelEnd
+  - Checkpoint
+  - Deathbox
+  - WallX
+  - WallZ
+  - Wall
   layers:
   - Default
   - TransparentFX

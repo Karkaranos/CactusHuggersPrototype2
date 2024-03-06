@@ -74,7 +74,7 @@ public class PlayerMovementBehavior : MonoBehaviour
 
     private bool _isInteracting = false;
     [SerializeField] private Vector3 moveDir;
-
+    private Transform lastCheckpoint;
     RigidbodyConstraints defConstraints;
 
     public float HorizontalRotationSpeed { get => _horizontalRotationSpeed;}
@@ -342,6 +342,20 @@ public class PlayerMovementBehavior : MonoBehaviour
             print("Load next scene");
             SceneManager.LoadScene(_sceneToGoTo);
         }
+
+        if (other.gameObject.tag.Equals("Checkpoint"))
+        {
+            print("Checkpoint Reached");
+            lastCheckpoint = other.transform;
+        }
+
+        if (other.gameObject.tag.Equals("Deathbox"))
+        {
+            CharacterController c = GetComponent<CharacterController>();
+            c.enabled = false;
+            transform.position = lastCheckpoint.position;
+            c.enabled = true;
+        }
     }
 
 
@@ -357,12 +371,24 @@ public class PlayerMovementBehavior : MonoBehaviour
     }
 
 
-    public void PlayerIsLaunched(float launchHeight)
+    public void PlayerIsLaunched(float launchHeight, bool straightUp, Vector2 launchDirecton)
     {
+        
+
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         launchHeight *= rb.mass;
 
-        rb.AddForce(transform.up * launchHeight, ForceMode.Impulse);
+        
+        if (straightUp)
+        {
+            rb.AddForce(new Vector3 (launchDirecton.x, 1, launchDirecton.y) * launchHeight, ForceMode.Impulse);
+        }
+        else
+        {
+            rb.AddForce(transform.up * launchHeight, ForceMode.Impulse);
+        }
+
+        Debug.Log(launchHeight + " " + straightUp + " " + launchDirecton);
     }
 }

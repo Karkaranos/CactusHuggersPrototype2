@@ -349,7 +349,8 @@ Transform:
   m_LocalPosition: {x: 0.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1653968106471190437}
   m_Father: {fileID: 2998729786619205751}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -366,9 +367,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeTime: 2
+  _wallReference: {fileID: 0}
   allInteractables: []
-  _buttonPressDistance: 4
+  _buttonPressDistance: 3.8
   _buttonAnimationTime: 0.4
+  _inactiveWire: {fileID: 2100000, guid: cd3c856da5d2d8a4c878a6e29dc96148, type: 2}
+  _activeWire: {fileID: 2100000, guid: 829a623e86e325b47829fe07aa0ff46d, type: 2}
+  _inactiveWireBox: {fileID: 2100000, guid: aea1db318c904074e81389d05bc80c10, type: 2}
+  _activeWireBox: {fileID: 2100000, guid: a19d2e0b4c63e3640a7aec7b40f7090b, type: 2}
 --- !u!33 &5193728321476886118
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -440,3 +446,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8856762419042510682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1653968106471190437}
+  m_Layer: 0
+  m_Name: LineDrawer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1653968106471190437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8856762419042510682}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 79705454102367373}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
