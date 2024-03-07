@@ -15,7 +15,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovementBehavior : MonoBehaviour
 {
-    private CharacterController cc;
     private PlayerInput _pControls;
     private InputAction _lrMovement;
     private InputAction _fbMovement;
@@ -91,7 +90,6 @@ public class PlayerMovementBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         //defConstraints = GetComponent<Rigidbody>().constraints;
-        cc = GetComponent<CharacterController>();
         camTransform = Camera.main.transform;
         GetComponent<PlayerInput>().currentActionMap.Enable();
         _pControls = GetComponent<PlayerInput>();
@@ -334,29 +332,26 @@ public class PlayerMovementBehavior : MonoBehaviour
         //rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    public void TriggerEntered(GameObject g)
     {
-        if (other.gameObject.tag.Equals("LevelEnd"))
+        if (g.tag.Equals("LevelEnd"))
         {
             print("Load next scene");
             SceneManager.LoadScene(_sceneToGoTo);
         }
 
-        if (other.gameObject.tag.Equals("Checkpoint"))
+        if (g.tag.Equals("Checkpoint"))
         {
             print("Checkpoint Reached");
-            lastCheckpoint = other.transform;
+            lastCheckpoint = g.transform;
         }
 
-        if (other.gameObject.tag.Equals("Deathbox"))
+        if (g.tag.Equals("Deathbox"))
         {
-            CharacterController c = GetComponent<CharacterController>();
-            c.enabled = false;
             transform.position = lastCheckpoint.position;
-            c.enabled = true;
         }
     }
+
 
 
     private void ControlSpeed()
