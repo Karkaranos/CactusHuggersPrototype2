@@ -195,7 +195,7 @@ public class SaveStateBehvaior : MonoBehaviour
         if(fuckCharacterController)
         {
             fuckCharacterController = false;
-            GetComponent<CharacterController>().enabled = false;
+            //GetComponent<CharacterController>().enabled = false;
 
             if (stopMe != null)
             {
@@ -211,7 +211,7 @@ public class SaveStateBehvaior : MonoBehaviour
             saveStates[selectedSaveState].hasBeenSaved = false;
             Destroy(waypoints[selectedSaveState].gameObject);
 
-            GetComponent<CharacterController>().enabled = true;
+            //GetComponent<CharacterController>().enabled = true;
         }
     }
 
