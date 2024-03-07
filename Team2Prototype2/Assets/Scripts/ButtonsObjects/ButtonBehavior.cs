@@ -599,9 +599,12 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to activate wire states on</param>
     public void ActivateWires(Interactables i)
     {
-        LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
-        l.material = _activeWire;
-        i.WireBox.GetComponent<Renderer>().material = _activeWireBox;
+        if (i.LineRendererObject.GetComponent<LineRenderer>())
+        {
+            LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
+            l.material = _activeWire;
+            i.WireBox.GetComponent<Renderer>().material = _activeWireBox;
+        }
     }
 
     /// <summary>
@@ -610,9 +613,12 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to deactivate wire states on</param>
     public void DeactivateWires(Interactables i)
     {
-        LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
-        l.material = _inactiveWire;
-        i.WireBox.GetComponent<Renderer>().material = _inactiveWireBox;
+        if(i.LineRendererObject.GetComponent<LineRenderer>())
+        {
+            LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
+            l.material = _inactiveWire;
+            i.WireBox.GetComponent<Renderer>().material = _inactiveWireBox;
+        }
     }
 
     #endregion

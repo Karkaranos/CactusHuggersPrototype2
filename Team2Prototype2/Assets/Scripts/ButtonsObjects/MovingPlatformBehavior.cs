@@ -23,6 +23,8 @@ public class MovingPlatformBehavior : MonoBehaviour
     [Header("Check this bool if you want the platform to move in a loop")]
     //changes if the next waypoint targeting loops or snakes
     [SerializeField] private bool loops;
+    [SerializeField] private bool stopsAtEnds;
+    [SerializeField] private float stopAtEndTimer;
 
     [Header("Check this bool if you want the platform to launch")]
     [SerializeField] private bool launches;
@@ -133,6 +135,10 @@ public class MovingPlatformBehavior : MonoBehaviour
             //sets the platform back at the beginning
             nextWaypoint = 0;
 
+            if (stopsAtEnds)
+            {
+                StartCoroutine(movementTimer());
+            }
         }
         else
         {
@@ -174,7 +180,13 @@ public class MovingPlatformBehavior : MonoBehaviour
         collision.transform.SetParent(null);
     }
 
-    
+    private IEnumerator movementTimer()
+    {
+        stopMoving = true;
+        yield return new WaitForSeconds(stopAtEndTimer);
+        stopMoving = false;
+    }
+
     public void LaunchPlayer()
     {
         if (DebugLaunching)
