@@ -301,6 +301,8 @@ public class ButtonBehavior : MonoBehaviour
 
     }
 
+    #region Wires
+
     /// <summary>
     /// Generates the wires for this button
     /// Hella inefficient code, but it works
@@ -575,6 +577,13 @@ public class ButtonBehavior : MonoBehaviour
         }
 
     }
+
+    /// <summary>
+    /// Draws the wires for the given interactable
+    /// </summary>
+    /// <param name="points">The points the wire is drawn between</param>
+    /// <param name="size">Number of points</param>
+    /// <param name="i">Interactable to draw wires for</param>
     private void DrawWires(Vector3[] points, int size, Interactables i)
     {
         //Create a new game object and give it a line renderer
@@ -622,4 +631,6 @@ public class ButtonBehavior : MonoBehaviour
     }
 
     #endregion
+
+#endregion
 }
