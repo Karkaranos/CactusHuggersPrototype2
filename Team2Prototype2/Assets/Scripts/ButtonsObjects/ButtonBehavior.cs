@@ -599,7 +599,7 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to activate wire states on</param>
     public void ActivateWires(Interactables i)
     {
-        if (i.LineRendererObject.GetComponent<LineRenderer>())
+        if (!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("2"))
         {
             LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
             l.material = _activeWire;
@@ -613,7 +613,7 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to deactivate wire states on</param>
     public void DeactivateWires(Interactables i)
     {
-        if(i.LineRendererObject.GetComponent<LineRenderer>())
+        if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("2"))
         {
             LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
             l.material = _inactiveWire;

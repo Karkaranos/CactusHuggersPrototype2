@@ -143,6 +143,37 @@ public class PlayerMovementBehavior : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void OnDestroy()
+    {
+
+        _lrMovement.performed -= contx => lrValue = contx.ReadValue<float>();
+        _fbMovement.performed -= contx => fbValue = contx.ReadValue<float>();
+
+
+        _lrMovement.canceled -= contx => lrValue = contx.ReadValue<float>();
+        _fbMovement.canceled -= contx => fbValue = contx.ReadValue<float>();
+
+        _scrollWheel.performed -= _scrollWheel_performed;
+        _scrollWheel.canceled -= _scrollWheel_canceled;
+
+        _saveState.started -= _saveState_started;
+        ssBehav = GetComponent<SaveStateBehvaior>();
+
+        _switchState1.started -= _switchState1_started;
+        _switchState2.started -= _switchState2_started;
+        _switchState3.started -= _switchState3_started;
+
+        _loadState.started -= _loadState_started;
+
+        _interact.performed -= contx => StartCoroutine(Interact());
+
+        _jump.performed -= contx => Jump();
+
+        _restartLevel.performed -= contx => RestartLevel();
+
+        _quit.performed -= contx => Quit();
+    }
+
     private void _scrollWheel_canceled(InputAction.CallbackContext obj)
     {
         scrolling = false;
