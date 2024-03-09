@@ -58,7 +58,7 @@ public class ButtonBehavior : MonoBehaviour
         walls = GameObject.FindGameObjectsWithTag("Wall");
 
 
-        if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("2"))
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("1"))
         {
             GenerateWirePositions();
         }
@@ -229,16 +229,67 @@ public class ButtonBehavior : MonoBehaviour
                 }
 
             }
+
+
+            if(i.ResetsThese.Length != 0)
+            {
+                foreach(ChangedObject c in i.ResetsThese)
+                {
+                    foreach(Interactables ii in allInteractables)
+                    {
+                        if(c.LinkedObject = ii.LinkObject)
+                        {
+                            SetDefaultState(ii);
+                        }
+                    }
+                }
+            }
         }
         
 
 
     }
 
+    public void SetDefaultState(Interactables i)
+    {
+        if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
+        {
+            mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
+            mpb.RelatedInteractable = i;
+            if (mpb == null)
+            {
+                throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
+            }
+            if (i.DefaultState == Interactables.LinkedState.STOPPED_PLATFORM)
+            {
+                mpb.StopMoving = true;
+            }
+            else
+            {
+                mpb.StopMoving = false;
+                ActivateWires(i);
+            }
+        }
+        else if (i.ObjectType == Interactables.LinkedType.DOOR)
+        {
+            DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
+            db.RelatedInteractable = i;
+            if (db == null)
+            {
+                throw new System.Exception("Door Behavior could not be found on the linked object");
+            }
+            if (i.DefaultState == Interactables.LinkedState.OPEN_DOOR)
+            {
+                db.OpenInitialDoor();
+                ActivateWires(i);
+            }
+        }
+    }
+
     /// <summary>
     /// Initializes the state of the linked object
     /// </summary>
-    private void InitializeLinkedState()
+    public void InitializeLinkedState()
     {
         foreach(Interactables i in allInteractables)
         {

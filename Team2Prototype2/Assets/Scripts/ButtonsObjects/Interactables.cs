@@ -32,6 +32,8 @@ public class Interactables
     [Tooltip("True if object goes between two states when pressed")]
     [SerializeField] private bool _togglesWhenPressed;
     private GameObject _lineRendererObject;
+    [Tooltip("What objects should reset to default if this is pressed. Leave blank if none.")]
+    [SerializeField] private ChangedObject[] _resetsThese;
 
 
     public LinkedType ObjectType { get => _objectType; set => _objectType = value; }
@@ -42,4 +44,5 @@ public class Interactables
     public bool TogglesWhenPressed { get => _togglesWhenPressed; set => _togglesWhenPressed = value; }
     public GameObject WireBox { get => wireBox; set => wireBox = value; }
     public GameObject LineRendererObject { get => _lineRendererObject; set => _lineRendererObject = value; }
+    public ChangedObject[] ResetsThese { get => _resetsThese; set => _resetsThese = value; }
 }
