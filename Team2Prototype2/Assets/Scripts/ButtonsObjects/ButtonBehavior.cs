@@ -235,13 +235,9 @@ public class ButtonBehavior : MonoBehaviour
             {
                 foreach(ChangedObject c in i.ResetsThese)
                 {
-                    foreach(Interactables ii in allInteractables)
-                    {
-                        if(c.LinkedObject = ii.LinkObject)
-                        {
-                            SetDefaultState(ii);
-                        }
-                    }
+                    MovingPlatformBehavior mpb = c.LinkedObject.GetComponentInChildren<MovingPlatformBehavior>();
+                    mpb.StopMoving = true;
+                    c.LinkedObject.transform.position = mpb.Waypoints[mpb.Waypoints.Count-1].transform.position;
                 }
             }
         }
@@ -347,6 +343,15 @@ public class ButtonBehavior : MonoBehaviour
                 db = i.LinkObject.GetComponent<DoorBehavior>();
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(transform.position, db.gameObject.transform.GetChild(0).position);
+            }
+
+            if(i.ResetsThese.Length!=0)
+            {
+                foreach(ChangedObject c in i.ResetsThese)
+                {
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawLine(transform.position, c.LinkedObject.transform.position);
+                }
             }
         }
 
@@ -659,7 +664,7 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to activate wire states on</param>
     public void ActivateWires(Interactables i)
     {
-        if (!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("2"))
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("1"))
         {
             LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
             l.material = _activeWire;
@@ -673,7 +678,7 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to deactivate wire states on</param>
     public void DeactivateWires(Interactables i)
     {
-        if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("2"))
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("1"))
         {
             LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
             l.material = _inactiveWire;

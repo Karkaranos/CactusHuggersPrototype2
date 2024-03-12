@@ -17,10 +17,14 @@ public class DoorTriggerBehavior : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        gameObject.GetComponentInParent<DoorBehavior>().CloseDoor();
-        if(_linkedDoor!=null)
+        if(other.gameObject.CompareTag("Player"))
         {
-            _linkedDoor.GetComponent<DoorBehavior>().OpenDoor();
+            gameObject.GetComponentInParent<DoorBehavior>().CloseDoor();
+            if (_linkedDoor != null)
+            {
+                _linkedDoor.GetComponent<DoorBehavior>().OpenDoor();
+            }
         }
+
     }
 }
