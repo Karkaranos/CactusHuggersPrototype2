@@ -54,6 +54,7 @@ public class MovingPlatformBehavior : MonoBehaviour
 
     public bool StopMoving { get => stopMoving; set => stopMoving = value; }
     public Interactables RelatedInteractable { get => relatedInteractable; set => relatedInteractable = value; }
+    public List<Transform> Waypoints { get => waypoints;}
 
     /// <summary>
     /// set refrences
@@ -87,10 +88,10 @@ public class MovingPlatformBehavior : MonoBehaviour
 
         //moves
         transform.position = Vector3.MoveTowards(transform.position,
-            waypoints[nextWaypoint].position, temp);
+            Waypoints[nextWaypoint].position, temp);
 
         //if it hits the current target, it changes to the next target
-        if (transform.position == waypoints[nextWaypoint].position)
+        if (transform.position == Waypoints[nextWaypoint].position)
         {
             GetNextWaypoint();
         }
@@ -105,7 +106,7 @@ public class MovingPlatformBehavior : MonoBehaviour
         {
             foreach (Transform t in launchPoints)
             {
-                if (t == waypoints[nextWaypoint].transform)
+                if (t == Waypoints[nextWaypoint].transform)
                 {
                     LaunchPlayer();
                 }
@@ -113,7 +114,7 @@ public class MovingPlatformBehavior : MonoBehaviour
         }
         
         //checks to see if its reached the end of the list
-        if (nextWaypoint + 1 >= waypoints.Count)
+        if (nextWaypoint + 1 >= Waypoints.Count)
         {
             //if the designers dont want it to loop, it reverses the order of the list
             if (!loops)
@@ -121,14 +122,14 @@ public class MovingPlatformBehavior : MonoBehaviour
                 //saves all the waypoints in reverse order to a temp list, clears waypoints
                 //then resets waypoints to the reversed temp list
                 List<Transform> tempWaypointList = new List<Transform>();
-                for (int i = waypoints.Count - 1; i >= 0; i--)
+                for (int i = Waypoints.Count - 1; i >= 0; i--)
                 {
-                    tempWaypointList.Add(waypoints[i]);
+                    tempWaypointList.Add(Waypoints[i]);
                 }
-                waypoints.Clear();
+                Waypoints.Clear();
                 foreach (Transform t in tempWaypointList)
                 {
-                    waypoints.Add(t);
+                    Waypoints.Add(t);
                 }
                 
             }
