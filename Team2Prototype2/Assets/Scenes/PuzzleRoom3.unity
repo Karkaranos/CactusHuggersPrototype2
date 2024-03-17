@@ -18021,7 +18021,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 6441857210397131960}
   - {fileID: 947549464632051917}
-  speed: 11.9
+  speed: 9.2
   loops: 1
   stopsAtEnds: 0
   stopAtEndTimer: 0
@@ -18496,7 +18496,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 5107896328616105413}
   - {fileID: 1342820987312052656}
-  speed: 11.9
+  speed: 9.12
   loops: 1
   stopsAtEnds: 0
   stopAtEndTimer: 0
@@ -18607,7 +18607,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 5069234655756261944}
   - {fileID: 1304291513511990861}
-  speed: 11.9
+  speed: 9.12
   loops: 1
   stopsAtEnds: 0
   stopAtEndTimer: 0
