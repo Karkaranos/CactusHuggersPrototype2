@@ -6255,6 +6255,10 @@ PrefabInstance:
       propertyPath: _sceneToGoTo
       value: PuzzleRoom2
       objectReference: {fileID: 0}
+    - target: {fileID: 7572214633151097419, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
+      propertyPath: groundLayers.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 8174277020852627336, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
       propertyPath: stateText
       value: 
@@ -8449,6 +8453,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2026676307}
+    - target: {fileID: 6343683737820380721, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6890595947904089552, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8476,6 +8484,14 @@ PrefabInstance:
     - target: {fileID: 6890595947904089552, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7455106695312301151, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550413668038664872, guid: 586ff432cb698b34a836a07a7ffe2636, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
