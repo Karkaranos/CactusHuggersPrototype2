@@ -30,8 +30,10 @@ public class SaveStateBehvaior : MonoBehaviour
     [SerializeField] private int currentStateSelected;
 
     [Header("Debug Variables: "), Tooltip("dont touch these pls")]
-    [SerializeField] private float currentCooldownTime;
-    private bool onCooldown;
+    [SerializeField] private float currentSaveCooldownTime;
+    [SerializeField] private float currentLoadCooldownTime;
+    private bool onSaveCooldown;
+    private bool onLoadCooldown;
     [SerializeField] public static int selectedSaveState;
     [SerializeField] private GameObject saveStateWaypoint;
     [SerializeField] private GameObject[] waypoints = new GameObject[NumberOfSaveStates];
@@ -53,8 +55,8 @@ public class SaveStateBehvaior : MonoBehaviour
     void Start()
     {
         _saveStateTextFeedback.SetActive(false);
-        currentCooldownTime = maxCooldownTime;
-        onCooldown = false;
+        currentSaveCooldownTime = maxCooldownTime;
+        onSaveCooldown = false;
         if (stateText == null)
         {
             noText = true;
@@ -69,19 +71,34 @@ public class SaveStateBehvaior : MonoBehaviour
     void FixedUpdate()
     {
         //only runs if its on cooldown
-        if (onCooldown)
+        if (onSaveCooldown)
         {
             //as long as its not done with the cooldown it will make it go down
-            if (currentCooldownTime > 0)
+            if (currentSaveCooldownTime > 0)
             {
                 //subtracts the time passed
-                currentCooldownTime -= Time.deltaTime;
+                currentSaveCooldownTime -= Time.deltaTime;
             }
             else
             {
                 //allows the player to use the ability again
-                currentCooldownTime = maxCooldownTime;
-                onCooldown = false;
+                currentSaveCooldownTime = maxCooldownTime;
+                onSaveCooldown = false;
+            }
+        }
+        if(onLoadCooldown)
+        {
+            //as long as its not done with the cooldown it will make it go down
+            if (currentLoadCooldownTime > 0)
+            {
+                //subtracts the time passed
+                currentLoadCooldownTime -= Time.deltaTime;
+            }
+            else
+            {
+                //allows the player to use the ability again
+                currentLoadCooldownTime = maxCooldownTime;
+                onLoadCooldown = false;
             }
         }
     }
@@ -114,10 +131,10 @@ public class SaveStateBehvaior : MonoBehaviour
     public void LoadState()
     {
         //only works if its not on cooldown
-        if (!onCooldown)
+        if (!onLoadCooldown)
         {
             //puts it on cooldown
-            onCooldown = true;
+            onLoadCooldown = true;
 
             //checks to see if the save state has anything in it
             if (saveStates[selectedSaveState].hasBeenSaved)
@@ -142,10 +159,10 @@ public class SaveStateBehvaior : MonoBehaviour
     public void SetSaveState()
     {
         //checks to see if its on cooldown already
-        if (!onCooldown)
+        if (!onSaveCooldown)
         {
             //puts it on cooldown
-            onCooldown = true;
+            onSaveCooldown = true;
 
             //sets all the variables
             saveStates[selectedSaveState].pPos = transform.position;
