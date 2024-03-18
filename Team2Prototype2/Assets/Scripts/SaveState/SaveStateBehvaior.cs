@@ -37,7 +37,7 @@ public class SaveStateBehvaior : MonoBehaviour
     [SerializeField] private GameObject[] waypoints = new GameObject[NumberOfSaveStates];
     [SerializeField] private TMP_Text stateText;
     private bool noText;
-    private bool fuckCharacterController = false;
+    private bool pauseMovement = false;
 
     [Header("Canvas References")]
     [SerializeField] private GameObject _saveStateTextFeedback;
@@ -127,7 +127,7 @@ public class SaveStateBehvaior : MonoBehaviour
                 {
                     uim.EmptySaveState(selectedSaveState);
                 }
-                fuckCharacterController = true;
+                pauseMovement = true;
             }
             else
             {
@@ -192,9 +192,9 @@ public class SaveStateBehvaior : MonoBehaviour
 
     public void LateUpdate()
     {
-        if(fuckCharacterController)
+        if(pauseMovement)
         {
-            fuckCharacterController = false;
+            pauseMovement = false;
 
             if (stopMe != null)
             {
@@ -202,7 +202,9 @@ public class SaveStateBehvaior : MonoBehaviour
             }
             stopMe = StartCoroutine(TextFade("Loaded Save " + (selectedSaveState + 1)));
             //sets all the variables in the saveStateVariables attached to it
-            transform.position = saveStates[selectedSaveState].pPos;
+            Vector3 playerPos = saveStates[selectedSaveState].pPos;
+            playerPos.y += .2f;
+            transform.position = playerPos;
             transform.rotation = saveStates[selectedSaveState].pRot;
             transform.localScale = saveStates[selectedSaveState].pScale;
 
