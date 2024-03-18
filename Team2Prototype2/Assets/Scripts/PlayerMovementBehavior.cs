@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -259,7 +260,7 @@ public class PlayerMovementBehavior : MonoBehaviour
         }
     }
 
-
+    
 
     /// <summary>
     /// Update is called once per frame. It handles movement and reads mouse position.
@@ -311,7 +312,7 @@ public class PlayerMovementBehavior : MonoBehaviour
 
         cameraBehav.Look(_mPos.ReadValue<Vector2>());
 
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayers);
+        //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayers);
 
         if (grounded)
         {
@@ -416,5 +417,22 @@ public class PlayerMovementBehavior : MonoBehaviour
         }
 
         Debug.Log(launchHeight + " " + straightUp + " " + launchDirecton);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 
+            6 && transform.position.y > collision.transform.position.y)
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            grounded = false;
+        }
     }
 }
