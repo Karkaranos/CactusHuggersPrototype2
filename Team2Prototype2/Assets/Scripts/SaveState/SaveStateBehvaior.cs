@@ -203,10 +203,11 @@ public class SaveStateBehvaior : MonoBehaviour
             stopMe = StartCoroutine(TextFade("Loaded Save " + (selectedSaveState + 1)));
             //sets all the variables in the saveStateVariables attached to it
             Vector3 playerPos = saveStates[selectedSaveState].pPos;
+            transform.parent = null;
             playerPos.y += .2f;
             transform.position = playerPos;
             transform.rotation = saveStates[selectedSaveState].pRot;
-            transform.localScale = saveStates[selectedSaveState].pScale;
+            //transform.localScale = saveStates[selectedSaveState].pScale;
 
             //makes it so you have to save again to load the state
             saveStates[selectedSaveState].hasBeenSaved = false;
