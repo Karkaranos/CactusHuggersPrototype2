@@ -5079,6 +5079,10 @@ PrefabInstance:
       propertyPath: cameraBehav
       value: 
       objectReference: {fileID: 2051725362}
+    - target: {fileID: 7572214633151097419, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
+      propertyPath: _sceneToGoTo
+      value: PlaytestEndScene
+      objectReference: {fileID: 0}
     - target: {fileID: 8174277020852627336, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
       propertyPath: stateText
       value: 
