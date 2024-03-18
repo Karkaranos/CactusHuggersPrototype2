@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 1822803069368258707}
   - component: {fileID: 2051908173206075591}
   - component: {fileID: 6343683737820380721}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual Red Lines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
