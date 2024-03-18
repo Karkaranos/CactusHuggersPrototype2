@@ -2215,7 +2215,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 132628426}
-  m_Material: {fileID: 13400000, guid: 70073aabb5f1b024292c9cfc613eb757, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -23830,7 +23830,7 @@ GameObject:
   - component: {fileID: 783585126}
   - component: {fileID: 783585125}
   - component: {fileID: 783585124}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23859,7 +23859,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783585122}
-  m_Material: {fileID: 13400000, guid: 70073aabb5f1b024292c9cfc613eb757, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -26938,8 +26938,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.739834, y: 12.911974, z: 11.900284}
-  m_Center: {x: -0.5112133, y: 5.955987, z: 1.0378113}
+  m_Size: {x: 3.59684, y: 12.129855, z: 13.613396}
+  m_Center: {x: -1.5827103, y: 6.3470464, z: 2.4006157}
 --- !u!43 &901873841
 Mesh:
   m_ObjectHideFlags: 0
@@ -27621,7 +27621,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948025984}
-  m_Material: {fileID: 13400000, guid: 70073aabb5f1b024292c9cfc613eb757, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -38110,7 +38110,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748267684}
-  m_Material: {fileID: 13400000, guid: 70073aabb5f1b024292c9cfc613eb757, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -39425,7 +39425,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759647450}
-  m_Material: {fileID: 13400000, guid: 70073aabb5f1b024292c9cfc613eb757, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
