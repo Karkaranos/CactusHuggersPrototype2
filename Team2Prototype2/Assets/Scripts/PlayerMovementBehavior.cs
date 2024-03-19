@@ -241,8 +241,17 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// <returns></returns>
     IEnumerator JumpDecay()
     {
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null)
+        {
+            am.JumpSound();
+        }
         yield return new WaitForSeconds(_jumpTime);
         jumping = false;
+        if (am != null)
+        {
+            am.LandSound();
+        }
     }
 
     /// <summary>
@@ -255,7 +264,6 @@ public class PlayerMovementBehavior : MonoBehaviour
         {
             Interacting = true;
             yield return new WaitForSeconds(2f);
-            print("interacted");
             Interacting = false;
         }
     }
@@ -368,13 +376,11 @@ public class PlayerMovementBehavior : MonoBehaviour
     {
         if (g.tag.Equals("LevelEnd"))
         {
-            print("Load next scene");
             SceneManager.LoadScene(_sceneToGoTo);
         }
 
         if (g.tag.Equals("Checkpoint"))
         {
-            print("Checkpoint Reached");
             lastCheckpoint = g.transform;
         }
 
@@ -419,7 +425,7 @@ public class PlayerMovementBehavior : MonoBehaviour
         Debug.Log(launchHeight + " " + straightUp + " " + launchDirecton);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.layer == 
             6 && transform.position.y > collision.transform.position.y)

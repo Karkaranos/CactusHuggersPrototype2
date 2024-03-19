@@ -118,8 +118,6 @@ public class SaveStateBehvaior : MonoBehaviour
         }
         if (!noText)
         {
-
-            print("Ran switch state");
             stateText.text = "Selected State: " + switchTo;
         }
         
@@ -178,6 +176,11 @@ public class SaveStateBehvaior : MonoBehaviour
             {
                 uim.OverwriteSaveState(selectedSaveState);
             }
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.OverrideSound();
+            }
         }
         else
         {
@@ -189,6 +192,11 @@ public class SaveStateBehvaior : MonoBehaviour
             if (uim != null)
             {
                 uim.FillSaveState(selectedSaveState);
+            }
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.SaveSound();
             }
         }
         waypoints[selectedSaveState] = go;
@@ -232,7 +240,6 @@ public class SaveStateBehvaior : MonoBehaviour
         transform.parent = null;
         Vector3 playerPos = saveStates[selectedSaveState].pPos;
         playerPos.y += .2f;
-        print(playerPos);
         transform.position = playerPos;
         transform.rotation = saveStates[selectedSaveState].pRot;
         //transform.localScale = saveStates[selectedSaveState].pScale;

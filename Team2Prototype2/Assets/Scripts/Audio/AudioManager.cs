@@ -34,6 +34,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        //Ensures this is the only instance of this object
         int numAM = FindObjectsOfType<AudioManager>().Length;
         if (numAM != 1)
         {
@@ -44,6 +45,7 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+        //Initializes all sounds
         foreach (Sound sound in Sounds)
         {
             sound.source = gameObject.AddComponent<AudioSource>();
@@ -80,7 +82,6 @@ public class AudioManager : MonoBehaviour
         if (sound != null)
         {
             sound.source.Play();
-            //print(audioName + " started");
         }
     }
 
@@ -94,7 +95,6 @@ public class AudioManager : MonoBehaviour
         if (sound != null)
         {
             sound.source.Stop();
-            //print(audioName + " stopped");
         }
 
     }
@@ -173,6 +173,9 @@ public class AudioManager : MonoBehaviour
 
     #region Play
 
+    /// <summary>
+    /// Stops all sounds that are currently playing
+    /// </summary>
     public void StopAllSounds()
     {
         for (int i = 0; i < Sounds.Length; i++)
@@ -181,6 +184,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops all music that is currently playing
+    /// </summary>
     private void StopAllMusic()
     {
         for (int i = 0; i < Sounds.Length; i++)
@@ -191,6 +197,56 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Public function to play the open door sound
+    /// </summary>
+    public void OpenDoorSound()
+    {
+        Play("OpenDoor");
+    }
+
+    /// <summary>
+    /// Public function to play the close door sound
+    /// </summary>
+    public void CloseDoorSound()
+    {
+        Play("CloseDoor");
+    }
+
+    /// <summary>
+    /// Public function to play the save override sound
+    /// </summary>
+    public void OverrideSound()
+    {
+        Play("Override");
+    }
+
+    /// <summary>
+    /// Public function to play the set save sound
+    /// </summary>
+    public void SaveSound()
+    {
+        Play("SetSave");
+    }
+
+    /// <summary>
+    /// Public function to play the jump sound
+    /// </summary>
+    public void JumpSound()
+    {
+        Play("Jump");
+    }
+
+    /// <summary>
+    /// Public function to play the land sound
+    /// </summary>
+    public void LandSound()
+    {
+        Play("Land");
+    }
+
+
 
     #endregion
 }
