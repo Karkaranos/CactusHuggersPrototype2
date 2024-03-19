@@ -8712,7 +8712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631452765804977548, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: allInteractables.Array.data[0]._platformsToChange.Array.data[1]._waypointToGoTo
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9891,7 +9891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631452765804977548, guid: a0ee10f32eb94584ca6c5bf1c92fe48d, type: 3}
       propertyPath: allInteractables.Array.data[0]._platformsToChange.Array.data[1]._waypointToGoTo
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25644,7 +25644,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 6441857210397131960}
   - {fileID: 947549464632051917}
-  speed: 9.2
+  speed: 6
   loops: 1
   stopsAtEnds: 0
   stopAtEndTimer: 0
@@ -26119,7 +26119,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 5107896328616105413}
   - {fileID: 1342820987312052656}
-  speed: 9.12
+  speed: 6
   loops: 1
   stopsAtEnds: 0
   stopAtEndTimer: 0
@@ -26231,7 +26231,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 5069234655756261944}
   - {fileID: 1304291513511990861}
-  speed: 9.12
+  speed: 6
   loops: 1
   stopsAtEnds: 0
   stopAtEndTimer: 0

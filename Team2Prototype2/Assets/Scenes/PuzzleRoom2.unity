@@ -7941,6 +7941,14 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: stopsAtEnds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: stopAtEndTimer
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: waypoints.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -22843,6 +22851,14 @@ PrefabInstance:
       value: 4.17
       objectReference: {fileID: 0}
     - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: stopsAtEnds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: stopAtEndTimer
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: waypoints.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -32728,6 +32744,14 @@ PrefabInstance:
     - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: speed
       value: 4.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: stopsAtEnds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
+      propertyPath: stopAtEndTimer
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6652261615575382523, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: waypoints.Array.size
