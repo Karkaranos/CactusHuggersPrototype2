@@ -91,6 +91,11 @@ public class ButtonBehavior : MonoBehaviour
     /// <returns>The time before the button resets</returns>
     IEnumerator Pressed()
     {
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null)
+        {
+            am.ButtonSound();
+        }
         Vector3 pos = transform.localPosition;
         pressed = true;
 

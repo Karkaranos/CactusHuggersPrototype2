@@ -246,6 +246,21 @@ public class AudioManager : MonoBehaviour
         Play("Land");
     }
 
+    /// <summary>
+    /// Public function to play the launch sound
+    /// </summary>
+    public void LaunchSound()
+    {
+        Play("Launch");
+    }
+
+    /// <summary>
+    /// Public function to play the button sound
+    /// </summary>
+    public void ButtonSound()
+    {
+        Play("Button");
+    }
 
 
     #endregion

@@ -331,23 +331,6 @@ public class PlayerMovementBehavior : MonoBehaviour
             rb.drag = 0;
         }
 
-
-       /* moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
-        if(jumping)
-        {
-            moveDir.y = _jumpHeight;
-        }
-        moveDir *= Time.deltaTime * _speed;
-        if(!jumping)
-        {
-            moveDir.y = 0;
-        }
-
-        moveDir.y -= _gravity * Time.deltaTime;
-        cc.Move(moveDir);
-        moveDir.y = 0;
-        transform.forward = moveDir;*/
-
     }
     private void FixedUpdate()
     {

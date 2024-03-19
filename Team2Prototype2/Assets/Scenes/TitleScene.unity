@@ -1885,7 +1885,7 @@ MonoBehaviour:
     source: {fileID: 0}
     isMusic: 0
   - name: Override
-    audClip: {fileID: 8300000, guid: 9615f07960dc7cd4e9adb1cadbe1e916, type: 3}
+    audClip: {fileID: 8300000, guid: ca7fe52f11c19bb4ca948ac77a474549, type: 3}
     clipVolume: 1
     clipPitch: 1
     canLoop: 0
@@ -1917,6 +1917,39 @@ MonoBehaviour:
     maxSoundDistance: 0
     source: {fileID: 0}
     isMusic: 0
+  - name: Launch
+    audClip: {fileID: 8300000, guid: 6ba16d59c139fb34e9789e9a5d4367da, type: 3}
+    clipVolume: 1
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: Button
+    audClip: {fileID: 8300000, guid: 5161e57679f03ce45b7eb80293fde183, type: 3}
+    clipVolume: 1
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: Matrix
+    audClip: {fileID: 8300000, guid: dd56a11bd6576a54e8b67f926881e88a, type: 3}
+    clipVolume: 1
+    clipPitch: 1
+    canLoop: 1
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 1
   masterMixer: {fileID: 24300002, guid: ea91c3d0f3fd50045b2f9fc5eb8a5525, type: 2}
   musicVolume: 1
 --- !u!4 &1226509972
