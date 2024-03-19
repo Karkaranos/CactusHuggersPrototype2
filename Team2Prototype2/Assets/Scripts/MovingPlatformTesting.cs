@@ -1,3 +1,15 @@
+/*****************************************************************************
+// File Name :         MovingPlatformTesting.cs
+// Author :            Tyler Hayes
+// Creation Date :     February 28, 2024
+//
+// Brief Description : Makes custom functions built into the unity editor so
+//                     the designers can playtest easier. This script is commented
+//                     because unity wont let you build with custom editors
+*****************************************************************************/
+
+
+
 /*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

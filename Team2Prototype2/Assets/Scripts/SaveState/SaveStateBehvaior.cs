@@ -15,11 +15,11 @@ using UnityEngine;
 
 public class SaveStateBehvaior : MonoBehaviour
 {
+    //sets total number of save states
     public const int NumberOfSaveStates = 3;
 
     [Header("Save State Cooldown: "), Tooltip("Edit this to change the max cooldown time")]
     [SerializeField] private float maxCooldownTime;
-    
 
     [Header("Save State Waypoint Colors"), Tooltip("Change these to change the color of each"
         + " save state's waypoint color")]
@@ -62,6 +62,8 @@ public class SaveStateBehvaior : MonoBehaviour
             noText = true;
             Debug.Log("No Save State Text Refrenced");
         }
+
+        //set the first save state
         SwitchSelectedState(1);
     }
 
@@ -112,13 +114,14 @@ public class SaveStateBehvaior : MonoBehaviour
         UIManager uim = FindObjectOfType<UIManager>();
         //-1 because selected save state is the index of the save state
         selectedSaveState = switchTo - 1;
+        
+        //sets the ui element
         if(uim!=null)
         {
             uim.SelectSaveState(selectedSaveState);
         }
         if (!noText)
         {
-
             print("Ran switch state");
             stateText.text = "Selected State: " + switchTo;
         }
@@ -130,10 +133,10 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void LoadState()
     {
-
         //checks to see if the save state has anything in it
         if (saveStates[selectedSaveState].hasBeenSaved)
         {
+            //sets the ui
             UIManager uim = FindObjectOfType<UIManager>();
             if (uim != null)
             {
@@ -153,6 +156,7 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void SetSaveState()
     {
+        //grabs all of the variables involved in the save state
         saveStates[selectedSaveState].pPos = transform.position;
         saveStates[selectedSaveState].pRot = transform.rotation;
         saveStates[selectedSaveState].pScale = transform.localScale;
@@ -161,17 +165,20 @@ public class SaveStateBehvaior : MonoBehaviour
         saveStates[selectedSaveState].hasBeenSaved = true;
         UIManager uim = FindObjectOfType<UIManager>();
 
-
+        //makes the pillar
         GameObject go = Instantiate(saveStateWaypoint, transform.position, Quaternion.identity);
         go.GetComponent<Renderer>().material.color = waypointColors[selectedSaveState];
         go.GetComponentInChildren<SpriteRenderer>().material.color = waypointColors[selectedSaveState];
 
+        //overwrites save states
         if (waypoints[selectedSaveState] != null)
         {
             if (stopMe != null)
             {
                 StopCoroutine(stopMe);
             }
+
+            //updates ui
             stopMe = StartCoroutine(TextFade("Overwrote Save " + (selectedSaveState + 1)));
             Destroy(waypoints[selectedSaveState].gameObject);
             if (uim != null)
@@ -204,33 +211,6 @@ public class SaveStateBehvaior : MonoBehaviour
         waypoints[selectedSaveState] = go;
     }
 
-    public void LateUpdate()
-    {
-        if(pauseMovement)
-        {
-            pauseMovement = false;
-
-            if (stopMe != null)
-            {
-                StopCoroutine(stopMe);
-            }
-            stopMe = StartCoroutine(TextFade("Loaded Save " + (selectedSaveState + 1)));
-            //sets all the variables in the saveStateVariables attached to it
-            transform.parent = null;
-            Vector3 playerPos = saveStates[selectedSaveState].pPos;
-            //transform.parent = null;
-            playerPos.y += .2f;
-            transform.position = playerPos;
-            transform.rotation = saveStates[selectedSaveState].pRot;
-            //transform.localScale = saveStates[selectedSaveState].pScale;
-
-            //makes it so you have to save again to load the state
-            saveStates[selectedSaveState].hasBeenSaved = false;
-            Destroy(waypoints[selectedSaveState].gameObject);
-
-        }
-    }
-
     private void TeleportPlayer()
     {
         if (stopMe != null)
@@ -245,7 +225,7 @@ public class SaveStateBehvaior : MonoBehaviour
         print(playerPos);
         transform.position = playerPos;
         transform.rotation = saveStates[selectedSaveState].pRot;
-        //transform.localScale = saveStates[selectedSaveState].pScale;
+
 
         //makes it so you have to save again to load the state
         saveStates[selectedSaveState].hasBeenSaved = false;
