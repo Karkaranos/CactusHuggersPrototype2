@@ -6,7 +6,6 @@
 // Brief Description : Handles basic player movement and player controls
 *****************************************************************************/
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtonBehavior : MonoBehaviour
@@ -57,7 +56,7 @@ public class ButtonBehavior : MonoBehaviour
 
         walls = GameObject.FindGameObjectsWithTag("Wall");
 
-
+        //Generates wires only in puzzle 1
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("1"))
         {
             GenerateWirePositions();
@@ -97,6 +96,7 @@ public class ButtonBehavior : MonoBehaviour
 
         float buttonAnimCounter = _buttonAnimationTime / 2;
 
+        //Handles button being pressed in
         while(buttonAnimCounter > 0)
         {
             buttonAnimCounter -= Time.deltaTime;
@@ -107,6 +107,7 @@ public class ButtonBehavior : MonoBehaviour
 
         buttonAnimCounter = _buttonAnimationTime / 2;
 
+        //Handles button being moved out
         while(buttonAnimCounter > 0)
         {
             buttonAnimCounter -= Time.deltaTime;
@@ -114,8 +115,6 @@ public class ButtonBehavior : MonoBehaviour
             transform.localPosition = pos;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-
-
 
         pressed = false;
 
@@ -128,10 +127,13 @@ public class ButtonBehavior : MonoBehaviour
     /// </summary>
     private void StopInteraction()
     {
+        //Iterates over each interactable to reset it and set it to its default state
         foreach (Interactables i in allInteractables)
         {
+            //If I resets when it isn't pressed
             if (i.ResetsWhenNotPressed)
             {
+                //Change the moving platform status
                 if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
                 {
                     mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
@@ -141,13 +143,14 @@ public class ButtonBehavior : MonoBehaviour
                     }
                     if (i.DefaultState == Interactables.LinkedState.STOPPED_PLATFORM)
                     {
-                        mpb.StopMoving = true;
+                        mpb.ButtonSaysStopMoving = true;
                     }
                     else
                     {
-                        mpb.StopMoving = false;
+                        mpb.ButtonSaysStopMoving = false;
                     }
                 }
+                //Change the door status
                 else if (i.ObjectType == Interactables.LinkedType.DOOR)
                 {
                     DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
@@ -187,18 +190,19 @@ public class ButtonBehavior : MonoBehaviour
                 }
                 if(i.PressedState == Interactables.LinkedState.MOVING_PLATFORM && !i.TogglesWhenPressed)
                 {
-                    mpb.StopMoving = false;
+                    mpb.ButtonSaysStopMoving = false;
                 }
                 else if (i.PressedState == Interactables.LinkedState.STOPPED_PLATFORM && !i.TogglesWhenPressed)
                 {
-                    mpb.StopMoving = true;
+                    mpb.ButtonSaysStopMoving = true;
                 }
                 else
                 {
-                    mpb.StopMoving = !mpb.StopMoving;
+                    mpb.ButtonSaysStopMoving = !mpb.ButtonSaysStopMoving;
                 }
 
-                if(mpb.StopMoving)
+                //Change the state of wires
+                if(mpb.ButtonSaysStopMoving)
                 {
                     DeactivateWires(i);
                 }
@@ -228,13 +232,13 @@ public class ButtonBehavior : MonoBehaviour
 
             }
 
-
+            //Handle other objects this button changes
             if(i.ResetsThese.Length != 0)
             {
                 foreach(ChangedObject c in i.ResetsThese)
                 {
                     MovingPlatformBehavior mpb = c.LinkedObject.GetComponentInChildren<MovingPlatformBehavior>();
-                    mpb.StopMoving = true;
+                    mpb.ButtonSaysStopMoving = true;
                     c.LinkedObject.transform.position = mpb.Waypoints[c.WaypointToGoTo-1].transform.position;
                 }
             }
@@ -244,8 +248,13 @@ public class ButtonBehavior : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Sets the default state of the given interactable
+    /// </summary>
+    /// <param name="i">The interactable to set</param>
     public void SetDefaultState(Interactables i)
     {
+        //Sets the default state of a moving platform
         if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
         {
             mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
@@ -254,16 +263,18 @@ public class ButtonBehavior : MonoBehaviour
             {
                 throw new System.Exception("Moving Platform Behavior could not be found on the linked object");
             }
+            //Sets the default state
             if (i.DefaultState == Interactables.LinkedState.STOPPED_PLATFORM)
             {
-                mpb.StopMoving = true;
+                mpb.ButtonSaysStopMoving = true;
             }
             else
             {
-                mpb.StopMoving = false;
+                mpb.ButtonSaysStopMoving = false;
                 ActivateWires(i);
             }
         }
+        //Sets the default state of a door
         else if (i.ObjectType == Interactables.LinkedType.DOOR)
         {
             DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
@@ -272,6 +283,7 @@ public class ButtonBehavior : MonoBehaviour
             {
                 throw new System.Exception("Door Behavior could not be found on the linked object");
             }
+            //Open the door
             if (i.DefaultState == Interactables.LinkedState.OPEN_DOOR)
             {
                 db.OpenInitialDoor();
@@ -285,8 +297,10 @@ public class ButtonBehavior : MonoBehaviour
     /// </summary>
     public void InitializeLinkedState()
     {
+        //Initializes the linked state by iterating over each related interactable
         foreach(Interactables i in allInteractables)
         {
+            //Sets the linked state of a moving platform
             if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
             {
                 mpb = i.LinkObject.GetComponentInChildren<MovingPlatformBehavior>();
@@ -297,14 +311,15 @@ public class ButtonBehavior : MonoBehaviour
                 }
                 if (i.DefaultState == Interactables.LinkedState.STOPPED_PLATFORM)
                 {
-                    mpb.StopMoving = true;
+                    mpb.ButtonSaysStopMoving = true;
                 }
                 else
                 {
-                    mpb.StopMoving = false;
+                    mpb.ButtonSaysStopMoving = false;
                     ActivateWires(i);
                 }
             }
+            //Sets the initial state of a door
             else if (i.ObjectType == Interactables.LinkedType.DOOR)
             {
                 DoorBehavior db = i.LinkObject.GetComponent<DoorBehavior>();
@@ -327,8 +342,10 @@ public class ButtonBehavior : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
+        //Draws a line to each related object
         foreach(Interactables i in allInteractables)
         {
+            //Draws a red line to each moving platform
             if (i.ObjectType == Interactables.LinkedType.MOVING_PLATFORM)
             {
 
@@ -336,6 +353,7 @@ public class ButtonBehavior : MonoBehaviour
                 Gizmos.color = Color.red;
                 Gizmos.DrawLine(transform.position, i.LinkObject.transform.position);
             }
+            //Draws a green line to each moving platform
             if (i.ObjectType == Interactables.LinkedType.DOOR)
             {
                 db = i.LinkObject.GetComponent<DoorBehavior>();
@@ -343,6 +361,7 @@ public class ButtonBehavior : MonoBehaviour
                 Gizmos.DrawLine(transform.position, db.gameObject.transform.GetChild(0).position);
             }
 
+            //Draws a blue line to each object this button resets
             if(i.ResetsThese.Length!=0)
             {
                 foreach(ChangedObject c in i.ResetsThese)
@@ -462,6 +481,7 @@ public class ButtonBehavior : MonoBehaviour
                     }
                 }
             }
+            //If the previous point is close enough to the end point, set the value to something that exists
             else
             {
                 if (Mathf.Abs(90 - (parent.eulerAngles.y % 180)) < 1f)
@@ -506,6 +526,7 @@ public class ButtonBehavior : MonoBehaviour
                     }
                 }
             }
+            //Else if the previous point is close enough to the last point, set the value to an existing value
             else
             {
                 if (Mathf.Abs(parent.eulerAngles.y % 180) < 1f)
@@ -558,6 +579,7 @@ public class ButtonBehavior : MonoBehaviour
         GameObject g = null;
         float difference;
 
+        //Set the value to check the difference against
         if (direction == 1)
         {
             difference = float.MaxValue;
@@ -567,26 +589,33 @@ public class ButtonBehavior : MonoBehaviour
             difference = float.MinValue;
         }
         
+        //Iterate over each wall and find the nearest wall in the given direction
         foreach(GameObject w in walls)
         {
+            //If looking in the x axis and towards -x
             if(axis == 'x' && direction == 1)
             {
+                //If the x position of the wall is greater than the last point and the difference between this wall and the last point is greater than the difference and the absolute value is within a set range
                 if((w.transform.position.x > lastPoint.x) && difference > (w.transform.position.x - lastPoint.x) && Mathf.Abs(w.transform.position.z - lastPoint.z) < 5f)
                 {
                     difference = w.transform.position.x - lastPoint.x;
                     g = w;
                 }
             }
+            //If looking in the x axis and towards x
             else if (axis == 'x' && direction == -1)
             {
+                //If the x position of the wall is less than the last point and the difference between this wall and the last point is less than the difference and the absolute value is within a set range
                 if ((w.transform.position.x < lastPoint.x) && difference < (w.transform.position.x - lastPoint.x) && Mathf.Abs(w.transform.position.z - lastPoint.z) < 5f)
                 {
                     difference = w.transform.position.x - lastPoint.x;
                     g = w;
                 }
             }
+
             else if (axis == 'z' && direction == 1)
             {
+                //If the z position of the wall is greater than the last point and the difference between this wall and the last point is greater than the difference and the absolute value is within a set range
                 if ((w.transform.position.z > lastPoint.z) && difference > (w.transform.position.z - lastPoint.z) && Mathf.Abs(w.transform.position.x - lastPoint.x) < 5f)
                 {
                     difference = w.transform.position.z - lastPoint.z;
@@ -595,6 +624,7 @@ public class ButtonBehavior : MonoBehaviour
             }
             else if (axis == 'z' && direction == -1)
             {
+                //If the z position of the wall is greater than the last point and the difference between this wall and the last point is less than the difference and the absolute value is within a set range
                 if ((w.transform.position.z < lastPoint.z) && difference < (w.transform.position.z - lastPoint.z) && Mathf.Abs(w.transform.position.x - lastPoint.x) < 5f)
                 {
                     difference = w.transform.position.z - lastPoint.z;
@@ -604,7 +634,8 @@ public class ButtonBehavior : MonoBehaviour
         }
 
 
-
+        //Double check the value multiplier and return the vector with the new point
+        //Changes on the X axis
         if(axis == 'x')
         {
             if (transform.position.x < g.transform.position.x)
@@ -617,6 +648,7 @@ public class ButtonBehavior : MonoBehaviour
             }
             return new Vector3(g.transform.position.x + (1f * direction), .005f, lastPoint.z);
         }
+        //Changes on the Z axis
         else
         {
             if (transform.position.z < g.transform.position.z)
@@ -662,6 +694,7 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to activate wire states on</param>
     public void ActivateWires(Interactables i)
     {
+        //If the current scene is 1, activate the wires
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("1"))
         {
             LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
@@ -676,6 +709,7 @@ public class ButtonBehavior : MonoBehaviour
     /// <param name="i">The interactable to deactivate wire states on</param>
     public void DeactivateWires(Interactables i)
     {
+        //If the current scene is Room 1, deactivate the wires
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("1"))
         {
             LineRenderer l = i.LineRendererObject.GetComponent<LineRenderer>();
