@@ -359,6 +359,22 @@ public class PlayerMovementBehavior : MonoBehaviour
     {
         if (g.tag.Equals("LevelEnd"))
         {
+            if(_sceneToGoTo.Contains("2"))
+            {
+                AudioManager am = FindObjectOfType<AudioManager>();
+                if (am != null)
+                {
+                    am.Lvl2BGM();
+                }
+            }
+            else if (_sceneToGoTo.Contains("3"))
+            {
+                AudioManager am = FindObjectOfType<AudioManager>();
+                if (am != null)
+                {
+                    am.Lvl3BGM();
+                }
+            }
             SceneManager.LoadScene(_sceneToGoTo);
         }
 

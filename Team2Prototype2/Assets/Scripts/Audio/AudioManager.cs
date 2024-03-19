@@ -262,6 +262,33 @@ public class AudioManager : MonoBehaviour
         Play("Button");
     }
 
+    /// <summary>
+    /// Public function to play lvl2 theme. Stops all other music
+    /// </summary>
+    public void Lvl2BGM()
+    {
+        StopAllMusic();
+        Play("Lvl2BGM");
+    }
+
+    /// <summary>
+    /// Public function to play lvl3 theme. Stops all other music
+    /// </summary>
+    public void Lvl3BGM()
+    {
+        StopAllMusic();
+        Play("Lvl3BGM");
+    }
+
+    /// <summary>
+    /// Public function to stop all music for title screen and lvl 1
+    /// </summary>
+    public void TitleLvl1()
+    {
+        StopAllMusic();
+    }
+
+
 
     #endregion
 }

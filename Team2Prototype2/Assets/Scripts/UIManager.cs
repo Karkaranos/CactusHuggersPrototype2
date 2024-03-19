@@ -115,6 +115,11 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null)
+        {
+            am.TitleLvl1();
+        }
         SceneManager.LoadScene(0);
     }
 
