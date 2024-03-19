@@ -6,8 +6,9 @@ using UnityEngine;
 public class ChangedObject
 {
     [SerializeField] private GameObject _linkedObject;
-    //[SerializeField] private Interactables.LinkedState _stateToGoTo;
+    [Tooltip("The waypoint to go to, starting at 1")]
+    [SerializeField] private int _waypointToGoTo;
 
     public GameObject LinkedObject { get => _linkedObject; set => _linkedObject = value; }
-    //public Interactables.LinkedState StateToGoTo { get => _stateToGoTo; set => _stateToGoTo = value; }
+    public int WaypointToGoTo { get => _waypointToGoTo; set => _waypointToGoTo = value; }
 }

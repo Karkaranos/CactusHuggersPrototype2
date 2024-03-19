@@ -237,7 +237,7 @@ public class ButtonBehavior : MonoBehaviour
                 {
                     MovingPlatformBehavior mpb = c.LinkedObject.GetComponentInChildren<MovingPlatformBehavior>();
                     mpb.StopMoving = true;
-                    c.LinkedObject.transform.position = mpb.Waypoints[mpb.Waypoints.Count-1].transform.position;
+                    c.LinkedObject.transform.position = mpb.Waypoints[c.WaypointToGoTo-1].transform.position;
                 }
             }
         }
