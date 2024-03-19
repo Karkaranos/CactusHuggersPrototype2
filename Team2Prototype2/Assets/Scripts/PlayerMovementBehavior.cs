@@ -252,6 +252,11 @@ public class PlayerMovementBehavior : MonoBehaviour
         {
             am.LandSound();
         }
+        yield return new WaitForSeconds(.5f);
+        if (am != null)
+        {
+            am.Mute("Land");
+        }
     }
 
     /// <summary>

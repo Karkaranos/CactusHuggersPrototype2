@@ -243,6 +243,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void LandSound()
     {
+        Unmute("Land");
         Play("Land");
     }
 
