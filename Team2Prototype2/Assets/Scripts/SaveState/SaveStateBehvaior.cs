@@ -178,6 +178,11 @@ public class SaveStateBehvaior : MonoBehaviour
             {
                 uim.OverwriteSaveState(selectedSaveState);
             }
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.OverrideSound();
+            }
         }
         else
         {
@@ -189,6 +194,11 @@ public class SaveStateBehvaior : MonoBehaviour
             if (uim != null)
             {
                 uim.FillSaveState(selectedSaveState);
+            }
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.SaveSound();
             }
         }
         waypoints[selectedSaveState] = go;

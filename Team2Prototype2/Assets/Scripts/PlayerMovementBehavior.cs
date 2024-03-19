@@ -241,8 +241,17 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// <returns></returns>
     IEnumerator JumpDecay()
     {
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null)
+        {
+            am.JumpSound();
+        }
         yield return new WaitForSeconds(_jumpTime);
         jumping = false;
+        if (am != null)
+        {
+            am.LandSound();
+        }
     }
 
     /// <summary>

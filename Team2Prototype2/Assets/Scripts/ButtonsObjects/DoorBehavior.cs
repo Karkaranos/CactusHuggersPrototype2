@@ -62,6 +62,11 @@ public class DoorBehavior : MonoBehaviour
     /// <returns>The time the door opens in</returns>
     private IEnumerator DoorSlideOpen()
     {
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null)
+        {
+            am.OpenDoorSound();
+        }
         float timer = doorOpenTime;
         Vector3 doorPos = doorObj.transform.position;
         while(timer > 0)
@@ -72,6 +77,7 @@ public class DoorBehavior : MonoBehaviour
             timer -= Time.deltaTime;
             yield return Time.deltaTime;
         }
+
     }
 
     /// <summary>
@@ -93,6 +99,11 @@ public class DoorBehavior : MonoBehaviour
     /// <returns>The time the door closes in</returns>
     private IEnumerator DoorShut()
     {
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null)
+        {
+            am.CloseDoorSound();
+        }
         float timer = doorCloseTime;
         Vector3 doorPos = doorObj.transform.position;
         while (timer > 0)
