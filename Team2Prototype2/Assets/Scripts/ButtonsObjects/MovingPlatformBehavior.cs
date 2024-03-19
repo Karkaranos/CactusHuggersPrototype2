@@ -49,6 +49,8 @@ public class MovingPlatformBehavior : MonoBehaviour
     //can stop the platform in the inspector to check if something is working/not
     [SerializeField] private bool stopMoving = false;
 
+    [SerializeField] private bool buttonSaysStopMoving = false;
+
     //next location for the moving platform to go to - formatted as waypoints[nextWaypoint]
     private int nextWaypoint;
 
@@ -71,7 +73,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        if (!StopMoving)
+        if (!StopMoving && !buttonSaysStopMoving)
         {
             Move();
         }
