@@ -204,6 +204,11 @@ public class MovingPlatformBehavior : MonoBehaviour
             playerPos = pbehav.gameObject.transform.position;
 
             pbehav.PlayerIsLaunched(launchHeight, launchStraightUp, XZLaunch);
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.LaunchSound();
+            }
         }
     }
 }

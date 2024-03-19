@@ -241,6 +241,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// <returns></returns>
     IEnumerator JumpDecay()
     {
+        jumping = true;
         AudioManager am = FindObjectOfType<AudioManager>();
         if (am != null)
         {
@@ -251,6 +252,11 @@ public class PlayerMovementBehavior : MonoBehaviour
         if (am != null)
         {
             am.LandSound();
+        }
+        yield return new WaitForSeconds(.5f);
+        if (am != null)
+        {
+            am.Mute("Land");
         }
     }
 
@@ -331,23 +337,6 @@ public class PlayerMovementBehavior : MonoBehaviour
             rb.drag = 0;
         }
 
-
-       /* moveDir = camTransform.forward * fbValue + camTransform.right * lrValue;
-        if(jumping)
-        {
-            moveDir.y = _jumpHeight;
-        }
-        moveDir *= Time.deltaTime * _speed;
-        if(!jumping)
-        {
-            moveDir.y = 0;
-        }
-
-        moveDir.y -= _gravity * Time.deltaTime;
-        cc.Move(moveDir);
-        moveDir.y = 0;
-        transform.forward = moveDir;*/
-
     }
     private void FixedUpdate()
     {
@@ -357,6 +346,22 @@ public class PlayerMovementBehavior : MonoBehaviour
     private void MovePlayer()
     {
         moveDir = orientation.forward * fbValue + orientation.right * lrValue;
+        if (moveDir.magnitude > 0 && !jumping)
+        {
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.PlayFootsteps();
+            }
+        }
+        else
+        {
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.StopFootsteps();
+            }
+        }
 
         
 
@@ -376,6 +381,22 @@ public class PlayerMovementBehavior : MonoBehaviour
     {
         if (g.tag.Equals("LevelEnd"))
         {
+            if(_sceneToGoTo.Contains("2"))
+            {
+                AudioManager am = FindObjectOfType<AudioManager>();
+                if (am != null)
+                {
+                    am.Lvl2BGM();
+                }
+            }
+            else if (_sceneToGoTo.Contains("3"))
+            {
+                AudioManager am = FindObjectOfType<AudioManager>();
+                if (am != null)
+                {
+                    am.Lvl3BGM();
+                }
+            }
             SceneManager.LoadScene(_sceneToGoTo);
         }
 

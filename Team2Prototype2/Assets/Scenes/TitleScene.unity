@@ -1842,7 +1842,7 @@ MonoBehaviour:
   Sounds:
   - name: OpenDoor
     audClip: {fileID: 8300000, guid: e02f4dc5114cbde4ca5061e222a5090e, type: 3}
-    clipVolume: 1
+    clipVolume: 0.7
     clipPitch: 1
     canLoop: 0
     panStereo: 0
@@ -1853,7 +1853,7 @@ MonoBehaviour:
     isMusic: 0
   - name: Jump
     audClip: {fileID: 8300000, guid: c790d6f0d4cf9884aabae8a6414a1af3, type: 3}
-    clipVolume: 1
+    clipVolume: 0.9
     clipPitch: 1
     canLoop: 0
     panStereo: 0
@@ -1875,7 +1875,7 @@ MonoBehaviour:
     isMusic: 0
   - name: CloseDoor
     audClip: {fileID: 8300000, guid: 49b21b77712ed714fa47c8b4a6748103, type: 3}
-    clipVolume: 1
+    clipVolume: 0.7
     clipPitch: 1
     canLoop: 0
     panStereo: 0
@@ -1885,8 +1885,8 @@ MonoBehaviour:
     source: {fileID: 0}
     isMusic: 0
   - name: Override
-    audClip: {fileID: 8300000, guid: 9615f07960dc7cd4e9adb1cadbe1e916, type: 3}
-    clipVolume: 1
+    audClip: {fileID: 8300000, guid: ca7fe52f11c19bb4ca948ac77a474549, type: 3}
+    clipVolume: 0.75
     clipPitch: 1
     canLoop: 0
     panStereo: 0
@@ -1908,7 +1908,106 @@ MonoBehaviour:
     isMusic: 0
   - name: SetSave
     audClip: {fileID: 8300000, guid: a5316543e117d064ab2d95ad24006a08, type: 3}
+    clipVolume: 0.7
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: Launch
+    audClip: {fileID: 8300000, guid: 6ba16d59c139fb34e9789e9a5d4367da, type: 3}
+    clipVolume: 0.75
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: Button
+    audClip: {fileID: 8300000, guid: 5161e57679f03ce45b7eb80293fde183, type: 3}
     clipVolume: 1
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: Lvl3BGM
+    audClip: {fileID: 8300000, guid: c413e7462c4903848991029bc6fa159d, type: 3}
+    clipVolume: 0.2
+    clipPitch: 1
+    canLoop: 1
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 1
+  - name: Lvl2BGM
+    audClip: {fileID: 8300000, guid: c30eb8f3691a1a548a9f7254dc59bb37, type: 3}
+    clipVolume: 0.2
+    clipPitch: 1
+    canLoop: 1
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 1
+  - name: 1
+    audClip: {fileID: 8300000, guid: 68c5bd46ddf2586479167dcdde5e050c, type: 3}
+    clipVolume: 0.6
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: 2
+    audClip: {fileID: 8300000, guid: 9f894ed542e68164e80700a3f3e1e071, type: 3}
+    clipVolume: 0.6
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: 3
+    audClip: {fileID: 8300000, guid: 8c5d5f23fb0f11d469157a6a1d651c97, type: 3}
+    clipVolume: 0.6
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: 4
+    audClip: {fileID: 8300000, guid: 4b1e899f489f55c48a49891f5d2f1380, type: 3}
+    clipVolume: 0.6
+    clipPitch: 1
+    canLoop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 0
+  - name: 5
+    audClip: {fileID: 8300000, guid: 105245c9b5a59844db5a1d63f25e6f9a, type: 3}
+    clipVolume: 0.6
     clipPitch: 1
     canLoop: 0
     panStereo: 0
@@ -1919,6 +2018,7 @@ MonoBehaviour:
     isMusic: 0
   masterMixer: {fileID: 24300002, guid: ea91c3d0f3fd50045b2f9fc5eb8a5525, type: 2}
   musicVolume: 1
+  isPlayingFootstep: 0
 --- !u!4 &1226509972
 Transform:
   m_ObjectHideFlags: 0
