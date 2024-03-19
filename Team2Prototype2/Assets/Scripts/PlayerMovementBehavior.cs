@@ -251,7 +251,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// <returns></returns>
     IEnumerator Interact()
     {
-        if(!Interacting)
+        if(!Interacting && this.gameObject!=null)
         {
             Interacting = true;
             yield return new WaitForSeconds(2f);
