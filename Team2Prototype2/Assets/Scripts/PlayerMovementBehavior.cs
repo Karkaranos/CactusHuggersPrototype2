@@ -241,6 +241,7 @@ public class PlayerMovementBehavior : MonoBehaviour
     /// <returns></returns>
     IEnumerator JumpDecay()
     {
+        jumping = true;
         AudioManager am = FindObjectOfType<AudioManager>();
         if (am != null)
         {
@@ -345,6 +346,22 @@ public class PlayerMovementBehavior : MonoBehaviour
     private void MovePlayer()
     {
         moveDir = orientation.forward * fbValue + orientation.right * lrValue;
+        if (moveDir.magnitude > 0 && !jumping)
+        {
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.PlayFootsteps();
+            }
+        }
+        else
+        {
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null)
+            {
+                am.StopFootsteps();
+            }
+        }
 
         
 
