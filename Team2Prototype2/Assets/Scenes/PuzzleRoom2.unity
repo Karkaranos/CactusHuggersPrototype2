@@ -38750,7 +38750,7 @@ PrefabInstance:
       objectReference: {fileID: 1797395009}
     - target: {fileID: 7572214633151097419, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
       propertyPath: _sceneToGoTo
-      value: PuzzleRoom2
+      value: PuzzleRoom3
       objectReference: {fileID: 0}
     - target: {fileID: 7572214633151097419, guid: 91f8f7b313c1d274cbb9e5fc8fcd2d75, type: 3}
       propertyPath: _airMultiplier
@@ -41137,7 +41137,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 398733960}
+  m_Mesh: {fileID: 950356822}
 --- !u!33 &1960204721
 MeshFilter:
   m_ObjectHideFlags: 10

@@ -130,27 +130,21 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void LoadState()
     {
-        //only works if its not on cooldown
-        if (!onLoadCooldown)
-        {
-            //puts it on cooldown
-            onLoadCooldown = true;
 
-            //checks to see if the save state has anything in it
-            if (saveStates[selectedSaveState].hasBeenSaved)
+        //checks to see if the save state has anything in it
+        if (saveStates[selectedSaveState].hasBeenSaved)
+        {
+            UIManager uim = FindObjectOfType<UIManager>();
+            if (uim != null)
             {
-                UIManager uim = FindObjectOfType<UIManager>();
-                if (uim != null)
-                {
-                    uim.EmptySaveState(selectedSaveState);
-                }
-                //pauseMovement = true;
-                TeleportPlayer();
+                uim.EmptySaveState(selectedSaveState);
             }
-            else
-            {
-                Debug.Log("Nothing Saved In Slot" + (selectedSaveState + 1));
-            }
+            //pauseMovement = true;
+            TeleportPlayer();
+        }
+        else
+        {
+            Debug.Log("Nothing Saved In Slot" + (selectedSaveState + 1));
         }
     }
 
@@ -159,52 +153,45 @@ public class SaveStateBehvaior : MonoBehaviour
     /// </summary>
     public void SetSaveState()
     {
-        //checks to see if its on cooldown already
-        if (!onSaveCooldown)
+        saveStates[selectedSaveState].pPos = transform.position;
+        saveStates[selectedSaveState].pRot = transform.rotation;
+        saveStates[selectedSaveState].pScale = transform.localScale;
+
+        //allows the player to load it now
+        saveStates[selectedSaveState].hasBeenSaved = true;
+        UIManager uim = FindObjectOfType<UIManager>();
+
+
+        GameObject go = Instantiate(saveStateWaypoint, transform.position, Quaternion.identity);
+        go.GetComponent<Renderer>().material.color = waypointColors[selectedSaveState];
+        go.GetComponentInChildren<SpriteRenderer>().material.color = waypointColors[selectedSaveState];
+
+        if (waypoints[selectedSaveState] != null)
         {
-            //puts it on cooldown
-            onSaveCooldown = true;
-
-            saveStates[selectedSaveState].pPos = transform.position;
-            saveStates[selectedSaveState].pRot = transform.rotation;
-            saveStates[selectedSaveState].pScale = transform.localScale;
-
-            //allows the player to load it now
-            saveStates[selectedSaveState].hasBeenSaved = true;
-            UIManager uim = FindObjectOfType<UIManager>();
-
-
-            GameObject go = Instantiate(saveStateWaypoint, transform.position, Quaternion.identity);
-            go.GetComponent<Renderer>().material.color = waypointColors[selectedSaveState];
-            go.GetComponentInChildren<SpriteRenderer>().material.color = waypointColors[selectedSaveState];
-
-            if (waypoints[selectedSaveState] != null)
+            if (stopMe != null)
             {
-                if (stopMe != null)
-                {
-                    StopCoroutine(stopMe);
-                }
-                stopMe = StartCoroutine(TextFade("Overwrote Save " + (selectedSaveState + 1)));
-                Destroy(waypoints[selectedSaveState].gameObject);
-                if (uim != null)
-                {
-                    uim.OverwriteSaveState(selectedSaveState);
-                }
+                StopCoroutine(stopMe);
             }
-            else
+            stopMe = StartCoroutine(TextFade("Overwrote Save " + (selectedSaveState + 1)));
+            Destroy(waypoints[selectedSaveState].gameObject);
+            if (uim != null)
             {
-                if(stopMe!=null)
-                {
-                    StopCoroutine(stopMe);
-                }
-                stopMe = StartCoroutine(TextFade("Added Save " + (selectedSaveState + 1)));
-                if (uim != null)
-                {
-                    uim.FillSaveState(selectedSaveState);
-                }
+                uim.OverwriteSaveState(selectedSaveState);
             }
-            waypoints[selectedSaveState] = go;
         }
+        else
+        {
+            if (stopMe != null)
+            {
+                StopCoroutine(stopMe);
+            }
+            stopMe = StartCoroutine(TextFade("Added Save " + (selectedSaveState + 1)));
+            if (uim != null)
+            {
+                uim.FillSaveState(selectedSaveState);
+            }
+        }
+        waypoints[selectedSaveState] = go;
     }
 
     public void LateUpdate()
@@ -244,8 +231,8 @@ public class SaveStateBehvaior : MonoBehaviour
         //sets all the variables in the saveStateVariables attached to it
         transform.parent = null;
         Vector3 playerPos = saveStates[selectedSaveState].pPos;
-        //transform.parent = null;
         playerPos.y += .2f;
+        print(playerPos);
         transform.position = playerPos;
         transform.rotation = saveStates[selectedSaveState].pRot;
         //transform.localScale = saveStates[selectedSaveState].pScale;
