@@ -57,6 +57,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     public bool StopMoving { get => stopMoving; set => stopMoving = value; }
     public Interactables RelatedInteractable { get => relatedInteractable; set => relatedInteractable = value; }
     public List<Transform> Waypoints { get => waypoints;}
+    public bool ButtonSaysStopMoving { get => buttonSaysStopMoving; set => buttonSaysStopMoving = value; }
 
     /// <summary>
     /// set refrences
@@ -73,7 +74,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        if (!StopMoving && !buttonSaysStopMoving)
+        if (!StopMoving && !ButtonSaysStopMoving)
         {
             Move();
         }
