@@ -264,7 +264,6 @@ public class PlayerMovementBehavior : MonoBehaviour
         {
             Interacting = true;
             yield return new WaitForSeconds(2f);
-            print("interacted");
             Interacting = false;
         }
     }
@@ -377,13 +376,11 @@ public class PlayerMovementBehavior : MonoBehaviour
     {
         if (g.tag.Equals("LevelEnd"))
         {
-            print("Load next scene");
             SceneManager.LoadScene(_sceneToGoTo);
         }
 
         if (g.tag.Equals("Checkpoint"))
         {
-            print("Checkpoint Reached");
             lastCheckpoint = g.transform;
         }
 

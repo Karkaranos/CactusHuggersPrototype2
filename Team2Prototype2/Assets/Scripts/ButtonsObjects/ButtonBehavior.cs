@@ -92,7 +92,6 @@ public class ButtonBehavior : MonoBehaviour
     /// <returns>The time before the button resets</returns>
     IEnumerator Pressed()
     {
-        print("started pressed");
         Vector3 pos = transform.localPosition;
         pressed = true;
 
@@ -106,7 +105,6 @@ public class ButtonBehavior : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
-        print("Switched button direction");
         buttonAnimCounter = _buttonAnimationTime / 2;
 
         while(buttonAnimCounter > 0)

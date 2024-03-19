@@ -82,7 +82,6 @@ public class AudioManager : MonoBehaviour
         if (sound != null)
         {
             sound.source.Play();
-            //print(audioName + " started");
         }
     }
 
@@ -96,7 +95,6 @@ public class AudioManager : MonoBehaviour
         if (sound != null)
         {
             sound.source.Stop();
-            //print(audioName + " stopped");
         }
 
     }
