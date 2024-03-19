@@ -13,6 +13,8 @@ inspector
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
@@ -23,6 +25,10 @@ public class AudioManager : MonoBehaviour
     private bool gameStarted = false;
 
     private string previousTrack;
+    private int footstepTrack;
+
+    [HideInInspector] public bool isPlayingFootstep;
+    private Coroutine StopMe;
 
     //public Texture2D glassTexture;
     //public CursorMode cursorMode = CursorMode.Auto;
@@ -246,6 +252,38 @@ public class AudioManager : MonoBehaviour
         Unmute("Land");
         Play("Land");
     }
+
+    /// <summary>
+    /// Plays a random footstep sound
+    /// </summary>
+    public void PlayFootsteps()
+    {
+        if(!isPlayingFootstep)
+        {
+            StopMe = StartCoroutine(Footsteps());
+        }
+
+    }
+
+    public void StopFootsteps()
+    {
+        if(StopMe!=null)
+        {
+            StopCoroutine(StopMe);
+            StopMe = null;
+            isPlayingFootstep = false;
+        }
+    }
+
+    private IEnumerator Footsteps()
+    {
+        isPlayingFootstep = true;
+        for(; ; )
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(.8f, 1.6f));
+            Play(UnityEngine.Random.Range(1, 6).ToString());
+        }
+    }    
 
     /// <summary>
     /// Public function to play the launch sound
