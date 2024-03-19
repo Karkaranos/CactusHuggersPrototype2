@@ -144,7 +144,8 @@ public class SaveStateBehvaior : MonoBehaviour
                 {
                     uim.EmptySaveState(selectedSaveState);
                 }
-                pauseMovement = true;
+                //pauseMovement = true;
+                TeleportPlayer();
             }
             else
             {
@@ -164,7 +165,6 @@ public class SaveStateBehvaior : MonoBehaviour
             //puts it on cooldown
             onSaveCooldown = true;
 
-            //sets all the variables
             saveStates[selectedSaveState].pPos = transform.position;
             saveStates[selectedSaveState].pRot = transform.rotation;
             saveStates[selectedSaveState].pScale = transform.localScale;
@@ -219,8 +219,9 @@ public class SaveStateBehvaior : MonoBehaviour
             }
             stopMe = StartCoroutine(TextFade("Loaded Save " + (selectedSaveState + 1)));
             //sets all the variables in the saveStateVariables attached to it
-            Vector3 playerPos = saveStates[selectedSaveState].pPos;
             transform.parent = null;
+            Vector3 playerPos = saveStates[selectedSaveState].pPos;
+            //transform.parent = null;
             playerPos.y += .2f;
             transform.position = playerPos;
             transform.rotation = saveStates[selectedSaveState].pRot;
@@ -231,6 +232,27 @@ public class SaveStateBehvaior : MonoBehaviour
             Destroy(waypoints[selectedSaveState].gameObject);
 
         }
+    }
+
+    private void TeleportPlayer()
+    {
+        if (stopMe != null)
+        {
+            StopCoroutine(stopMe);
+        }
+        stopMe = StartCoroutine(TextFade("Loaded Save " + (selectedSaveState + 1)));
+        //sets all the variables in the saveStateVariables attached to it
+        transform.parent = null;
+        Vector3 playerPos = saveStates[selectedSaveState].pPos;
+        //transform.parent = null;
+        playerPos.y += .2f;
+        transform.position = playerPos;
+        transform.rotation = saveStates[selectedSaveState].pRot;
+        //transform.localScale = saveStates[selectedSaveState].pScale;
+
+        //makes it so you have to save again to load the state
+        saveStates[selectedSaveState].hasBeenSaved = false;
+        Destroy(waypoints[selectedSaveState].gameObject);
     }
 
     /// <summary>
