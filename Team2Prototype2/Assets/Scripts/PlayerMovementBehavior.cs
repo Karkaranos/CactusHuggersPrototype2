@@ -425,7 +425,7 @@ public class PlayerMovementBehavior : MonoBehaviour
         Debug.Log(launchHeight + " " + straightUp + " " + launchDirecton);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.layer == 
             6 && transform.position.y > collision.transform.position.y)
