@@ -12128,7 +12128,7 @@ GameObject:
   - component: {fileID: 761058159}
   - component: {fileID: 761058158}
   - component: {fileID: 761058157}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Torus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12143,7 +12143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761058155}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.78, y: -12.700799, z: 33.229996}
+  m_LocalPosition: {x: -30.779999, y: -12.700799, z: 33.229996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36153,10 +36153,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 1531751795}
     m_Modifications:
     - target: {fileID: 1342820987917093291, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.1900005
-      objectReference: {fileID: 0}
-    - target: {fileID: 1342820987917093291, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_LocalPosition.z
       value: -9.07
       objectReference: {fileID: 0}
@@ -36169,20 +36165,12 @@ PrefabInstance:
       value: -0.62
       objectReference: {fileID: 0}
     - target: {fileID: 4170843814209640682, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.1900005
-      objectReference: {fileID: 0}
-    - target: {fileID: 4170843814209640682, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_LocalPosition.z
       value: 10.36
       objectReference: {fileID: 0}
     - target: {fileID: 5107896328147371486, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5107896328147371486, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.19
       objectReference: {fileID: 0}
     - target: {fileID: 5107896328147371486, guid: a02dcc298ec052848ab6fda3d1d20d05, type: 3}
       propertyPath: m_LocalPosition.z
@@ -38198,7 +38186,7 @@ GameObject:
   - component: {fileID: 1748267688}
   - component: {fileID: 1748267687}
   - component: {fileID: 1748267686}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
