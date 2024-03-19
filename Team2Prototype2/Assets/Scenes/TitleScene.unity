@@ -1939,8 +1939,19 @@ MonoBehaviour:
     maxSoundDistance: 0
     source: {fileID: 0}
     isMusic: 0
-  - name: Matrix
-    audClip: {fileID: 8300000, guid: dd56a11bd6576a54e8b67f926881e88a, type: 3}
+  - name: Lvl3BGM
+    audClip: {fileID: 8300000, guid: c413e7462c4903848991029bc6fa159d, type: 3}
+    clipVolume: 1
+    clipPitch: 1
+    canLoop: 1
+    panStereo: 0
+    spacialBlend: 0
+    minSoundDistance: 0
+    maxSoundDistance: 0
+    source: {fileID: 0}
+    isMusic: 1
+  - name: Lvl2BGM
+    audClip: {fileID: 8300000, guid: c30eb8f3691a1a548a9f7254dc59bb37, type: 3}
     clipVolume: 1
     clipPitch: 1
     canLoop: 1
